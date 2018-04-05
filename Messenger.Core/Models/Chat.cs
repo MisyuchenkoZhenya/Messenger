@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Messenger.Models
+namespace Messenger.Core.Models
 {
-    class Chat
+    public class Chat
     {
         public int Id { get; set; }
 

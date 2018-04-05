@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Messenger.Models
+namespace Messenger.Core.Models
 {
-    class Message
+    public class Message
     {
         public int Id { get; set; }
 
