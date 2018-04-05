@@ -13,21 +13,24 @@ namespace Messenger.Core.DAL
     {
         public MessengerContext()
             : base("DbConnection")
-        {
-            
-        }
+        { }
 
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<MessageType> MessageTypes { get; set; }
         public DbSet<User> Users { get; set; }
-    }
 
-    public class DbInitializer : CreateDatabaseIfNotExists<MessengerContext>
-    {
-        protected override void Seed(MessengerContext db)
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            db.SaveChanges();
+            modelBuilder.Entity<Chat>()
+                        .HasMany(c => c.Participants)
+                        .WithMany(u => u.Chats)
+                        .Map(cu =>
+                        {
+                            cu.MapLeftKey("Chat_Id");
+                            cu.MapRightKey("Participant_Id");
+                            cu.ToTable("ChatParticipant");
+                        });
         }
     }
 }

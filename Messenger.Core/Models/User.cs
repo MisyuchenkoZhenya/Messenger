@@ -10,6 +10,13 @@ namespace Messenger.Core.Models
 {
     public class User
     {
+        public User()
+        {
+            Chats = new HashSet<Chat>();
+            Messages = new HashSet<Message>();
+            Contacts = new HashSet<User>();
+        }
+
         public int Id { get; set; }
 
         public string FirstName { get; set; }

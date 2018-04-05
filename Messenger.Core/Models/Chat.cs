@@ -8,6 +8,12 @@ namespace Messenger.Core.Models
 {
     public class Chat
     {
+        public Chat()
+        {
+            Participants = new HashSet<User>();
+            Messages = new HashSet<Message>();
+        }
+
         public int Id { get; set; }
 
         public User Admin { get; set; }
