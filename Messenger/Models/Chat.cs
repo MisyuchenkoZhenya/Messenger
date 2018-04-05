@@ -10,16 +10,18 @@ namespace Messenger.Models
     {
         public int Id { get; set; }
 
+        public User Admin { get; set; }
+
         public DateTime CreatedAt { get; set; }
 
         public string Title { get; set; }
 
-        public string Photo { get; set; }
+        public string PhotoUrl { get; set; }
 
         public bool IsPrivate { get; set; }
 
 
-        public ICollection<ChatParticipant> Participants { get; set; }
+        public ICollection<User> Participants { get; set; }
 
         public ICollection<Message> Messages { get; set; }
     }

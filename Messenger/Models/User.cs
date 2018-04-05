@@ -21,10 +21,10 @@ namespace Messenger.Models
         public string Password { get; set; }
 
 
-        public ICollection<ChatParticipant> Chats { get; set; }
+        public ICollection<Chat> Chats { get; set; }
 
         public ICollection<Message> Messages { get; set; }
 
-        public ICollection<Contact> Contacts { get; set; }
+        public ICollection<User> Contacts { get; set; }
     }
 }
