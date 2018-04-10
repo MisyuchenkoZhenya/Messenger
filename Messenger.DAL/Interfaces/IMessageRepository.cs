@@ -7,10 +7,8 @@ using Messenger.DAL.Models;
 
 namespace Messenger.DAL.Interfaces
 {
-    interface IMessageRepository
+    interface IMessageRepository : IRepository<Message>
     {
-        IQueryable<Message> GetMessages();
         IQueryable<Message> GetMessagesByChatId(int Id);
-        void CreateMessage(Message message);
     }
 }

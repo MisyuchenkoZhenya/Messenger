@@ -13,27 +13,27 @@ namespace Messenger.DAL.Repository
     {
         private MessengerContext db;
 
-        public ChatRepository()
+        public ChatRepository(MessengerContext context)
         {
-            db = new MessengerContext();
+            db = context;
         }
 
-        public void CreateChat(Chat chat)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteChat(int Id)
+        public void Create(Chat item)
         {
             throw new NotImplementedException();
         }
 
-        public Chat GetChatById(int Id)
+        public void Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<Chat> GetChats()
+        public IQueryable<Chat> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Chat GetById(int id)
         {
             throw new NotImplementedException();
         }
@@ -43,7 +43,7 @@ namespace Messenger.DAL.Repository
             throw new NotImplementedException();
         }
 
-        public void UpdateChat(Chat chat)
+        public void Update(Chat item)
         {
             throw new NotImplementedException();
         }

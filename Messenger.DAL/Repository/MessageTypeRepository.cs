@@ -13,27 +13,32 @@ namespace Messenger.DAL.Repository
     {
         private MessengerContext db;
 
-        public MessageTypeRepository()
+        public MessageTypeRepository(MessengerContext context)
         {
-            db = new MessengerContext();
+            db = context;
         }
 
-        public void CreateMessageType(MessageType messageType)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void DeleteMessageType(int Id)
+        public void Create(MessageType item)
         {
             throw new NotImplementedException();
         }
 
-        public MessageType GetMessageTypeById(int Id)
+        public void Delete(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<MessageType> GetMessageTypes()
+        public IQueryable<MessageType> GetAll()
+        {
+            throw new NotImplementedException();
+        }
+
+        public MessageType GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(MessageType item)
         {
             throw new NotImplementedException();
         }

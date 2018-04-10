@@ -7,11 +7,8 @@ using Messenger.DAL.Models;
 
 namespace Messenger.DAL.Interfaces
 {
-    interface IMessageTypeRepository
+    interface IMessageTypeRepository : IRepository<MessageType>
     {
-        IQueryable<MessageType> GetMessageTypes();
-        MessageType GetMessageTypeById(int Id);
-        void CreateMessageType(MessageType messageType);
-        void DeleteMessageType(int Id);
+
     }
 }

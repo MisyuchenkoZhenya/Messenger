@@ -7,13 +7,8 @@ using Messenger.DAL.Models;
 
 namespace Messenger.DAL.Interfaces
 {
-    interface IChatRepository
+    interface IChatRepository : IRepository<Chat>
     {
-        IQueryable<Chat> GetChats();
-        Chat GetChatById(int Id);
         IQueryable<Chat> GetChatsByUserId(int Id);
-        void CreateChat(Chat chat);
-        void UpdateChat(Chat chat);
-        void DeleteChat(int Id);
     }
 }
