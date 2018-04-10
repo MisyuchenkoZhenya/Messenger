@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using Messenger.Core.Models;
+using Messenger.DAL.Models;
 
-namespace Messenger.Core.DAL
+namespace Messenger.DAL.Context
 {
     public class MessengerContext : DbContext
     {

@@ -1,4 +1,4 @@
-﻿using Messenger.Core.DAL;
+﻿using Messenger.DAL.Context;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

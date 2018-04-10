@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 
 
-namespace Messenger.Core.Models
+namespace Messenger.DAL.Models
 {
     public class User
     {

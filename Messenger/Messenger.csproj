@@ -262,9 +262,9 @@
     <Content Include="Scripts\jquery-1.10.2.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Messenger.Core\Messenger.Core.csproj">
-      <Project>{d01f9ce8-2132-48f4-9a3c-f6fb9da3ab43}</Project>
-      <Name>Messenger.Core</Name>
+    <ProjectReference Include="..\Messenger.DAL\Messenger.DAL.csproj">
+      <Project>{391e8f59-7857-4233-bf78-f86c868d0f25}</Project>
+      <Name>Messenger.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

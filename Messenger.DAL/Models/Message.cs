@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace Messenger.Core.Models
+namespace Messenger.DAL.Models
 {
     public class Message
     {
