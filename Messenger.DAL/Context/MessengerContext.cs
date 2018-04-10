@@ -29,7 +29,17 @@ namespace Messenger.DAL.Context
                         {
                             cu.MapLeftKey("Chat_Id");
                             cu.MapRightKey("Participant_Id");
-                            cu.ToTable("ChatParticipant");
+                            cu.ToTable("ChatToParticipant");
+                        });
+
+            modelBuilder.Entity<User>()
+                        .HasMany(u => u.Contacts)
+                        .WithMany(u => u.Contacts)
+                        .Map(u =>
+                        {
+                            u.MapLeftKey("User_Id");
+                            u.MapRightKey("Contact_Id");
+                            u.ToTable("UserToContact");
                         });
         }
     }
