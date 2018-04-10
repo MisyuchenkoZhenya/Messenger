@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Messenger.DAL.Interfaces;
 using Messenger.DAL.Context;
+using Messenger.DAL.Models;
 
 namespace Messenger.DAL.Repository
 {
@@ -15,6 +16,21 @@ namespace Messenger.DAL.Repository
         public MessageRepository()
         {
             db = new MessengerContext();
+        }
+
+        public void CreateMessage(Message message)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Message> GetMessages()
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQueryable<Message> GetMessagesByChatId(int Id)
+        {
+            throw new NotImplementedException();
         }
     }
 }
