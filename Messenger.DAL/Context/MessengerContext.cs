@@ -33,8 +33,8 @@ namespace Messenger.DAL.Context
                         });
 
             modelBuilder.Entity<User>()
-                        .HasMany(u => u.Contacts)
-                        .WithMany(u => u.Contacts)
+                        .HasMany(u => u.ContactFrom)
+                        .WithMany(u => u.ContactTo)
                         .Map(u =>
                         {
                             u.MapLeftKey("User_Id");
