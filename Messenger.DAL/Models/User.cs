@@ -14,8 +14,7 @@ namespace Messenger.DAL.Models
         {
             Chats = new HashSet<Chat>();
             Messages = new HashSet<Message>();
-            ContactFrom = new HashSet<User>();
-            ContactTo = new HashSet<User>();
+            Contacts = new HashSet<User>();
         }
 
         public int Id { get; set; }
@@ -33,8 +32,6 @@ namespace Messenger.DAL.Models
 
         public ICollection<Message> Messages { get; set; }
 
-        public ICollection<User> ContactFrom { get; set; }
-
-        public ICollection<User> ContactTo { get; set; }
+        public ICollection<User> Contacts { get; set; }
     }
 }

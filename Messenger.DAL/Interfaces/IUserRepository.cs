@@ -9,7 +9,7 @@ namespace Messenger.DAL.Interfaces
 {
     interface IUserRepository : IRepository<User>
     {
-        IQueryable<User> GetUsersByChatId(int Id);
-        IQueryable<User> GetUsersByContactId(int Id);
+        IEnumerable<User> GetUsersByChatId(int Id);
+        IEnumerable<User> GetUsersByContactId(int Id);
     }
 }

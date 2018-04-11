@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Messenger.DAL.Interfaces;
 using Messenger.DAL.Context;
 using Messenger.DAL.Models;
+using System.Data.Entity;
 
 namespace Messenger.DAL.Repository
 {
-    class ChatRepository : IChatRepository
+    public class ChatRepository : IChatRepository
     {
         private MessengerContext db;
 
@@ -18,32 +19,41 @@ namespace Messenger.DAL.Repository
             db = context;
         }
 
-        public void Create(Chat item)
+        public void Create(Chat chat)
         {
-            throw new NotImplementedException();
+            db.Chats.Add(chat);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Chat chat = db.Chats.Find(id);
+            if (chat != null)
+                db.Chats.Remove(chat);
         }
 
-        public IQueryable<Chat> GetAll()
+        public IEnumerable<Chat> GetAll()
         {
-            throw new NotImplementedException();
+            return db.Chats
+                    .Include(c => c.Admin)
+                    .Include(c => c.Participants)
+                    .Include(c => c.Messages);
         }
 
         public Chat GetById(int id)
         {
-            throw new NotImplementedException();
+            return db.Chats
+                    .Include(c => c.Admin)
+                    .Include(c => c.Participants)
+                    .Include(c => c.Messages)
+                    .FirstOrDefault(c => c.Id == id);
         }
 
-        public IQueryable<Chat> GetChatsByUserId(int Id)
+        public void Update(Chat chat)
         {
-            throw new NotImplementedException();
+            db.Entry(chat).State = EntityState.Modified;
         }
 
-        public void Update(Chat item)
+        public IEnumerable<Chat> GetChatsByUserId(int Id)
         {
             throw new NotImplementedException();
         }

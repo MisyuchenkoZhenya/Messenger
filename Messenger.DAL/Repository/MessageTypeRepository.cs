@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Messenger.DAL.Interfaces;
 using Messenger.DAL.Context;
 using Messenger.DAL.Models;
+using System.Data.Entity;
 
 namespace Messenger.DAL.Repository
 {
-    class MessageTypeRepository : IMessageTypeRepository
+    public class MessageTypeRepository : IMessageTypeRepository
     {
         private MessengerContext db;
 
@@ -18,29 +19,31 @@ namespace Messenger.DAL.Repository
             db = context;
         }
 
-        public void Create(MessageType item)
+        public void Create(MessageType messageType)
         {
-            throw new NotImplementedException();
+            db.MessageTypes.Add(messageType);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            MessageType messageType = db.MessageTypes.Find(id);
+            if (messageType != null)
+                db.MessageTypes.Remove(messageType);
         }
 
-        public IQueryable<MessageType> GetAll()
+        public IEnumerable<MessageType> GetAll()
         {
-            throw new NotImplementedException();
+            return db.MessageTypes;
         }
 
         public MessageType GetById(int id)
         {
-            throw new NotImplementedException();
+            return db.MessageTypes.Find(id);
         }
 
-        public void Update(MessageType item)
+        public void Update(MessageType messageType)
         {
-            throw new NotImplementedException();
+            db.Entry(messageType).State = EntityState.Modified;
         }
     }
 }

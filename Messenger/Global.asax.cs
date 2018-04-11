@@ -15,16 +15,17 @@ namespace Messenger
     {
         protected void Application_Start()
         {
+            Database.SetInitializer<MessengerContext>(new DbInitializer());
+            //using (MessengerContext db = new MessengerContext())
+            //{
+            //    db.Database.CreateIfNotExists();
+            //}
+
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-
-            using(MessengerContext db = new MessengerContext())
-            {
-                db.Database.CreateIfNotExists();
-            }
         }
     }
 }

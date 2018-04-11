@@ -9,6 +9,6 @@ namespace Messenger.DAL.Interfaces
 {
     interface IChatRepository : IRepository<Chat>
     {
-        IQueryable<Chat> GetChatsByUserId(int Id);
+        IEnumerable<Chat> GetChatsByUserId(int Id);
     }
 }

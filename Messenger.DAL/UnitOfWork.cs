@@ -8,7 +8,7 @@ using Messenger.DAL.Repository;
 
 namespace Messenger.DAL
 {
-    class UnitOfWork
+    public class UnitOfWork : IDisposable
     {
         private MessengerContext db;
         private ChatRepository chatRepository;
@@ -67,7 +67,27 @@ namespace Messenger.DAL
 
         public void Save()
         {
-            db.SaveChanges();
+            db.SaveChanges();            
+        }
+
+        private bool disposed = false;
+
+        public virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    db.Dispose();
+                }
+                disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

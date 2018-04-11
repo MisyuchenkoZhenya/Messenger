@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Messenger.DAL.Interfaces;
 using Messenger.DAL.Context;
 using Messenger.DAL.Models;
+using System.Data.Entity;
 
 namespace Messenger.DAL.Repository
 {
-    class UserRepository : IUserRepository
+    public class UserRepository : IUserRepository
     {
         private MessengerContext db;
 
@@ -28,7 +29,7 @@ namespace Messenger.DAL.Repository
             throw new NotImplementedException();
         }
 
-        public IQueryable<User> GetAll()
+        public IEnumerable<User> GetAll()
         {
             throw new NotImplementedException();
         }
@@ -38,12 +39,12 @@ namespace Messenger.DAL.Repository
             throw new NotImplementedException();
         }
 
-        public IQueryable<User> GetUsersByChatId(int Id)
+        public IEnumerable<User> GetUsersByChatId(int Id)
         {
             throw new NotImplementedException();
         }
 
-        public IQueryable<User> GetUsersByContactId(int Id)
+        public IEnumerable<User> GetUsersByContactId(int Id)
         {
             throw new NotImplementedException();
         }

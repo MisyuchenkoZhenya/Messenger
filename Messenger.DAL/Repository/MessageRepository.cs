@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 using Messenger.DAL.Interfaces;
 using Messenger.DAL.Context;
 using Messenger.DAL.Models;
+using System.Data.Entity;
 
 namespace Messenger.DAL.Repository
 {
-    class MessageRepository : IMessageRepository
+    public class MessageRepository : IMessageRepository
     {
         private MessengerContext db;
 
@@ -18,34 +19,48 @@ namespace Messenger.DAL.Repository
             db = context;
         }
 
-        public void Create(Message item)
+        public void Create(Message message)
         {
-            throw new NotImplementedException();
+            db.Messages.Add(message);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            Message message = db.Messages.Find(id);
+            if (message != null)
+                db.Messages.Remove(message);
         }
 
-        public IQueryable<Message> GetAll()
+        public IEnumerable<Message> GetAll()
         {
-            throw new NotImplementedException();
+            return db.Messages
+                    .Include(m => m.Author)
+                    .Include(m => m.Chat)
+                    .Include(m => m.Type)
+                    .ToList();
         }
 
         public Message GetById(int id)
         {
-            throw new NotImplementedException();
+            return db.Messages.Find(id);
+                    //.Include(m => m.Author)
+                    //.Include(m => m.Chat)
+                    //.Include(m => m.Type)
+                    //.FirstOrDefault(m => m.Id == id);
         }
 
-        public IQueryable<Message> GetMessagesByChatId(int Id)
+        public void Update(Message message)
         {
-            throw new NotImplementedException();
+            db.Entry(message).State = EntityState.Modified;
         }
 
-        public void Update(Message item)
+        public IEnumerable<Message> GetMessagesByChatId(int id)
         {
-            throw new NotImplementedException();
+            return db.Messages
+                    .Include(m => m.Author)
+                    .Include(m => m.Chat)
+                    .Include(m => m.Type)
+                    .Where(m => m.Chat.Id == id);
         }
     }
 }
