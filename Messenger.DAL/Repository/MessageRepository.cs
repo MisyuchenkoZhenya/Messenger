@@ -7,10 +7,11 @@ using Messenger.DAL.Interfaces;
 using Messenger.DAL.Context;
 using Messenger.DAL.Models;
 using System.Data.Entity;
+using System.Linq.Expressions;
 
 namespace Messenger.DAL.Repository
 {
-    public class MessageRepository : IMessageRepository
+    public class MessageRepository : IRepository<Message>
     {
         private MessengerContext db;
 
@@ -33,20 +34,12 @@ namespace Messenger.DAL.Repository
 
         public IEnumerable<Message> GetAll()
         {
-            return db.Messages
-                    .Include(m => m.Author)
-                    .Include(m => m.Chat)
-                    .Include(m => m.Type)
-                    .ToList();
+            return db.Messages.ToList();
         }
 
         public Message GetById(int id)
         {
             return db.Messages.Find(id);
-                    //.Include(m => m.Author)
-                    //.Include(m => m.Chat)
-                    //.Include(m => m.Type)
-                    //.FirstOrDefault(m => m.Id == id);
         }
 
         public void Update(Message message)
@@ -54,13 +47,21 @@ namespace Messenger.DAL.Repository
             db.Entry(message).State = EntityState.Modified;
         }
 
-        public IEnumerable<Message> GetMessagesByChatId(int id)
+        public IEnumerable<Message> GetWithInclude(params Expression<Func<Message, object>>[] includeProperties)
         {
-            return db.Messages
-                    .Include(m => m.Author)
-                    .Include(m => m.Chat)
-                    .Include(m => m.Type)
-                    .Where(m => m.Chat.Id == id);
+            return Include(includeProperties).ToList();
+        }
+
+        public IEnumerable<Message> GetWithInclude(Func<Message, bool> predicate, params Expression<Func<Message, object>>[] includeProperties)
+        {
+            var query = Include(includeProperties);
+            return query.Where(predicate).ToList();
+        }
+
+        public IQueryable<Message> Include(params Expression<Func<Message, object>>[] includeProperties)
+        {
+            IQueryable<Message> query = db.Messages;
+            return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
     }
 }

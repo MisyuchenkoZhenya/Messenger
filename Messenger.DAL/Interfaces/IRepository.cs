@@ -1,17 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Messenger.DAL.Interfaces
 {
-    interface IRepository<T> where T : class
+    interface IRepository<TEntity> where TEntity : class
     {
-        IEnumerable<T> GetAll();
-        T GetById(int id);
-        void Create(T item);
-        void Update(T item);
+        IEnumerable<TEntity> GetAll();
+        TEntity GetById(int id);
+        void Create(TEntity item);
+        void Update(TEntity item);
         void Delete(int id);
+        IEnumerable<TEntity> GetWithInclude(params Expression<Func<TEntity, object>>[] includeProperties);
+        IEnumerable<TEntity> GetWithInclude(Func<TEntity, bool> predicate, params Expression<Func<TEntity, object>>[] includeProperties);
+        IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties);
     }
 } 

@@ -7,10 +7,11 @@ using Messenger.DAL.Interfaces;
 using Messenger.DAL.Context;
 using Messenger.DAL.Models;
 using System.Data.Entity;
+using System.Linq.Expressions;
 
 namespace Messenger.DAL.Repository
 {
-    public class ChatRepository : IChatRepository
+    public class ChatRepository : IRepository<Chat>
     {
         private MessengerContext db;
 
@@ -33,19 +34,12 @@ namespace Messenger.DAL.Repository
 
         public IEnumerable<Chat> GetAll()
         {
-            return db.Chats
-                    .Include(c => c.Admin)
-                    .Include(c => c.Participants)
-                    .Include(c => c.Messages);
+            return db.Chats.ToList();
         }
 
         public Chat GetById(int id)
         {
-            return db.Chats
-                    .Include(c => c.Admin)
-                    .Include(c => c.Participants)
-                    .Include(c => c.Messages)
-                    .FirstOrDefault(c => c.Id == id);
+            return db.Chats.Find(id);
         }
 
         public void Update(Chat chat)
@@ -53,9 +47,21 @@ namespace Messenger.DAL.Repository
             db.Entry(chat).State = EntityState.Modified;
         }
 
-        public IEnumerable<Chat> GetChatsByUserId(int Id)
+        public IEnumerable<Chat> GetWithInclude(params Expression<Func<Chat, object>>[] includeProperties)
         {
-            throw new NotImplementedException();
+            return Include(includeProperties).ToList();
+        }
+
+        public IEnumerable<Chat> GetWithInclude(Func<Chat, bool> predicate, params Expression<Func<Chat, object>>[] includeProperties)
+        {
+            var query = Include(includeProperties);
+            return query.Where(predicate).ToList();
+        }
+
+        public IQueryable<Chat> Include(params Expression<Func<Chat, object>>[] includeProperties)
+        {
+            IQueryable<Chat> query = db.Chats;
+            return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
     }
 }

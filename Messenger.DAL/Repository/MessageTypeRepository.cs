@@ -7,10 +7,11 @@ using Messenger.DAL.Interfaces;
 using Messenger.DAL.Context;
 using Messenger.DAL.Models;
 using System.Data.Entity;
+using System.Linq.Expressions;
 
 namespace Messenger.DAL.Repository
 {
-    public class MessageTypeRepository : IMessageTypeRepository
+    public class MessageTypeRepository : IRepository<MessageType>
     {
         private MessengerContext db;
 
@@ -40,10 +41,27 @@ namespace Messenger.DAL.Repository
         {
             return db.MessageTypes.Find(id);
         }
-
+        
         public void Update(MessageType messageType)
         {
             db.Entry(messageType).State = EntityState.Modified;
+        }
+
+        public IEnumerable<MessageType> GetWithInclude(params Expression<Func<MessageType, object>>[] includeProperties)
+        {
+            return Include(includeProperties).ToList();
+        }
+
+        public IEnumerable<MessageType> GetWithInclude(Func<MessageType, bool> predicate, params Expression<Func<MessageType, object>>[] includeProperties)
+        {
+            var query = Include(includeProperties);
+            return query.Where(predicate).ToList();
+        }
+
+        public IQueryable<MessageType> Include(params Expression<Func<MessageType, object>>[] includeProperties)
+        {
+            IQueryable<MessageType> query = db.MessageTypes;
+            return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
     }
 }

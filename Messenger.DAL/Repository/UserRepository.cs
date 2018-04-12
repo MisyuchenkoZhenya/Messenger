@@ -7,10 +7,11 @@ using Messenger.DAL.Interfaces;
 using Messenger.DAL.Context;
 using Messenger.DAL.Models;
 using System.Data.Entity;
+using System.Linq.Expressions;
 
 namespace Messenger.DAL.Repository
 {
-    public class UserRepository : IUserRepository
+    public class UserRepository : IRepository<User>
     {
         private MessengerContext db;
 
@@ -19,39 +20,48 @@ namespace Messenger.DAL.Repository
             db = context;
         }
 
-        public void Create(User item)
+        public void Create(User user)
         {
-            throw new NotImplementedException();
+            db.Users.Add(user);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            User user = db.Users.Find(id);
+            if (user != null)
+                db.Users.Remove(user);
         }
 
         public IEnumerable<User> GetAll()
         {
-            throw new NotImplementedException();
+            return db.Users.ToList();
         }
 
         public User GetById(int id)
         {
-            throw new NotImplementedException();
+            return db.Users.Find(id);
         }
 
-        public IEnumerable<User> GetUsersByChatId(int Id)
+        public void Update(User user)
         {
-            throw new NotImplementedException();
+            db.Entry(user).State = EntityState.Modified;
         }
 
-        public IEnumerable<User> GetUsersByContactId(int Id)
+        public IEnumerable<User> GetWithInclude(params Expression<Func<User, object>>[] includeProperties)
         {
-            throw new NotImplementedException();
+            return Include(includeProperties).ToList();
         }
 
-        public void Update(User item)
+        public IEnumerable<User> GetWithInclude(Func<User, bool> predicate, params Expression<Func<User, object>>[] includeProperties)
         {
-            throw new NotImplementedException();
+            var query = Include(includeProperties);
+            return query.Where(predicate).ToList();
+        }
+
+        public IQueryable<User> Include(params Expression<Func<User, object>>[] includeProperties)
+        {
+            IQueryable<User> query = db.Users;
+            return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
     }
 }
