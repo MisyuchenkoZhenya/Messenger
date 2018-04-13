@@ -14,12 +14,6 @@ namespace Messenger.Controllers
         {
             ViewBag.Title = "Home Page";
 
-            using (MessengerContext db = new MessengerContext())
-            {
-                db.Database.Initialize(true);
-                db.SaveChanges();
-            }
-
             return View();
         }
     }

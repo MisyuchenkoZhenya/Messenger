@@ -11,6 +11,11 @@ namespace Messenger.DAL.Context
 {
     public class MessengerContext : DbContext
     {
+        static MessengerContext()
+        {
+            Database.SetInitializer<MessengerContext>(new DbInitializer());
+        }
+
         public MessengerContext()
             : base("DbConnection")
         { }

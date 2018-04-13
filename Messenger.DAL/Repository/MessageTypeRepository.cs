@@ -58,6 +58,12 @@ namespace Messenger.DAL.Repository
             return query.Where(predicate).ToList();
         }
 
+        public MessageType GetWithInclude(int id, params Expression<Func<MessageType, object>>[] includeProperties)
+        {
+            var query = Include(includeProperties);
+            return query.FirstOrDefault(q => q.Id == id);
+        }
+
         public IQueryable<MessageType> Include(params Expression<Func<MessageType, object>>[] includeProperties)
         {
             IQueryable<MessageType> query = db.MessageTypes;
