@@ -5,11 +5,15 @@ using System.Text;
 using System.Threading.Tasks;
 using Messenger.DAL.Context;
 using Messenger.DAL.Repository;
+using Messenger.DAL.Interfaces;
+using Messenger.DAL.Models;
 
 namespace Messenger.DAL
 {
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork
     {
+        private bool disposed = false;
+
         private MessengerContext db;
         private ChatRepository chatRepository;
         private MessageRepository messageRepository;
@@ -21,7 +25,7 @@ namespace Messenger.DAL
             db = new MessengerContext();
         }
 
-        public ChatRepository Chats
+        public IRepository<Chat> Chats
         {
             get
             {
@@ -32,7 +36,7 @@ namespace Messenger.DAL
             }
         }
 
-        public MessageRepository Messages
+        public IRepository<Message> Messages
         {
             get
             {
@@ -43,7 +47,7 @@ namespace Messenger.DAL
             }
         }
 
-        public MessageTypeRepository MessageTypes
+        public IRepository<MessageType> MessageTypes
         {
             get
             {
@@ -54,7 +58,7 @@ namespace Messenger.DAL
             }
         }
 
-        public UserRepository Users
+        public IRepository<User> Users
         {
             get
             {
@@ -69,8 +73,6 @@ namespace Messenger.DAL
         {
             db.SaveChanges();            
         }
-
-        private bool disposed = false;
 
         public virtual void Dispose(bool disposing)
         {

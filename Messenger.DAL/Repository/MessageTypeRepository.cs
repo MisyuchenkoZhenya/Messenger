@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 
 namespace Messenger.DAL.Repository
 {
-    public class MessageTypeRepository : IRepository<MessageType>
+    class MessageTypeRepository : IRepository<MessageType>
     {
         private MessengerContext db;
 
