@@ -1,7 +1,5 @@
-﻿using Messenger.DAL.Context;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -21,11 +19,12 @@ namespace Messenger
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            using (MessengerContext db = new MessengerContext())
-            {
-                db.Database.Initialize(false);
-                db.SaveChanges();
-            }
+            //TODO: delete this in the future
+            //using (MessengerContext db = new MessengerContext())
+            //{
+            //    db.Database.Initialize(false);
+            //    db.SaveChanges();
+            //}
         }
     }
 }

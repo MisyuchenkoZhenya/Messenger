@@ -4,11 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Messenger.DAL.Context;
-using Messenger.DAL.Repository;
 using Messenger.DAL.Interfaces;
 using Messenger.DAL.Models;
 
-namespace Messenger.DAL
+namespace Messenger.DAL.Repository
 {
     public class UnitOfWork : IUnitOfWork
     {
@@ -74,7 +73,7 @@ namespace Messenger.DAL
             db.SaveChanges();            
         }
 
-        public virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!disposed)
             {
