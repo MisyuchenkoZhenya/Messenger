@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Messenger.BLL.DTO;
 using Messenger.BLL.Interfaces;
 using Messenger.DAL.Interfaces;
+using Messenger.DAL.Models;
+using AutoMapper;
 
 namespace Messenger.BLL.Services
 {
@@ -20,25 +22,34 @@ namespace Messenger.BLL.Services
 
         public void AddChatUser(UserToChatDTO utc)
         {
-            throw new NotImplementedException();
+            var user = Database.Users.GetById(utc.UserId);
+            Database.Chats.GetById(utc.ChatId).Participants.Add(user);
+            Database.Save();
         }
 
-        public void CreateChat(ChatDTO chat)
+        public void CreateChat(ChatDTO chatDto)
         {
-            throw new NotImplementedException();
+            User admin = Database.Users.GetById(chatDto.AdminId);
+            Mapper.Initialize(cfg => cfg.CreateMap<ChatDTO, Chat>()
+                                        .ForMember("Admin", opt => opt.MapFrom(c => admin)));
+            User user = Mapper.Map<ChatDTO, User>(chatDto);
+            Database.Save();
         }
 
         public void DeleteChatUser(UserToChatDTO utc)
         {
-            throw new NotImplementedException();
+            User user = Database.Users.GetById(utc.UserId);
+            Chat chat = Database.Chats.GetWithInclude(utc.ChatId, c => c.Participants);
+            chat.Participants.Remove(user);
+            Database.Save();
         }
 
-        public void EditChatPhoto(ChatDTO chat)
+        public void EditChatPhoto(ChatDTO chatDto)
         {
             throw new NotImplementedException();
         }
 
-        public void EditChatTitle(ChatDTO chat)
+        public void EditChatTitle(ChatDTO chatDto)
         {
             throw new NotImplementedException();
         }

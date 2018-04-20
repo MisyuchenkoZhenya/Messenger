@@ -8,7 +8,7 @@ using Messenger.DAL.Models;
 
 namespace Messenger.DAL.Context
 {
-    public class DbInitializer : DropCreateDatabaseAlways<MessengerContext>
+    public class DbInitializer : CreateDatabaseIfNotExists<MessengerContext>
     {
         protected override void Seed(MessengerContext db)
         {

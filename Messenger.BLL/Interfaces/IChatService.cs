@@ -11,10 +11,10 @@ namespace Messenger.BLL.Interfaces
     {
         IEnumerable<ChatDTO> GetChats(int userId);
         ChatDTO GetFullChat(int chatId);
-        void EditChatTitle(ChatDTO chat);
-        void EditChatPhoto(ChatDTO chat);
+        void EditChatTitle(ChatDTO chatDto);
+        void EditChatPhoto(ChatDTO chatDto);
         void AddChatUser(UserToChatDTO utc);
         void DeleteChatUser(UserToChatDTO utc);
-        void CreateChat(ChatDTO chat);
+        void CreateChat(ChatDTO chatDto);
     }
 }

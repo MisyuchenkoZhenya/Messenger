@@ -22,7 +22,9 @@ namespace Messenger.DAL.Repository
 
         public void Create(User user)
         {
+            //db.Users.Attach(user);
             db.Users.Add(user);
+            //db.SaveChanges();
         }
 
         public void Delete(int id)

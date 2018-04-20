@@ -20,7 +20,7 @@ namespace Messenger
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             //TODO: delete this in the future
-            using (MessengerContext db = new MessengerContext())
+            using (DAL.Context.MessengerContext db = new DAL.Context.MessengerContext())
             {
                 db.Database.Initialize(false);
                 db.SaveChanges();

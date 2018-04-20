@@ -20,23 +20,21 @@ namespace Messenger.BLL.Services
             Database = unitOfWork;
         }
 
-        public void AddContact(UserToUserDTO user)
+        public void AddContact(UserToUserDTO userDto)
         {
-            User firstUser = Database.Users.GetById(user.FirstUserId);
-            User secondUser = Database.Users.GetById(user.SecondUserId);
+            User firstUser = Database.Users.GetById(userDto.FirstUserId);
+            User secondUser = Database.Users.GetById(userDto.SecondUserId);
             firstUser.Contacts.Add(secondUser);
             secondUser.Contacts.Add(firstUser);
-
             Database.Save();
         }
 
-        public void DeleteContact(UserToUserDTO user)
+        public void DeleteContact(UserToUserDTO userDto)
         {
-            User firstUser = Database.Users.GetWithInclude(user.FirstUserId, u => u.Contacts);
-            User secondUser = Database.Users.GetWithInclude(user.SecondUserId, u => u.Contacts);
+            User firstUser = Database.Users.GetWithInclude(userDto.FirstUserId, u => u.Contacts);
+            User secondUser = Database.Users.GetWithInclude(userDto.SecondUserId, u => u.Contacts);
             firstUser.Contacts.Remove(secondUser);
             secondUser.Contacts.Remove(firstUser);
-
             Database.Save();
         }
 
@@ -51,7 +49,11 @@ namespace Messenger.BLL.Services
 
         public UserDTO GetFullUser(int id)
         {
-            throw new NotImplementedException();
+            var user = Database.Users.GetById(id);
+            Mapper.Initialize(cfg => cfg.CreateMap<User, UserDTO>());
+            var userDTO = Mapper.Map<User, UserDTO>(user);
+
+            return userDTO;
         }
 
         public IEnumerable<UserDTO> GetUsers()
@@ -59,19 +61,25 @@ namespace Messenger.BLL.Services
             throw new NotImplementedException();
         }
 
-        public void LoginUser(UserAccountDTO user)
+        public void LoginUser(UserAccountDTO userDto)
         {
             throw new NotImplementedException();
         }
 
-        public void RegisterUser(UserAccountDTO user)
-        {
-            throw new NotImplementedException();
+        public void RegisterUser(UserAccountDTO userDto)
+        {            
+            Mapper.Initialize(cfg => cfg.CreateMap<UserAccountDTO, User>());
+            var user = Mapper.Map<UserAccountDTO, User>(userDto);
+            Database.Users.Create(user);
+            Database.Save();
         }
 
-        public void UpdateUser(UserDTO user)
+        public void UpdateUser(UserDTO userDto)
         {
-            throw new NotImplementedException();
+            Mapper.Initialize(cfg => cfg.CreateMap<UserDTO, User>());
+            var user = Mapper.Map<UserDTO, User>(userDto);
+            Database.Users.Update(user);
+            Database.Save();
         }
 
         public void Dispose()

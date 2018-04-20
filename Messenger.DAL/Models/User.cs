@@ -33,5 +33,7 @@ namespace Messenger.DAL.Models
         public ICollection<Message> Messages { get; set; }
 
         public ICollection<User> Contacts { get; set; }
+
+        public string GetFullName() => $"{FirstName} {LastName}";
     }
 }

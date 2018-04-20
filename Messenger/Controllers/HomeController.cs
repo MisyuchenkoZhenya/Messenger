@@ -13,14 +13,10 @@ namespace Messenger.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-            
-            using(var service = new UserService(new UnitOfWork()))
+
+            using (var service = new UserService(new UnitOfWork()))
             {
-                var result = service.GetContacts(1);
-                foreach(var i in result)
-                {
-                    System.Diagnostics.Debug.WriteLine(i.PhoneNumber);
-                }
+                service.RegisterUser(new BLL.DTO.UserAccountDTO() { Password = "adasdsd", PhoneNumber = "10101010" });
             }
 
             return View();
