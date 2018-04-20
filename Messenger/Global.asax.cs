@@ -20,11 +20,11 @@ namespace Messenger
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             //TODO: delete this in the future
-            //using (MessengerContext db = new MessengerContext())
-            //{
-            //    db.Database.Initialize(false);
-            //    db.SaveChanges();
-            //}
+            using (MessengerContext db = new MessengerContext())
+            {
+                db.Database.Initialize(false);
+                db.SaveChanges();
+            }
         }
     }
 }

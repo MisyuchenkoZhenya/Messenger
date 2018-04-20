@@ -9,7 +9,7 @@ using Messenger.DAL.Interfaces;
 
 namespace Messenger.BLL.Services
 {
-    class MessageService : IMessageService
+    public class MessageService : IMessageService
     {
         public IUnitOfWork Database { get; set; }
 

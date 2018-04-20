@@ -7,10 +7,11 @@ using Messenger.BLL.DTO;
 using Messenger.BLL.Interfaces;
 using Messenger.DAL.Interfaces;
 using Messenger.DAL.Models;
+using AutoMapper;
 
 namespace Messenger.BLL.Services
 {
-    class UserService : IUserService
+    public class UserService : IUserService
     {
         public IUnitOfWork Database { get; set; }
 
@@ -41,8 +42,11 @@ namespace Messenger.BLL.Services
 
         public IEnumerable<UserDTO> GetContacts(int id)
         {
-            //IEnumerable<User> users = Database.Users.GetWithInclude(id, u => u.Contacts).Contacts;
-            throw new NotImplementedException();
+            var users = Database.Users.GetWithInclude(id, u => u.Contacts).Contacts;
+            Mapper.Initialize(cfg => cfg.CreateMap<User, UserDTO>());
+            var usersDTO = Mapper.Map<IEnumerable<User>, List<UserDTO>>(users);
+
+            return usersDTO;
         }
 
         public UserDTO GetFullUser(int id)

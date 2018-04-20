@@ -46,6 +46,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.8.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -259,6 +265,10 @@
     <ProjectReference Include="..\Messenger.BLL\Messenger.BLL.csproj">
       <Project>{785292ee-c4bb-40fb-81cf-8d4371958b16}</Project>
       <Name>Messenger.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Messenger.DAL\Messenger.DAL.csproj">
+      <Project>{391e8f59-7857-4233-bf78-f86c868d0f25}</Project>
+      <Name>Messenger.DAL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

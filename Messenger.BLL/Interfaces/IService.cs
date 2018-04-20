@@ -7,10 +7,8 @@ using Messenger.DAL.Interfaces;
 
 namespace Messenger.BLL.Interfaces
 {
-    interface IService
+    interface IService : IDisposable
     {
         IUnitOfWork Database { get; set; }
-
-        void Dispose();
     }
 }

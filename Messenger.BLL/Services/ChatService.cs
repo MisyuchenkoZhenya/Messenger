@@ -9,7 +9,7 @@ using Messenger.DAL.Interfaces;
 
 namespace Messenger.BLL.Services
 {
-    class ChatService : IChatService
+    public class ChatService : IChatService
     {
         public IUnitOfWork Database { get; set; }
 

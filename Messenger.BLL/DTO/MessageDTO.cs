@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Messenger.BLL.DTO
 {
-    class MessageDTO
+    public class MessageDTO
     {
     }
 }
