@@ -13,7 +13,10 @@ namespace Messenger.BLL.Services
 {
     public class MessageService : IMessageService
     {
+        public bool disposed = false;
+
         public IUnitOfWork Database { get; set; }
+
 
         public MessageService(IUnitOfWork unitOfWork)
         {
@@ -49,7 +52,25 @@ namespace Messenger.BLL.Services
 
         public void Dispose()
         {
-            Database.Dispose();
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    Database.Dispose();
+                }
+                disposed = true;
+            }
+        }
+
+        ~MessageService()
+        {
+            Dispose(false);
         }
     }
 }
