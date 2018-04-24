@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Messenger.BLL.MapperConfig;
 
 namespace Messenger
 {
@@ -18,6 +19,8 @@ namespace Messenger
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+
+            AutoMapperServiceConfiguration.Configure();
 
             //TODO: delete this in the future
             using (DAL.Context.MessengerContext db = new DAL.Context.MessengerContext())

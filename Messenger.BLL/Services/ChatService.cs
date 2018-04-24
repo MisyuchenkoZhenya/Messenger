@@ -33,9 +33,8 @@ namespace Messenger.BLL.Services
         public void CreateChat(ChatDTO chatDto)
         {
             User admin = Database.Users.GetById(chatDto.AdminId);
-            Mapper.Initialize(cfg => cfg.CreateMap<ChatDTO, Chat>()
-                                        .ForMember("Admin", opt => opt.MapFrom(c => admin)));
-            User user = Mapper.Map<ChatDTO, User>(chatDto);
+            Chat chat = Mapper.Map<ChatDTO, Chat>(chatDto);
+            chat.Admin = admin;
             Database.Save();
         }
 

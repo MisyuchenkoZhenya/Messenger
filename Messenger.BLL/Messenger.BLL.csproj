@@ -61,6 +61,7 @@
     <Compile Include="Interfaces\IMessageService.cs" />
     <Compile Include="Interfaces\IService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
+    <Compile Include="MapperConfig\AutoMapperServiceConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ChatService.cs" />
     <Compile Include="Services\MessageService.cs" />

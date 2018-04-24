@@ -44,7 +44,6 @@ namespace Messenger.BLL.Services
         public IEnumerable<UserDTO> GetContacts(int id)
         {
             var users = Database.Users.GetWithInclude(id, u => u.Contacts).Contacts;
-            Mapper.Initialize(cfg => cfg.CreateMap<User, UserDTO>());
             var usersDTO = Mapper.Map<IEnumerable<User>, List<UserDTO>>(users);
 
             return usersDTO;
@@ -53,7 +52,6 @@ namespace Messenger.BLL.Services
         public UserDTO GetFullUser(int id)
         {
             var user = Database.Users.GetById(id);
-            Mapper.Initialize(cfg => cfg.CreateMap<User, UserDTO>());
             var userDTO = Mapper.Map<User, UserDTO>(user);
 
             return userDTO;
@@ -71,7 +69,6 @@ namespace Messenger.BLL.Services
 
         public void RegisterUser(UserAccountDTO userDto)
         {            
-            Mapper.Initialize(cfg => cfg.CreateMap<UserAccountDTO, User>());
             var user = Mapper.Map<UserAccountDTO, User>(userDto);
             Database.Users.Create(user);
             Database.Save();
@@ -79,7 +76,6 @@ namespace Messenger.BLL.Services
 
         public void UpdateUser(UserDTO userDto)
         {
-            Mapper.Initialize(cfg => cfg.CreateMap<UserDTO, User>());
             var user = Mapper.Map<UserDTO, User>(userDto);
             Database.Users.Update(user);
             Database.Save();

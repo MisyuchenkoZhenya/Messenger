@@ -31,11 +31,10 @@ namespace Messenger.BLL.Services
 
         public IEnumerable<MessageDTO> GetMessages(int chatId)
         {
-            var messages = Database.Chats.GetWithInclude(chatId, c => c.Messages).Messages;
-            Mapper.Initialize(cfg => cfg.CreateMap<Message, MessageDTO>()
-                                        .ForMember("Author", opt => opt.MapFrom(m => m.Author.GetFullName()))
-                                        .ForMember("Type", opt => opt.MapFrom(m => m.Type.Type)));
-            var messagesDto = Mapper.Map<ICollection<Message>, List<MessageDTO>>(messages);
+            var messages = Database.Chats.GetWithInclude(chatId, c => c.Messages, 
+                                                                 c => c.Messages.Select(m => m.Type),
+                                                                 c => c.Messages.Select(m => m.Author)).Messages;
+            var messagesDto = Mapper.Map<IEnumerable<Message>, List<MessageDTO>>(messages);
 
             return messagesDto;
         }
