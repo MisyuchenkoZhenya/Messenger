@@ -24,6 +24,10 @@ namespace Messenger.BLL.MapperConfig
         private static void ConfigureChatMapping(IMapperConfigurationExpression cfg)
         {
             cfg.CreateMap<ChatDTO, Chat>();
+            cfg.CreateMap<Chat, ChatDTO>()
+                    .ForMember("AdminId", opt => opt.MapFrom(c => c.Admin.Id));
+            cfg.CreateMap<Chat, FullChatDTO>()
+                    .ForMember("AdminId", opt => opt.MapFrom(c => c.Admin.Id));
         }
 
         private static void ConfigureMessageMapping(IMapperConfigurationExpression cfg)

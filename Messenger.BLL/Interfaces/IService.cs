@@ -7,7 +7,7 @@ using Messenger.DAL.Interfaces;
 
 namespace Messenger.BLL.Interfaces
 {
-    interface IService : IDisposable
+    public interface IService : IDisposable
     {
         IUnitOfWork Database { get; set; }
     }

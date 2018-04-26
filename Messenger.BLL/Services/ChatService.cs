@@ -41,29 +41,38 @@ namespace Messenger.BLL.Services
         public void DeleteChatUser(UserToChatDTO utc)
         {
             User user = Database.Users.GetById(utc.UserId);
-            Chat chat = Database.Chats.GetWithInclude(utc.ChatId, c => c.Participants);
+            Chat chat = Database.Chats.GetWithInclude(utc.ChatId, 
+                                                      c => c.Participants);
             chat.Participants.Remove(user);
             Database.Save();
         }
 
-        public void EditChatPhoto(ChatDTO chatDto)
+        public void EditChat(ChatDTO chatDto)
         {
-            throw new NotImplementedException();
-        }
-
-        public void EditChatTitle(ChatDTO chatDto)
-        {
-            throw new NotImplementedException();
+            Chat chat = Database.Chats.GetById(chatDto.Id);
+            chat = Mapper.Map<ChatDTO, Chat>(chatDto);
+            Database.Save();
         }
 
         public IEnumerable<ChatDTO> GetChats(int userId)
         {
-            throw new NotImplementedException();
+            var chats = Database.Users.GetWithInclude(userId, 
+                                                      u => u.Chats,
+                                                      u => u.Chats.Select(c => c.Admin)).Chats;
+            var chatsDto = Mapper.Map<IEnumerable<Chat>, List<ChatDTO>>(chats);
+
+            return chatsDto;
         }
 
-        public ChatDTO GetFullChat(int chatId)
+        public FullChatDTO GetFullChat(int chatId)
         {
-            throw new NotImplementedException();
+            Chat chat = Database.Chats.GetWithInclude(chatId, 
+                                                      c => c.Admin,
+                                                      c => c.Messages,
+                                                      c => c.Participants);
+            FullChatDTO chatDTO = Mapper.Map<Chat, FullChatDTO>(chat);
+
+            return chatDTO;
         }
 
         public void Dispose()

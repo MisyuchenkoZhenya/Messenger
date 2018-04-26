@@ -7,12 +7,11 @@ using Messenger.BLL.DTO;
 
 namespace Messenger.BLL.Interfaces
 {
-    interface IChatService : IService
+    public interface IChatService : IService
     {
         IEnumerable<ChatDTO> GetChats(int userId);
-        ChatDTO GetFullChat(int chatId);
-        void EditChatTitle(ChatDTO chatDto);
-        void EditChatPhoto(ChatDTO chatDto);
+        FullChatDTO GetFullChat(int chatId);
+        void EditChat(ChatDTO chatDto);
         void AddChatUser(UserToChatDTO utc);
         void DeleteChatUser(UserToChatDTO utc);
         void CreateChat(ChatDTO chatDto);

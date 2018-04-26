@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Messenger.BLL.Services;
-using Messenger.BLL.DTO;
-using Messenger.DAL.Repository;
 
 namespace Messenger.Controllers
 {
@@ -14,14 +11,14 @@ namespace Messenger.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-            IEnumerable<MessageDTO> messages;
+            //IEnumerable<UserDTO> users;
             
-            using (var service = new MessageService(new UnitOfWork()))
-            {
-                messages = service.GetMessages(1);
-            }
+            //using (var service = new ChatService(new UnitOfWork()))
+            //{
+            //    users = service.GetFullChat(1).Participants;
+            //}
 
-            return View(messages);
+            return View();
         }
     }
 }

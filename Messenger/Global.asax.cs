@@ -23,11 +23,11 @@ namespace Messenger
             AutoMapperServiceConfiguration.Configure();
 
             //TODO: delete this in the future
-            using (DAL.Context.MessengerContext db = new DAL.Context.MessengerContext())
-            {
-                db.Database.Initialize(false);
-                db.SaveChanges();
-            }
+            //using (DAL.Context.MessengerContext db = new DAL.Context.MessengerContext())
+            //{
+            //    db.Database.Initialize(false);
+            //    db.SaveChanges();
+            //}
         }
     }
 }

@@ -12,7 +12,7 @@ namespace Messenger.DAL.Context
     {
         static MessengerContext()
         {
-            Database.SetInitializer<MessengerContext>(new DbInitializer());
+            Database.SetInitializer(new DbInitializer());
         }
 
         public MessengerContext()

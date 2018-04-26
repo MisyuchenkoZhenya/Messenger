@@ -7,7 +7,7 @@ using Messenger.BLL.DTO;
 
 namespace Messenger.BLL.Interfaces
 {
-    interface IMessageService : IService
+    public interface IMessageService : IService
     {
         void SendMessage(MessageDTO message);
         void SendMedia(MessageDTO message);

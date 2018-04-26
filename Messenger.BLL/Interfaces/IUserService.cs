@@ -7,7 +7,7 @@ using Messenger.BLL.DTO;
 
 namespace Messenger.BLL.Interfaces
 {
-    interface IUserService : IService
+    public interface IUserService : IService
     {
         void RegisterUser(UserAccountDTO userDto);
         void LoginUser(UserAccountDTO userDto);

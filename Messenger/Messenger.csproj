@@ -266,9 +266,9 @@
       <Project>{785292ee-c4bb-40fb-81cf-8d4371958b16}</Project>
       <Name>Messenger.BLL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Messenger.DAL\Messenger.DAL.csproj">
-      <Project>{391e8f59-7857-4233-bf78-f86c868d0f25}</Project>
-      <Name>Messenger.DAL</Name>
+    <ProjectReference Include="..\ServiceUOW\ServiceUOW.csproj">
+      <Project>{83d9984f-d9e8-49b7-8cd1-0ba92a379aec}</Project>
+      <Name>ServiceUOW</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
