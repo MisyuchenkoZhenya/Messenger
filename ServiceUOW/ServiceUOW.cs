@@ -14,19 +14,19 @@ namespace ServiceUOW
     {
         private bool disposed = false;
 
-        private IUnitOfWork unitOfWork;
+        private UnitOfWork unitOfWork;
 
         private ChatService chatService;
         private MessageService messageService;
         private UserService userService;
 
 
-        public ServiceUOW(IUnitOfWork uow)
+        public ServiceUOW()
         {
-            unitOfWork = uow;
+            unitOfWork = new UnitOfWork();
         }
 
-        public IService ChatService {
+        public ChatService ChatService {
             get
             {
                 if (chatService == null)
@@ -36,7 +36,7 @@ namespace ServiceUOW
             }
         }
 
-        public IService MessageService
+        public MessageService MessageService
         {
             get
             {
@@ -47,7 +47,7 @@ namespace ServiceUOW
             }
         }
 
-        public IService UserService
+        public UserService UserService
         {
             get
             {
