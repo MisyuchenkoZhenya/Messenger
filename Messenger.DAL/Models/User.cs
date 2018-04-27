@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 
 namespace Messenger.DAL.Models
 {
-    public class User
+    public class User : IdentityUser
     {
         public User()
         {
@@ -17,7 +18,7 @@ namespace Messenger.DAL.Models
             Contacts = new HashSet<User>();
         }
 
-        public int Id { get; set; }
+        public new int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PhoneNumber { get; set; }

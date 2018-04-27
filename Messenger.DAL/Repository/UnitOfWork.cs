@@ -14,10 +14,10 @@ namespace Messenger.DAL.Repository
         private bool disposed = false;
 
         private MessengerContext db;
-        private ChatRepository chatRepository;
-        private MessageRepository messageRepository;
-        private MessageTypeRepository messageTypeRepository;
-        private UserRepository userRepository;
+        private ChatRepository _chatRepository;
+        private MessageRepository _messageRepository;
+        private MessageTypeRepository _messageTypeRepository;
+        private UserRepository _userRepository;
 
         public UnitOfWork()
         {
@@ -28,10 +28,10 @@ namespace Messenger.DAL.Repository
         {
             get
             {
-                if (chatRepository == null)
-                    chatRepository = new ChatRepository(db);
+                if (_chatRepository == null)
+                    _chatRepository = new ChatRepository(db);
 
-                return chatRepository;
+                return _chatRepository;
             }
         }
 
@@ -39,10 +39,10 @@ namespace Messenger.DAL.Repository
         {
             get
             {
-                if (messageRepository == null)
-                    messageRepository = new MessageRepository(db);
+                if (_messageRepository == null)
+                    _messageRepository = new MessageRepository(db);
 
-                return messageRepository;
+                return _messageRepository;
             }
         }
 
@@ -50,10 +50,10 @@ namespace Messenger.DAL.Repository
         {
             get
             {
-                if (messageTypeRepository == null)
-                    messageTypeRepository = new MessageTypeRepository(db);
+                if (_messageTypeRepository == null)
+                    _messageTypeRepository = new MessageTypeRepository(db);
 
-                return messageTypeRepository;
+                return _messageTypeRepository;
             }
         }
 
@@ -61,10 +61,10 @@ namespace Messenger.DAL.Repository
         {
             get
             {
-                if (userRepository == null)
-                    userRepository = new UserRepository(db);
+                if (_userRepository == null)
+                    _userRepository = new UserRepository(db);
 
-                return userRepository;
+                return _userRepository;
             }
         }
 

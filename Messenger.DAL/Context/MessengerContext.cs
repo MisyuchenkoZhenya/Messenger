@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.Entity;
 using Messenger.DAL.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Messenger.DAL.Context
 {
-    public class MessengerContext : DbContext
+    public class MessengerContext : IdentityDbContext<User>
     {
         static MessengerContext()
         {
@@ -22,7 +23,8 @@ namespace Messenger.DAL.Context
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<MessageType> MessageTypes { get; set; }
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
+        //public DbSet<Role> Roles { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

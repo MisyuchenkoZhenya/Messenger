@@ -57,12 +57,14 @@ namespace Messenger.DAL.Repository
         public IEnumerable<User> GetWithInclude(Func<User, bool> predicate, params Expression<Func<User, object>>[] includeProperties)
         {
             var query = Include(includeProperties);
+
             return query.Where(predicate).ToList();
         }
 
         public User GetWithInclude(int id, params Expression<Func<User, object>>[] includeProperties)
         {
             var query = Include(includeProperties);
+
             return query.FirstOrDefault(q => q.Id == id);
         }
 
