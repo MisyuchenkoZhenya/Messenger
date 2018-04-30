@@ -54,7 +54,7 @@ namespace Messenger.BLL.Services
             Database.Save();
         }
 
-        public IEnumerable<ChatDTO> GetChats(int userId)
+        public IEnumerable<ChatDTO> GetChats(string userId)
         {
             var chats = Database.Users.GetWithInclude(userId, 
                                                       u => u.Chats,

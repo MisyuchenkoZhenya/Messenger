@@ -12,7 +12,7 @@ namespace Messenger.DAL.Interfaces
         IRepository<Chat> Chats { get; }
         IRepository<Message> Messages { get; }
         IRepository<MessageType> MessageTypes { get; }
-        IRepository<User> Users { get; }
+        IRepository<User, string> Users { get; }
 
         void Save();
     }

@@ -35,7 +35,6 @@ namespace Messenger.BLL.Identity
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<AppUserManager, User>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
-                    //getUserIdCallback: (id) => (Int32.Parse(id.GetUserId())))
                 }
             });
 

@@ -57,7 +57,7 @@ namespace Messenger.DAL.Repository
             }
         }
 
-        public IRepository<User> Users
+        public IRepository<User, string> Users
         {
             get
             {

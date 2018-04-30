@@ -18,8 +18,7 @@ namespace Messenger.DAL.Models
             Messages = new HashSet<Message>();
             Contacts = new HashSet<User>();
         }
-
-        //public new int Id { get; set; }
+        
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Password { get; set; }
@@ -29,8 +28,8 @@ namespace Messenger.DAL.Models
         public ICollection<User> Contacts { get; set; }
 
         public string GetFullName() => $"{FirstName} {LastName}";
+        
 
-        //IDN
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);

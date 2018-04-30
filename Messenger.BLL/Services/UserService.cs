@@ -41,7 +41,7 @@ namespace Messenger.BLL.Services
             Database.Save();
         }
 
-        public IEnumerable<UserDTO> GetContacts(int id)
+        public IEnumerable<UserDTO> GetContacts(string id)
         {
             var users = Database.Users.GetWithInclude(id, u => u.Contacts).Contacts;
             var usersDTO = Mapper.Map<IEnumerable<User>, List<UserDTO>>(users);
@@ -49,7 +49,7 @@ namespace Messenger.BLL.Services
             return usersDTO;
         }
 
-        public UserDTO GetFullUser(int id)
+        public UserDTO GetFullUser(string id)
         {
             var user = Database.Users.GetById(id);
             var userDTO = Mapper.Map<User, UserDTO>(user);

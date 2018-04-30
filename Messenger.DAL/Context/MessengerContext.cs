@@ -23,10 +23,8 @@ namespace Messenger.DAL.Context
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<MessageType> MessageTypes { get; set; }
-        //public DbSet<User> Users { get; set; }
-        //public DbSet<Role> Roles { get; set; }
 
-        //IDN
+        
         public static MessengerContext Create()
         {
             return new MessengerContext();
@@ -35,8 +33,8 @@ namespace Messenger.DAL.Context
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
-            modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
+            modelBuilder.Entity<IdentityUserLogin>().HasKey(l => l.UserId);
+            modelBuilder.Entity<IdentityRole>().HasKey(r => r.Id);
             modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
 
             modelBuilder.Entity<Chat>()

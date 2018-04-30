@@ -9,7 +9,7 @@ namespace Messenger.BLL.DTO
     public class ChatDTO
     {
         public int Id { get; set; }
-        public int AdminId { get; set; }
+        public string AdminId { get; set; }
         public DateTime CreatedAt { get; set; }
         public string Title { get; set; }
         public string PhotoUrl { get; set; }

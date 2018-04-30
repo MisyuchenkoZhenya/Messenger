@@ -11,7 +11,7 @@ using System.Linq.Expressions;
 
 namespace Messenger.DAL.Repository
 {
-    class UserRepository : IRepository<User>
+    class UserRepository : IRepository<User, string>
     {
         private MessengerContext db;
 
@@ -22,12 +22,10 @@ namespace Messenger.DAL.Repository
 
         public void Create(User user)
         {
-            //db.Users.Attach(user);
             db.Users.Add(user);
-            //db.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(string id)
         {
             User user = db.Users.Find(id);
             if (user != null)
@@ -39,7 +37,7 @@ namespace Messenger.DAL.Repository
             return db.Users.ToList();
         }
 
-        public User GetById(int id)
+        public User GetById(string id)
         {
             return db.Users.Find(id);
         }
@@ -61,11 +59,11 @@ namespace Messenger.DAL.Repository
             return query.Where(predicate).ToList();
         }
 
-        public User GetWithInclude(int id, params Expression<Func<User, object>>[] includeProperties)
+        public User GetWithInclude(string id, params Expression<Func<User, object>>[] includeProperties)
         {
             var query = Include(includeProperties);
 
-            return query.FirstOrDefault(q => q.Id == id.ToString());
+            return query.FirstOrDefault(q => q.Id == id);
         }
 
         public IQueryable<User> Include(params Expression<Func<User, object>>[] includeProperties)

@@ -12,9 +12,9 @@ namespace Messenger.BLL.Interfaces
         void RegisterUser(UserAccountDTO userDto);
         void LoginUser(UserAccountDTO userDto);
         IEnumerable<UserDTO> GetUsers();
-        UserDTO GetFullUser(int id);
+        UserDTO GetFullUser(string id);
         void UpdateUser(UserDTO userDto);
-        IEnumerable<UserDTO> GetContacts(int id);
+        IEnumerable<UserDTO> GetContacts(string id);
         void AddContact(UserToUserDTO userDto);
         void DeleteContact(UserToUserDTO userDto);
     }

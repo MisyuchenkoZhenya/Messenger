@@ -8,7 +8,7 @@ namespace Messenger.BLL.DTO
 {
     public class UserToUserDTO
     {
-        public int FirstUserId { get; set; }
-        public int SecondUserId { get; set; }
+        public string FirstUserId { get; set; }
+        public string SecondUserId { get; set; }
     }
 }
