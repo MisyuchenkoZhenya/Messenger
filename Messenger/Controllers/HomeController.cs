@@ -4,6 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
+
+using Messenger.DAL.Models;
+using Messenger.DAL.Repository;
+
+
 namespace Messenger.Controllers
 {
     public class HomeController : Controller
@@ -11,12 +16,18 @@ namespace Messenger.Controllers
         public ActionResult Index()
         {
             ViewBag.Title = "Home Page";
-            //IEnumerable<UserDTO> users;
-            
-            //using (var service = new ChatService(new UnitOfWork()))
-            //{
-            //    users = service.GetFullChat(1).Participants;
-            //}
+
+            using (var db = new UnitOfWork())
+            {
+                db.Users.Create(new User
+                {
+                    Id = "jadnjakndjkasndkjdnkajsdnkjsdnsadn",
+                    FirstName = "q",
+                    LastName = "q",
+                    PhoneNumber = "123321123",
+                    PasswordHash = "addemcewocmweocm"
+                });
+            }
 
             return View();
         }

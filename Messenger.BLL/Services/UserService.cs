@@ -8,12 +8,15 @@ using Messenger.BLL.Interfaces;
 using Messenger.DAL.Interfaces;
 using Messenger.DAL.Models;
 using AutoMapper;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using Messenger.BLL.Identity;
 
 namespace Messenger.BLL.Services
 {
     public class UserService : IUserService
     {
-        public bool disposed = false;
+        private bool disposed = false;
 
         public IUnitOfWork Database { get; set; }
 
@@ -67,9 +70,12 @@ namespace Messenger.BLL.Services
             throw new NotImplementedException();
         }
 
-        public void RegisterUser(UserAccountDTO userDto)
+        public void RegisterUser(RegisterDTO userDto)
         {            
-            var user = Mapper.Map<UserAccountDTO, User>(userDto);
+            var user = Mapper.Map<RegisterDTO, User>(userDto);
+            //IdentityResult result = await AppUserManager.Create(new IdentityFactoryOptions<AppUserManager>(), Messenger.)
+            //await SignInManager<User, string>.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+            user.PasswordHash = new PasswordHasher().HashPassword(userDto.Password);
             Database.Users.Create(user);
             Database.Save();
         }

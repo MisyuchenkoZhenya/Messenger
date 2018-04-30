@@ -9,7 +9,7 @@ namespace Messenger.BLL.Interfaces
 {
     public interface IUserService : IService
     {
-        void RegisterUser(UserAccountDTO userDto);
+        void RegisterUser(RegisterDTO userDto);
         void LoginUser(UserAccountDTO userDto);
         IEnumerable<UserDTO> GetUsers();
         UserDTO GetFullUser(string id);

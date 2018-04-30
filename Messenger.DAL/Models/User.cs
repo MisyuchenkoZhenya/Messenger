@@ -21,7 +21,6 @@ namespace Messenger.DAL.Models
         
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public string Password { get; set; }
         
         public ICollection<Chat> Chats { get; set; }
         public ICollection<Message> Messages { get; set; }
@@ -29,7 +28,7 @@ namespace Messenger.DAL.Models
 
         public string GetFullName() => $"{FirstName} {LastName}";
         
-
+        //ERR
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);

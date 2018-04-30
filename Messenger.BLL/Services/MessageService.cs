@@ -13,7 +13,7 @@ namespace Messenger.BLL.Services
 {
     public class MessageService : IMessageService
     {
-        public bool disposed = false;
+        private bool disposed = false;
 
         public IUnitOfWork Database { get; set; }
 

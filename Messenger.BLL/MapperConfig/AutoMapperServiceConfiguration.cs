@@ -34,8 +34,9 @@ namespace Messenger.BLL.MapperConfig
 
         private static void ConfigureUserMapping(IMapperConfigurationExpression cfg)
         {
+            cfg.CreateMap<RegisterDTO, User>();
+
             cfg.CreateMap<User, UserDTO>();
-            cfg.CreateMap<UserAccountDTO, User>();
             cfg.CreateMap<UserDTO, User>();
         }
     }

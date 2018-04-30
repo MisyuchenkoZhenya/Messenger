@@ -19,14 +19,14 @@ namespace Messenger.DAL.Context
             {
                 FirstName = "Sam",
                 LastName = "Owen",
-                Password = "Qwerty",
+                PasswordHash = "Qwerty",
                 PhoneNumber = "23423423"
             };
             User user2 = new User
             {
                 FirstName = "Karl",
                 LastName = "Lrak",
-                Password = "Qazwsx",
+                PasswordHash = "Qazwsx",
                 PhoneNumber = "111111111",
                 Contacts = new List<User>() { user1 }
             };

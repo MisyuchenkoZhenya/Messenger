@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Messenger.BLL.Services;
 using Messenger.BLL.Interfaces;
+using Messenger.BLL.Services;
 using Messenger.DAL.Repository;
-using Messenger.DAL.Interfaces;
 
 namespace ServiceUOW
 {
@@ -16,9 +11,9 @@ namespace ServiceUOW
 
         private UnitOfWork unitOfWork;
 
-        private ChatService chatService;
-        private MessageService messageService;
-        private UserService userService;
+        private IChatService chatService;
+        private IMessageService messageService;
+        private IUserService userService;
 
 
         public ServiceUOW()
@@ -26,7 +21,7 @@ namespace ServiceUOW
             unitOfWork = new UnitOfWork();
         }
 
-        public ChatService ChatService {
+        public IChatService ChatService {
             get
             {
                 if (chatService == null)
@@ -36,7 +31,7 @@ namespace ServiceUOW
             }
         }
 
-        public MessageService MessageService
+        public IMessageService MessageService
         {
             get
             {
@@ -47,7 +42,7 @@ namespace ServiceUOW
             }
         }
 
-        public UserService UserService
+        public IUserService UserService
         {
             get
             {
