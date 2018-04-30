@@ -65,7 +65,7 @@ namespace Messenger.DAL.Repository
         {
             var query = Include(includeProperties);
 
-            return query.FirstOrDefault(q => q.Id == id);
+            return query.FirstOrDefault(q => q.Id == id.ToString());
         }
 
         public IQueryable<User> Include(params Expression<Func<User, object>>[] includeProperties)

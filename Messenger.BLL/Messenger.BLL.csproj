@@ -85,9 +85,10 @@
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="DTO\UserToChatDTO.cs" />
     <Compile Include="DTO\UserToUserDTO.cs" />
-    <Compile Include="Identity\IdentityConfig.cs" />
-    <Compile Include="Identity\RoleManager.cs" />
-    <Compile Include="Identity\UserManager.cs" />
+    <Compile Include="Identity\Managers\AppSignInManager.cs" />
+    <Compile Include="Identity\Managers\AppUserManager.cs" />
+    <Compile Include="DatabaseInitializer\DatabaseInitializer.cs" />
+    <Compile Include="Identity\Startup.cs" />
     <Compile Include="Interfaces\IChatService.cs" />
     <Compile Include="Interfaces\IMessageService.cs" />
     <Compile Include="Interfaces\IService.cs" />

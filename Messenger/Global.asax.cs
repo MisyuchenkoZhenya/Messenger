@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
+using Messenger.BLL.DatabaseInitializer;
 using Messenger.BLL.MapperConfig;
 
 namespace Messenger
@@ -22,12 +23,7 @@ namespace Messenger
 
             AutoMapperServiceConfiguration.Configure();
 
-            //TODO: delete this in the future
-            //using (DAL.Context.MessengerContext db = new DAL.Context.MessengerContext())
-            //{
-            //    db.Database.Initialize(false);
-            //    db.SaveChanges();
-            //}
+            DatabaseInitializer.Initialize();
         }
     }
 }

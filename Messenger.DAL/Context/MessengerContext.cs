@@ -26,8 +26,19 @@ namespace Messenger.DAL.Context
         //public DbSet<User> Users { get; set; }
         //public DbSet<Role> Roles { get; set; }
 
+        //IDN
+        public static MessengerContext Create()
+        {
+            return new MessengerContext();
+        }
+
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<IdentityUserLogin>().HasKey<string>(l => l.UserId);
+            modelBuilder.Entity<IdentityRole>().HasKey<string>(r => r.Id);
+            modelBuilder.Entity<IdentityUserRole>().HasKey(r => new { r.RoleId, r.UserId });
+
             modelBuilder.Entity<Chat>()
                         .HasMany(c => c.Participants)
                         .WithMany(u => u.Chats)
