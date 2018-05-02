@@ -16,6 +16,7 @@ using Messenger.DAL.Context;
 using Microsoft.Owin;
 using System.Net;
 using Microsoft.Owin.Security;
+using Messenger.BLL.Identity.Managers;
 
 namespace Messenger.BLL.Services
 {
@@ -74,18 +75,18 @@ namespace Messenger.BLL.Services
             throw new NotImplementedException();
         }
 
-        public void RegisterUser(RegisterDTO userDto)
+        public async Task<IdentityResult> RegisterUser(RegisterDTO userDto, ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
-
             var user = Mapper.Map<RegisterDTO, User>(userDto);
-            user.PasswordHash = new PasswordHasher().HashPassword(userDto.Password);
+            user.UserName = userDto.Email;
 
-            //var result = await UserManager.CreateAsync(user, userDto.Password);
+            var result = await userManager.CreateAsync(user, userDto.Password);
+            if (result.Succeeded)
+            {
+                await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+            }
 
-            //var appDbContext = new IOwinContext().Get<ApplicationDbContext>();
-            //Database.Users.Create(user);
-
-            //Database.Save();
+            return result;
         }
 
         public void UpdateUser(UserDTO userDto)

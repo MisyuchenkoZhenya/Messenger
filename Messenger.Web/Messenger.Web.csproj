@@ -223,7 +223,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -244,7 +246,7 @@
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ForgotPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
-    <Content Include="Views\Account\Register.cshtml" />
+    <Content Include="Views\Account\RRRegister.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
     <Content Include="Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Views\Account\SendCode.cshtml" />
@@ -257,6 +259,7 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -278,10 +281,6 @@
     <ProjectReference Include="..\Messenger.BLL\Messenger.BLL.csproj">
       <Project>{785292ee-c4bb-40fb-81cf-8d4371958b16}</Project>
       <Name>Messenger.BLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Messenger.DAL\Messenger.DAL.csproj">
-      <Project>{391E8F59-7857-4233-BF78-F86C868D0F25}</Project>
-      <Name>Messenger.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\ServiceUOW\ServiceUOW.csproj">
       <Project>{83d9984f-d9e8-49b7-8cd1-0ba92a379aec}</Project>

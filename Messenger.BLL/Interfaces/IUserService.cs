@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Messenger.BLL.DTO;
+using Messenger.BLL.Identity.Managers;
+using Microsoft.AspNet.Identity;
 
 namespace Messenger.BLL.Interfaces
 {
     public interface IUserService : IService
     {
-        void RegisterUser(RegisterDTO userDto);
+        Task<IdentityResult> RegisterUser(RegisterDTO userDto, ApplicationUserManager userManager, ApplicationSignInManager signInManager);
         void LoginUser(UserAccountDTO userDto);
         IEnumerable<UserDTO> GetUsers();
         UserDTO GetFullUser(string id);
