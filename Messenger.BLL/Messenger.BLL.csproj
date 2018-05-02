@@ -86,6 +86,7 @@
     <Compile Include="DTO\UserDTO.cs" />
     <Compile Include="DTO\UserToChatDTO.cs" />
     <Compile Include="DTO\UserToUserDTO.cs" />
+    <Compile Include="Identity\AppUserStore.cs" />
     <Compile Include="Identity\Managers\AppSignInManager.cs" />
     <Compile Include="Identity\Managers\AppUserManager.cs" />
     <Compile Include="DatabaseInitializer\DatabaseInitializer.cs" />

@@ -8,7 +8,7 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
 
-[assembly: OwinStartup(typeof(Messenger.BLL.Identity.Startup))]
+//[assembly: OwinStartup(typeof(Messenger.BLL.Identity.Startup))]
 
 namespace Messenger.BLL.Identity
 {
@@ -16,14 +16,14 @@ namespace Messenger.BLL.Identity
     {
         public void Configuration(IAppBuilder app)
         {
-            ConfigureAuth(app);
+            //ConfigureAuth(app);
         }
 
         public void ConfigureAuth(IAppBuilder app)
         {
             app.CreatePerOwinContext(MessengerContext.Create);
-            app.CreatePerOwinContext<AppUserManager>(AppUserManager.Create);
-            app.CreatePerOwinContext<AppSignInManager>(AppSignInManager.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
+            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
 
 
             app.UseCookieAuthentication(new CookieAuthenticationOptions
@@ -32,9 +32,10 @@ namespace Messenger.BLL.Identity
                 LoginPath = new PathString("/Account/Login"),
                 Provider = new CookieAuthenticationProvider
                 {
-                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<AppUserManager, User>(
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, User>(
                         validateInterval: TimeSpan.FromMinutes(30),
-                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
+                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager)
+                    )
                 }
             });
 

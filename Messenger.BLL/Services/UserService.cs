@@ -11,6 +11,11 @@ using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Messenger.BLL.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Messenger.DAL.Context;
+using Microsoft.Owin;
+using System.Net;
+using Microsoft.Owin.Security;
 
 namespace Messenger.BLL.Services
 {
@@ -18,7 +23,33 @@ namespace Messenger.BLL.Services
     {
         private bool disposed = false;
 
+        private ApplicationSignInManager _signInManager;
+        private ApplicationUserManager _userManager;
         public IUnitOfWork Database { get; set; }
+
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager;// ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
+
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager;// ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
 
         public UserService(IUnitOfWork unitOfWork)
@@ -70,13 +101,17 @@ namespace Messenger.BLL.Services
             throw new NotImplementedException();
         }
 
-        public void RegisterUser(RegisterDTO userDto)
-        {            
+        public async void RegisterUser(RegisterDTO userDto)
+        {
+
             var user = Mapper.Map<RegisterDTO, User>(userDto);
-            //IdentityResult result = await AppUserManager.Create(new IdentityFactoryOptions<AppUserManager>(), Messenger.)
-            //await SignInManager<User, string>.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             user.PasswordHash = new PasswordHasher().HashPassword(userDto.Password);
-            Database.Users.Create(user);
+
+            var result = await UserManager.CreateAsync(user, userDto.Password);
+
+            //var appDbContext = new IOwinContext().Get<ApplicationDbContext>();
+            //Database.Users.Create(user);
+
             Database.Save();
         }
 

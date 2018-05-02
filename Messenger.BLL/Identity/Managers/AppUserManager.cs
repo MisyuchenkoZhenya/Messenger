@@ -12,15 +12,15 @@ using System.Threading.Tasks;
 
 namespace Messenger.BLL.Identity
 {
-    class AppUserManager : UserManager<User>
+    public class ApplicationUserManager : UserManager<User>
     {
-        public AppUserManager(IUserStore<User> store)
+        public ApplicationUserManager(IUserStore<User> store)
             : base(store)
         { }
 
-        public static AppUserManager Create(IdentityFactoryOptions<AppUserManager> options, IOwinContext context)
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new AppUserManager(new UserStore<User>(context.Get<MessengerContext>()));
+            var manager = new ApplicationUserManager(new UserStore<User>(context.Get<MessengerContext>()));
 
             manager.UserValidator = new UserValidator<User>(manager)
             {

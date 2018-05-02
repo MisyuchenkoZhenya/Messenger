@@ -5,20 +5,26 @@ using Microsoft.Owin.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Messenger.BLL.Identity
 {
-    class AppSignInManager : SignInManager<User, string>
+    public class ApplicationSignInManager : SignInManager<User, string>
     {
-        public AppSignInManager(AppUserManager userManager, IAuthenticationManager authenticationManager)
+        public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
         { }
 
-        public static AppSignInManager Create(IdentityFactoryOptions<AppSignInManager> options, IOwinContext context)
+        public override Task<ClaimsIdentity> CreateUserIdentityAsync(User user)
         {
-            return new AppSignInManager(context.GetUserManager<AppUserManager>(), context.Authentication);
+            return user.GenerateUserIdentityAsync((ApplicationUserManager)UserManager);
+        }
+
+        public static ApplicationSignInManager Create(IdentityFactoryOptions<ApplicationSignInManager> options, IOwinContext context)
+        {
+            return new ApplicationSignInManager(context.GetUserManager<ApplicationUserManager>(), context.Authentication);
         }
     }
 }
