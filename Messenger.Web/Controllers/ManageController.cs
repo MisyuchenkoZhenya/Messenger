@@ -21,60 +21,60 @@ namespace Messenger.Web.Controllers
         {
         }
 
-        //public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
-        //{
-        //    UserManager = userManager;
-        //    SignInManager = signInManager;
-        //}
+        public ManageController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
+        {
+            UserManager = userManager;
+            SignInManager = signInManager;
+        }
 
-        //public ApplicationSignInManager SignInManager
-        //{
-        //    get
-        //    {
-        //        return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-        //    }
-        //    private set 
-        //    { 
-        //        _signInManager = value; 
-        //    }
-        //}
+        public ApplicationSignInManager SignInManager
+        {
+            get
+            {
+                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+            }
+            private set
+            {
+                _signInManager = value;
+            }
+        }
 
-        //public ApplicationUserManager UserManager
-        //{
-        //    get
-        //    {
-        //        return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-        //    }
-        //    private set
-        //    {
-        //        _userManager = value;
-        //    }
-        //}
+        public ApplicationUserManager UserManager
+        {
+            get
+            {
+                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+            }
+            private set
+            {
+                _userManager = value;
+            }
+        }
 
-        ////
-        //// GET: /Manage/Index
-        //public async Task<ActionResult> Index(ManageMessageId? message)
-        //{
-        //    ViewBag.StatusMessage =
-        //        message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
-        //        : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
-        //        : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
-        //        : message == ManageMessageId.Error ? "An error has occurred."
-        //        : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
-        //        : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
-        //        : "";
+        //
+        // GET: /Manage/Index
+        public async Task<ActionResult> Index(ManageMessageId? message)
+        {
+            ViewBag.StatusMessage =
+                message == ManageMessageId.ChangePasswordSuccess ? "Your password has been changed."
+                : message == ManageMessageId.SetPasswordSuccess ? "Your password has been set."
+                : message == ManageMessageId.SetTwoFactorSuccess ? "Your two-factor authentication provider has been set."
+                : message == ManageMessageId.Error ? "An error has occurred."
+                : message == ManageMessageId.AddPhoneSuccess ? "Your phone number was added."
+                : message == ManageMessageId.RemovePhoneSuccess ? "Your phone number was removed."
+                : "";
 
-        //    var userId = User.Identity.GetUserId();
-        //    var model = new IndexViewModel
-        //    {
-        //        HasPassword = HasPassword(),
-        //        PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
-        //        TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
-        //        Logins = await UserManager.GetLoginsAsync(userId),
-        //        BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
-        //    };
-        //    return View(model);
-        //}
+            var userId = User.Identity.GetUserId();
+            var model = new IndexViewModel
+            {
+                HasPassword = HasPassword(),
+                PhoneNumber = await UserManager.GetPhoneNumberAsync(userId),
+                TwoFactor = await UserManager.GetTwoFactorEnabledAsync(userId),
+                Logins = await UserManager.GetLoginsAsync(userId),
+                BrowserRemembered = await AuthenticationManager.TwoFactorBrowserRememberedAsync(userId)
+            };
+            return View(model);
+        }
 
         ////
         //// POST: /Manage/RemoveLogin
@@ -310,29 +310,16 @@ namespace Messenger.Web.Controllers
         //    return new AccountController.ChallengeResult(provider, Url.Action("LinkLoginCallback", "Manage"), User.Identity.GetUserId());
         //}
 
-        ////
-        //// GET: /Manage/LinkLoginCallback
-        //public async Task<ActionResult> LinkLoginCallback()
-        //{
-        //    var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync(XsrfKey, User.Identity.GetUserId());
-        //    if (loginInfo == null)
-        //    {
-        //        return RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
-        //    }
-        //    var result = await UserManager.AddLoginAsync(User.Identity.GetUserId(), loginInfo.Login);
-        //    return result.Succeeded ? RedirectToAction("ManageLogins") : RedirectToAction("ManageLogins", new { Message = ManageMessageId.Error });
-        //}
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && _userManager != null)
+            {
+                _userManager.Dispose();
+                _userManager = null;
+            }
 
-        //protected override void Dispose(bool disposing)
-        //{
-        //    if (disposing && _userManager != null)
-        //    {
-        //        _userManager.Dispose();
-        //        _userManager = null;
-        //    }
-
-        //    base.Dispose(disposing);
-        //}
+            base.Dispose(disposing);
+        }
 
         //#region Helpers
         //        // Used for XSRF protection when adding external logins
@@ -354,36 +341,36 @@ namespace Messenger.Web.Controllers
             }
         }
 
-        //        private bool HasPassword()
-        //        {
-        //            var user = UserManager.FindById(User.Identity.GetUserId());
-        //            if (user != null)
-        //            {
-        //                return user.PasswordHash != null;
-        //            }
-        //            return false;
-        //        }
+        private bool HasPassword()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (user != null)
+            {
+                return user.PasswordHash != null;
+            }
+            return false;
+        }
 
-        //        private bool HasPhoneNumber()
-        //        {
-        //            var user = UserManager.FindById(User.Identity.GetUserId());
-        //            if (user != null)
-        //            {
-        //                return user.PhoneNumber != null;
-        //            }
-        //            return false;
-        //        }
+        private bool HasPhoneNumber()
+        {
+            var user = UserManager.FindById(User.Identity.GetUserId());
+            if (user != null)
+            {
+                return user.PhoneNumber != null;
+            }
+            return false;
+        }
 
-        //        public enum ManageMessageId
-        //        {
-        //            AddPhoneSuccess,
-        //            ChangePasswordSuccess,
-        //            SetTwoFactorSuccess,
-        //            SetPasswordSuccess,
-        //            RemoveLoginSuccess,
-        //            RemovePhoneSuccess,
-        //            Error
-        //        }
+        public enum ManageMessageId
+        {
+            AddPhoneSuccess,
+            ChangePasswordSuccess,
+            SetTwoFactorSuccess,
+            SetPasswordSuccess,
+            RemoveLoginSuccess,
+            RemovePhoneSuccess,
+            Error
+        }
 
         //#endregion
     }
