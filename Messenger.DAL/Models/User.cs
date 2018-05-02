@@ -27,12 +27,12 @@ namespace Messenger.DAL.Models
         public ICollection<User> Contacts { get; set; }
 
         public string GetFullName() => $"{FirstName} {LastName}";
-        
-        //ERR
+
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User> manager)
         {
             var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
-
+            
             return userIdentity;
         }
     }

@@ -22,35 +22,8 @@ namespace Messenger.BLL.Services
     public class UserService : IUserService
     {
         private bool disposed = false;
-
-        private ApplicationSignInManager _signInManager;
-        private ApplicationUserManager _userManager;
+        
         public IUnitOfWork Database { get; set; }
-
-        public ApplicationSignInManager SignInManager
-        {
-            get
-            {
-                return _signInManager;// ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
-            }
-            private set
-            {
-                _signInManager = value;
-            }
-        }
-
-        public ApplicationUserManager UserManager
-        {
-            get
-            {
-                return _userManager;// ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
-            }
-            private set
-            {
-                _userManager = value;
-            }
-        }
-
 
         public UserService(IUnitOfWork unitOfWork)
         {
@@ -101,18 +74,18 @@ namespace Messenger.BLL.Services
             throw new NotImplementedException();
         }
 
-        public async void RegisterUser(RegisterDTO userDto)
+        public void RegisterUser(RegisterDTO userDto)
         {
 
             var user = Mapper.Map<RegisterDTO, User>(userDto);
             user.PasswordHash = new PasswordHasher().HashPassword(userDto.Password);
 
-            var result = await UserManager.CreateAsync(user, userDto.Password);
+            //var result = await UserManager.CreateAsync(user, userDto.Password);
 
             //var appDbContext = new IOwinContext().Get<ApplicationDbContext>();
             //Database.Users.Create(user);
 
-            Database.Save();
+            //Database.Save();
         }
 
         public void UpdateUser(UserDTO userDto)

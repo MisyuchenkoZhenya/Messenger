@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Messenger.Web.Models;
+using Messenger.BLL.Identity.Managers;
 
 namespace Messenger.Web.Controllers
 {

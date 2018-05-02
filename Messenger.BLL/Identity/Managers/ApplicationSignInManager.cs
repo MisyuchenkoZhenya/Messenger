@@ -9,13 +9,14 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Messenger.BLL.Identity
+namespace Messenger.BLL.Identity.Managers
 {
     public class ApplicationSignInManager : SignInManager<User, string>
     {
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
-        { }
+        {
+        }
 
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(User user)
         {

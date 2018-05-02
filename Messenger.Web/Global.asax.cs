@@ -19,9 +19,9 @@ namespace Messenger.Web
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
-            //AutoMapperServiceConfiguration.Configure();
+            AutoMapperServiceConfiguration.Configure();
 
-            //DatabaseInitializer.Initialize();
+            DatabaseInitializer.Initialize();
         }
     }
 }

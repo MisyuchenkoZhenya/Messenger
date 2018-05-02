@@ -187,9 +187,7 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -197,10 +195,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -282,6 +278,10 @@
     <ProjectReference Include="..\Messenger.BLL\Messenger.BLL.csproj">
       <Project>{785292ee-c4bb-40fb-81cf-8d4371958b16}</Project>
       <Name>Messenger.BLL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Messenger.DAL\Messenger.DAL.csproj">
+      <Project>{391E8F59-7857-4233-BF78-F86C868D0F25}</Project>
+      <Name>Messenger.DAL</Name>
     </ProjectReference>
     <ProjectReference Include="..\ServiceUOW\ServiceUOW.csproj">
       <Project>{83d9984f-d9e8-49b7-8cd1-0ba92a379aec}</Project>
