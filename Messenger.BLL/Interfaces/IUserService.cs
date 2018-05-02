@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 using Messenger.BLL.DTO;
 using Messenger.BLL.Identity.Managers;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
 
 namespace Messenger.BLL.Interfaces
 {
     public interface IUserService : IService
     {
         Task<IdentityResult> RegisterUser(RegisterDTO userDto, ApplicationUserManager userManager, ApplicationSignInManager signInManager);
-        void LoginUser(UserAccountDTO userDto);
+        Task<SignInStatus> LoginUser(LoginDTO userDto, ApplicationSignInManager signInManager);
         IEnumerable<UserDTO> GetUsers();
         UserDTO GetFullUser(string id);
         void UpdateUser(UserDTO userDto);

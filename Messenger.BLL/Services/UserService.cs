@@ -70,11 +70,6 @@ namespace Messenger.BLL.Services
             throw new NotImplementedException();
         }
 
-        public void LoginUser(UserAccountDTO userDto)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<IdentityResult> RegisterUser(RegisterDTO userDto, ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             var user = Mapper.Map<RegisterDTO, User>(userDto);
@@ -85,6 +80,13 @@ namespace Messenger.BLL.Services
             {
                 await signInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
             }
+
+            return result;
+        }
+
+        public async Task<SignInStatus> LoginUser(LoginDTO userDto, ApplicationSignInManager signInManager)
+        {
+            var result = await signInManager.PasswordSignInAsync(userDto.Email, userDto.Password, userDto.RememberMe, shouldLockout: false);           
 
             return result;
         }

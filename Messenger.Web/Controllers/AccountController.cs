@@ -29,11 +29,11 @@ namespace Messenger.Web.Controllers
             serviceUOW = new ServiceUOW.ServiceUOW();
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
-        {
-            UserManager = userManager;
-            SignInManager = signInManager;
-        }
+        //public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        //{
+        //    UserManager = userManager;
+        //    SignInManager = signInManager;
+        //}
 
         public ApplicationSignInManager SignInManager
         {
@@ -68,35 +68,33 @@ namespace Messenger.Web.Controllers
             return View();
         }
 
-        ////
-        //// POST: /Account/Login
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(model);
-        //    }
+        //
+        // POST: /Account/Login
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login(LoginDTO modelDto, string returnUrl)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(modelDto);
+            }
 
-        //    // This doesn't count login failures towards account lockout
-        //    // To enable password failures to trigger account lockout, change to shouldLockout: true
-        //    var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
-        //    switch (result)
-        //    {
-        //        case SignInStatus.Success:
-        //            return RedirectToLocal(returnUrl);
-        //        case SignInStatus.LockedOut:
-        //            return View("Lockout");
-        //        case SignInStatus.RequiresVerification:
-        //            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-        //        case SignInStatus.Failure:
-        //        default:
-        //            ModelState.AddModelError("", "Invalid login attempt.");
-        //            return View(model);
-        //    }
-        //}
+            var result = await serviceUOW.UserService.LoginUser(modelDto, SignInManager); 
+            switch (result)
+            {
+                case SignInStatus.Success:
+                    return RedirectToLocal(returnUrl);
+                case SignInStatus.LockedOut:
+                    return View("Lockout");
+                case SignInStatus.RequiresVerification:
+                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = modelDto.RememberMe });
+                case SignInStatus.Failure:
+                default:
+                    ModelState.AddModelError("", "Invalid login attempt.");
+                    return View(modelDto);
+            }
+        }
 
         ////
         //// GET: /Account/VerifyCode
@@ -154,11 +152,11 @@ namespace Messenger.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterDTO modelDTO)
+        public async Task<ActionResult> Register(RegisterDTO modelDto)
         {
             if (ModelState.IsValid)
             {
-                var result = await serviceUOW.UserService.RegisterUser(modelDTO, UserManager, SignInManager);
+                var result = await serviceUOW.UserService.RegisterUser(modelDto, UserManager, SignInManager);
                 if (result.Succeeded)
                 {
                     return RedirectToAction("Index", "Home");
@@ -166,7 +164,7 @@ namespace Messenger.Web.Controllers
                 AddErrors(result);
             }
             
-            return View(modelDTO);
+            return View(modelDto);
         }
 
         ////
@@ -440,14 +438,14 @@ namespace Messenger.Web.Controllers
             }
         }
 
-        //private ActionResult RedirectToLocal(string returnUrl)
-        //{
-        //    if (Url.IsLocalUrl(returnUrl))
-        //    {
-        //        return Redirect(returnUrl);
-        //    }
-        //    return RedirectToAction("Index", "Home");
-        //}
+        private ActionResult RedirectToLocal(string returnUrl)
+        {
+            if (Url.IsLocalUrl(returnUrl))
+            {
+                return Redirect(returnUrl);
+            }
+            return RedirectToAction("Index", "Home");
+        }
 
         //internal class ChallengeResult : HttpUnauthorizedResult
         //{

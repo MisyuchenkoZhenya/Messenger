@@ -80,6 +80,7 @@
   <ItemGroup>
     <Compile Include="DTO\ChatDTO.cs" />
     <Compile Include="DTO\FullChatDTO.cs" />
+    <Compile Include="DTO\LoginDTO.cs" />
     <Compile Include="DTO\MessageDTO.cs" />
     <Compile Include="DTO\RegisterDTO.cs" />
     <Compile Include="DTO\UserAccountDTO.cs" />
