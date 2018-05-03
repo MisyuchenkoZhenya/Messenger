@@ -1,12 +1,18 @@
-﻿@{
+﻿@model Messenger.Web.Models.ChatContactViewModel
+@{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div> @*class="jumbotron">*@
-
+<div>
     <div class="row">
         <div class="col-md-4">
             <h4>List of contacts</h4>
+            @foreach(var user in Model.users)
+            {
+                <div>
+                    @user.Email;
+                </div>
+            }
         </div>
         <div class="col-md-4">
             <h4>Chats</h4>

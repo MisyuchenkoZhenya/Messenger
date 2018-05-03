@@ -36,6 +36,8 @@ namespace Messenger.BLL.MapperConfig
         {
             cfg.CreateMap<RegisterDTO, User>();
             cfg.CreateMap<User, UserDTO>();
+            cfg.CreateMap<Chat, ChatDTO>()
+                    .ForMember("AdminId", opt => opt.MapFrom(u => u.Admin.Id));
 
             cfg.CreateMap<UserDTO, User>();
         }

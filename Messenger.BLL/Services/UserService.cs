@@ -57,6 +57,14 @@ namespace Messenger.BLL.Services
             return usersDTO;
         }
 
+        public IEnumerable<ChatDTO> GetChats(string id)
+        {
+            var chats = Database.Users.GetWithInclude(id, u => u.Chats).Chats;
+            var chatsDTO = Mapper.Map<IEnumerable<Chat>, List<ChatDTO>>(chats);
+
+            return chatsDTO;
+        }
+
         public Task<UserDTO> GetFullUser(string id)
         {
             return Task.Run(() => {

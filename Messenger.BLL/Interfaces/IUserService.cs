@@ -14,10 +14,11 @@ namespace Messenger.BLL.Interfaces
     {
         Task<IdentityResult> RegisterUser(RegisterDTO userDto, ApplicationUserManager userManager, ApplicationSignInManager signInManager);
         Task<SignInStatus> LoginUser(LoginDTO userDto, ApplicationSignInManager signInManager);
-        IEnumerable<UserDTO> GetUsers();
+        IEnumerable<UserDTO> GetUsers();        
         Task<UserDTO> GetFullUser(string id);
         void UpdateUser(UserDTO userDto);
         IEnumerable<UserDTO> GetContacts(string id);
+        IEnumerable<ChatDTO> GetChats(string id);
         void AddContact(UserToUserDTO userDto);
         void DeleteContact(UserToUserDTO userDto);
     }
