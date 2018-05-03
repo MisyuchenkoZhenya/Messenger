@@ -20,7 +20,8 @@ namespace Messenger.DAL.Context
                 FirstName = "Sam",
                 LastName = "Owen",
                 PasswordHash = "Qwerty",
-                PhoneNumber = "23423423"
+                PhoneNumber = "23423423",
+                Email = "SOSOSO@mail.ru"
             };
             User user2 = new User
             {
@@ -28,6 +29,7 @@ namespace Messenger.DAL.Context
                 LastName = "Lrak",
                 PasswordHash = "Qazwsx",
                 PhoneNumber = "111111111",
+                Email = "KkkLll@mail.ru",
                 Contacts = new List<User>() { user1 }
             };
 

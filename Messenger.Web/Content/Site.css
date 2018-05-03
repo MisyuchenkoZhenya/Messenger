@@ -1,10 +1,12 @@
-﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
+﻿html, body {
+    position: absolute;
+    height: 100%;
+    width: 100%;
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
+    position: relative;
     padding-left: 15px;
     padding-right: 15px;
 }
@@ -21,4 +23,38 @@ input,
 select,
 textarea {
     max-width: 280px;
+}
+
+.header {
+    position: relative;
+    height: 50px;
+    background: #444444;
+    width: 100%;
+    padding: 0 25% 0 25%;
+}
+
+#logout_img {
+    position: absolute;
+    height: 100%;
+    filter: invert(0.9);
+}
+
+#account_ref {
+    position: absolute;
+    height: 100%;
+    border-radius: 0;
+    background: transparent;
+    font-size: 20px;
+    color: #eeeeee;
+}
+
+#account_ref:hover {
+    animation: acc_ref_hover 2s forwards;
+}
+
+@keyframes acc_ref_hover {
+    100% {
+        background: #eeeeee;
+        color: #000000;
+    }
 }

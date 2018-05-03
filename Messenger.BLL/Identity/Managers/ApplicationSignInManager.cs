@@ -15,8 +15,7 @@ namespace Messenger.BLL.Identity.Managers
     {
         public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager)
             : base(userManager, authenticationManager)
-        {
-        }
+        { }
 
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(User user)
         {

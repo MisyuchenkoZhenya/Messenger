@@ -15,7 +15,7 @@ namespace Messenger.BLL.Interfaces
         Task<IdentityResult> RegisterUser(RegisterDTO userDto, ApplicationUserManager userManager, ApplicationSignInManager signInManager);
         Task<SignInStatus> LoginUser(LoginDTO userDto, ApplicationSignInManager signInManager);
         IEnumerable<UserDTO> GetUsers();
-        UserDTO GetFullUser(string id);
+        Task<UserDTO> GetFullUser(string id);
         void UpdateUser(UserDTO userDto);
         IEnumerable<UserDTO> GetContacts(string id);
         void AddContact(UserToUserDTO userDto);

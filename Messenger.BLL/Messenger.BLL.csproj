@@ -79,14 +79,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\ChatDTO.cs" />
-    <Compile Include="DTO\FullChatDTO.cs" />
-    <Compile Include="DTO\LoginDTO.cs" />
     <Compile Include="DTO\MessageDTO.cs" />
-    <Compile Include="DTO\RegisterDTO.cs" />
-    <Compile Include="DTO\UserAccountDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
-    <Compile Include="DTO\UserToChatDTO.cs" />
-    <Compile Include="DTO\UserToUserDTO.cs" />
     <Compile Include="Identity\IdentityServices.cs" />
     <Compile Include="Identity\Managers\ApplicationSignInManager.cs" />
     <Compile Include="Identity\Managers\ApplicationUserManager.cs" />

@@ -1,0 +1,36 @@
+﻿body {
+    background: linear-gradient(166deg, #e4e9cd, #ccd7ee, #c8eecf, #d5c8f5);
+    background-size: 600% 600%;
+    -webkit-animation: Gradient 40s ease infinite;
+    -moz-animation: Gradient 40s ease infinite;
+    animation: Gradient 40s ease infinite;
+}
+
+@-webkit-keyframes Gradient {
+    0%{background-position: 39% 0%}
+    50%{background-position: 62% 100%}
+    100%{background-position: 39% 0%}
+}
+
+@-moz-keyframes Gradient {
+    0%{background-position: 39% 0%}
+    50%{background-position: 62% 100%}
+    100%{background-position: 39% 0%}
+}
+
+@keyframes Gradient {
+    0%{background-position: 39% 0%}
+    50%{background-position: 62% 100%}
+    100%{background-position: 39% 0%}
+}
+
+.login_greeting {
+    display: inline-block;
+    height: auto;
+    background: #eeeeee;
+    border-radius: 10px;
+    padding: 10px 8px 10px 8px;
+    font-size: 18px;
+}
+
+

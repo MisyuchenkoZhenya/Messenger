@@ -6,11 +6,11 @@ using System.Web.Mvc;
 
 namespace Messenger.Web.Controllers
 {
-    public class HomeController : Controller
+    public class ChatController : Controller
     {
+        // GET: Chat
         public ActionResult Index()
         {
-
             return View();
         }
     }

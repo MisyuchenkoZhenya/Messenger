@@ -57,12 +57,14 @@ namespace Messenger.BLL.Services
             return usersDTO;
         }
 
-        public UserDTO GetFullUser(string id)
+        public Task<UserDTO> GetFullUser(string id)
         {
-            var user = Database.Users.GetById(id);
-            var userDTO = Mapper.Map<User, UserDTO>(user);
+            return Task.Run(() => {
+                var user = Database.Users.GetById(id);
+                var userDTO = Mapper.Map<User, UserDTO>(user);
 
-            return userDTO;
+                return userDTO;
+            });
         }
 
         public IEnumerable<UserDTO> GetUsers()
