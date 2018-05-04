@@ -51,16 +51,24 @@ namespace Messenger.BLL.Services
 
         public IEnumerable<UserDTO> GetContacts(string id)
         {
-            var users = Database.Users.GetWithInclude(id, u => u.Contacts).Contacts;
-            var usersDTO = Mapper.Map<IEnumerable<User>, List<UserDTO>>(users);
+            var usersDTO = new List<UserDTO>();
+            if(id != null)
+            {
+                var users = Database.Users.GetWithInclude(id, u => u.Contacts).Contacts;
+                usersDTO = Mapper.Map<IEnumerable<User>, List<UserDTO>>(users);
+            }
 
             return usersDTO;
         }
 
         public IEnumerable<ChatDTO> GetChats(string id)
         {
-            var chats = Database.Users.GetWithInclude(id, u => u.Chats).Chats;
-            var chatsDTO = Mapper.Map<IEnumerable<Chat>, List<ChatDTO>>(chats);
+            var chatsDTO = new List<ChatDTO>();
+            if (id != null)
+            {
+                var chats = Database.Users.GetWithInclude(id, u => u.Chats).Chats;
+                chatsDTO = Mapper.Map<IEnumerable<Chat>, List<ChatDTO>>(chats);
+            }
 
             return chatsDTO;
         }

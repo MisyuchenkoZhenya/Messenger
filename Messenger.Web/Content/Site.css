@@ -25,6 +25,11 @@ textarea {
     max-width: 280px;
 }
 
+.row {
+    position: relative;
+    height: inherit;
+}
+
 .header {
     position: relative;
     height: 50px;
@@ -58,3 +63,13 @@ textarea {
         color: #000000;
     }
 }
+
+.warning_message {
+    position: absolute;
+    color: #ee0000;
+}
+
+.user_info {
+    font-size: 18px;
+}
+

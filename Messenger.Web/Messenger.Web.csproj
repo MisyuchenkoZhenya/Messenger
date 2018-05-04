@@ -212,6 +212,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="images\logout.png" />
     <Content Include="images\noImage.png" />
+    <Content Include="images\warning.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -251,6 +252,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_Login.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
+    <Content Include="Views\Manage\DetailsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

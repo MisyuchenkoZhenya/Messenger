@@ -31,6 +31,12 @@ namespace Messenger.Web.Controllers
         //    SignInManager = signInManager;
         //}
 
+        [HttpGet]
+        public ActionResult Details()
+        {
+            return PartialView("DetailsPartial");
+        }
+
         public ApplicationSignInManager SignInManager
         {
             get
