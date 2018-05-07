@@ -34,7 +34,7 @@ namespace Messenger.DAL.Repository
 
         public IEnumerable<User> GetAll()
         {
-            return db.Users.ToList();
+            return db.Users.AsNoTracking().ToList();
         }
 
         public User GetById(string id)

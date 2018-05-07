@@ -73,3 +73,18 @@ textarea {
     font-size: 18px;
 }
 
+.foundUsers_info {
+    border: solid 1px #555555;
+    border-radius: 10%;
+    box-shadow: 1px 2px 3px #555555;
+}
+
+.foundUsers_info:hover {
+    border: solid 1px #4444bb;
+    box-shadow: 1px 2px 3px #7477b6;
+    background: #fafaff
+}
+
+.foundUsers_info p {
+    font-size: 18px;
+}

@@ -9,6 +9,7 @@ using Microsoft.Owin.Security;
 using Messenger.Web.Models;
 using Messenger.BLL.Identity.Managers;
 using Messenger.BLL.DTO;
+using Newtonsoft.Json;
 
 namespace Messenger.Web.Controllers
 {
@@ -70,7 +71,16 @@ namespace Messenger.Web.Controllers
 
             return View(model);
         }
-        
+
+        //
+        // GET: /Manage/GetUsersByEmail
+        public async Task<string> GetUsersByEmail(string email)
+        {
+            var contacts = await serviceUOW.UserService.GetContacts(User.Identity.GetUserId());
+            var users = await serviceUOW.UserService.GetUsersWithEmail(email, User.Identity.GetUserId());
+
+            return JsonConvert.SerializeObject(users.Except(contacts), Formatting.Indented);
+        }
 
         //#region Helpers
         //        // Used for XSRF protection when adding external logins

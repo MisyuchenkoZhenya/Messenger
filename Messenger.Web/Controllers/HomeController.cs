@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Messenger.Web.Models;
@@ -18,10 +19,10 @@ namespace Messenger.Web.Controllers
             serviceUOW = new ServiceUOW.ServiceUOW();
         }
 
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var userId = User.Identity.GetUserId();
-            var contacts = serviceUOW.UserService.GetContacts(userId);
+            var contacts = await serviceUOW.UserService.GetContacts(userId);
             var chats = serviceUOW.UserService.GetChats(userId);
 
             return View(new ChatContactViewModel { chats = chats, users = contacts });

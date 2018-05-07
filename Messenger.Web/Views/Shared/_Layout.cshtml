@@ -14,16 +14,16 @@
     {
         Response.Redirect("~/Account/Index");
         @*using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
-        {
-            @Html.AntiForgeryToken()
+            {
+                @Html.AntiForgeryToken()
 
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-                </li>
-                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
-            </ul>
-        }*@
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                    </li>
+                    <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                </ul>
+            }*@
     }
     <div class="header">
         <button id="account_ref" class="btn" type="button" onclick="location.href='@Url.Action("Index", "Manage")'">
@@ -44,6 +44,10 @@
         <footer class="modal-footer">
             <p>&copy; @DateTime.Now.Year - Messenger</p>
         </footer>
+    </div>
+
+    <div id="modDialog" class="modal fade">
+        <div id="dialogContent" class="modal-dialog"></div>
     </div>
 
     @Scripts.Render("~/bundles/jquery")

@@ -10,13 +10,8 @@ using Messenger.DAL.Models;
 using AutoMapper;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using Messenger.BLL.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Messenger.DAL.Context;
-using Microsoft.Owin;
-using System.Net;
-using Microsoft.Owin.Security;
 using Messenger.BLL.Identity.Managers;
+using System.Text.RegularExpressions;
 
 namespace Messenger.BLL.Services
 {
@@ -49,16 +44,19 @@ namespace Messenger.BLL.Services
             Database.Save();
         }
 
-        public IEnumerable<UserDTO> GetContacts(string id)
+        public Task<IEnumerable<UserDTO>> GetContacts(string id)
         {
-            var usersDTO = new List<UserDTO>();
-            if(id != null)
+            return Task.Run<IEnumerable<UserDTO>>(() =>
             {
-                var users = Database.Users.GetWithInclude(id, u => u.Contacts).Contacts;
-                usersDTO = Mapper.Map<IEnumerable<User>, List<UserDTO>>(users);
-            }
+                var usersDTO = new List<UserDTO>();
+                if (id != null)
+                {
+                    var users = Database.Users.GetWithInclude(id, u => u.Contacts).Contacts;
+                    usersDTO = Mapper.Map<IEnumerable<User>, List<UserDTO>>(users);
+                }
 
-            return usersDTO;
+                return usersDTO;
+            });
         }
 
         public IEnumerable<ChatDTO> GetChats(string id)
@@ -83,9 +81,29 @@ namespace Messenger.BLL.Services
             });
         }
 
-        public IEnumerable<UserDTO> GetUsers()
+        public Task<IEnumerable<UserDTO>> GetUsers()
         {
-            throw new NotImplementedException();
+            return Task.Run(() =>
+            {
+                var users = Database.Users.GetAll();
+                var usersDTO = Mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(users);
+
+                return usersDTO;
+            });
+        }
+
+        public Task<IEnumerable<UserDTO>> GetUsersWithEmail(string email, string currentUserId)
+        {
+            return Task.Run(() =>
+            {
+                var users = Database.Users.GetAll();
+                var usersDTO = Mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(users);
+                usersDTO = usersDTO.Where(u => u.Id != currentUserId);
+                if (!string.IsNullOrWhiteSpace(email))
+                    usersDTO = usersDTO.Where(u => Regex.IsMatch(u.Email.ToLower(), email.ToLower()));
+
+                return usersDTO;
+            });
         }
 
         public async Task<IdentityResult> RegisterUser(RegisterDTO userDto, ApplicationUserManager userManager, ApplicationSignInManager signInManager)
