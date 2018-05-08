@@ -54,22 +54,6 @@ function AddNewContact(e) {
     }
 }
 
-//TODO: delete later
-function LoadUserContacts() {
-    $.get("/Manage/GetUserContacts", function (data) {
-        let output = "";
-        let input = JSON.parse(data);
-        input.forEach(e => {
-            output += `
-            <div id="${e.Id}">
-                <p>${e.FirstName} ${e.LastName}</p>
-                <h5>${e.Email}</h5>
-            </div>`;
-        });
-        $("#userContacts").html(output);
-    });
-}
-
 function UsersFromJson(jsonString) {    
     let output = "";
     let input = JSON.parse(jsonString);

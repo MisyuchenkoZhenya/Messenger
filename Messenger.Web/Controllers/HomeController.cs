@@ -22,10 +22,11 @@ namespace Messenger.Web.Controllers
         public async Task<ActionResult> Index()
         {
             var userId = User.Identity.GetUserId();
+            var model = await serviceUOW.UserService.GetFullUser(userId);
             var contacts = await serviceUOW.UserService.GetContacts(userId);
             var chats = await serviceUOW.UserService.GetChats(userId);
 
-            return View(new ChatContactViewModel { chats = chats, users = contacts });
+            return View(new ManageIndexViewModel { CurrentUser = model, Contacts = contacts, Chats = chats });
         }
     }
 }

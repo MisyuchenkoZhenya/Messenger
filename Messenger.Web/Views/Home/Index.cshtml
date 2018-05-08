@@ -1,4 +1,4 @@
-﻿@model Messenger.Web.Models.ChatContactViewModel
+﻿@model Messenger.Web.Models.ManageIndexViewModel
 @{
     ViewBag.Title = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,12 +7,17 @@
     <div class="row">
         <div class="col-md-4">
             <h4>List of contacts</h4>
-            @foreach(var user in Model.users)
+            @foreach (var contact in Model.Contacts)
             {
-                <div>
-                    @user.Email;
+                <div id="@contact.Id" class="currentContact">
+                    <div class="contact_info">
+                        <b>Name:</b> @contact.FirstName<br />
+                        <b>Second name:</b> @contact.LastName<br />
+                        <b>Email:</b> @contact.Email<br />
+                        <b>Phone number:</b> @contact.PhoneNumber
+                    </div>
                 </div>
-            }
+            }   
         </div>
         <div class="col-md-4">
             <h4>Chats</h4>
