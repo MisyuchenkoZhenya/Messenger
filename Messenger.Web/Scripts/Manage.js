@@ -6,6 +6,7 @@
 function init() {
     $.ajaxSetup({ cache: false });
     $(".modalItem").click(OnModalItemCalled);
+    $(".delete_contact").click(OnDeleteContact);
 }
 
 
@@ -27,6 +28,18 @@ function OnModalItemCalled(e) {
         $(".findContact").click();
         $("#email_input").keyup(OnPressInputEnter);
     });
+}
+
+function OnDeleteContact(e) {
+    if (confirm('Are you sure?')) {
+        $.post("/Manage/DeleteContact", { contactId: $(this).parent().attr("id") })
+            .done((data) => {
+                if (data === "true")
+                    window.location.reload();
+                else
+                    alert("Something wrong");
+            });
+    }
 }
 
 function AddNewContact(e) {

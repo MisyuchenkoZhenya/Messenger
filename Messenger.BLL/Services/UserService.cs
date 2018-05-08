@@ -46,13 +46,24 @@ namespace Messenger.BLL.Services
             });
         }
 
-        public void DeleteContact(UserToUserDTO userDto)
+        public Task<bool> DeleteContact(UserToUserDTO userDto)
         {
-            User firstUser = Database.Users.GetWithInclude(userDto.FirstUserId, u => u.Contacts);
-            User secondUser = Database.Users.GetWithInclude(userDto.SecondUserId, u => u.Contacts);
-            firstUser.Contacts.Remove(secondUser);
-            secondUser.Contacts.Remove(firstUser);
-            Database.Save();
+            return Task.Run(() => {
+                try
+                {
+                    User firstUser = Database.Users.GetWithInclude(userDto.FirstUserId, u => u.Contacts);
+                    User secondUser = Database.Users.GetWithInclude(userDto.SecondUserId, u => u.Contacts);
+                    firstUser.Contacts.Remove(secondUser);
+                    secondUser.Contacts.Remove(firstUser);
+                    Database.Save();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+                return true;
+            });            
         }
 
         public Task<IEnumerable<UserDTO>> GetContacts(string id)

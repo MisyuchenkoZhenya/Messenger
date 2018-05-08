@@ -21,6 +21,6 @@ namespace Messenger.BLL.Interfaces
         Task<IEnumerable<UserDTO>> GetContacts(string id);
         Task<IEnumerable<ChatDTO>> GetChats(string id);
         Task<bool> AddContact(UserToUserDTO userDto);
-        void DeleteContact(UserToUserDTO userDto);
+        Task<bool> DeleteContact(UserToUserDTO userDto);
     }
 }

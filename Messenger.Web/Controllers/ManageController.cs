@@ -94,11 +94,25 @@ namespace Messenger.Web.Controllers
         }
 
         //
-        // GET: /Manage/GetUserContacts
+        // GET: /Manage/AddContact
         [HttpPost]
         public async Task<string> AddContact(string contactId)
         {
             bool result = await serviceUOW.UserService.AddContact(new UserToUserDTO
+            {
+                FirstUserId = User.Identity.GetUserId(),
+                SecondUserId = contactId
+            });
+
+            return JsonConvert.SerializeObject(result, Formatting.Indented);
+        }
+
+        //
+        // GET: /Manage/DeleteContact
+        [HttpPost]
+        public async Task<string> DeleteContact(string contactId)
+        {
+            bool result = await serviceUOW.UserService.DeleteContact(new UserToUserDTO
             {
                 FirstUserId = User.Identity.GetUserId(),
                 SecondUserId = contactId

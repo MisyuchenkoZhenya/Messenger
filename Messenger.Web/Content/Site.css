@@ -86,6 +86,15 @@ textarea {
     font-size: 18px;
 }
 
+.contact_info {
+    margin: 5px 0 5px 0;
+    padding: 10px 10px 10px 10px;
+    font-size: 16px;
+    border: solid 1px #aaaaaa;
+    border-radius: 4px;
+    background: #fafafa;
+}
+
 .possibleContact {
     border: solid 1px #555555;
     border-radius: 20%;
@@ -114,4 +123,8 @@ textarea {
     width: 30px;
     display: table;
     margin: 0 auto;
+}
+
+.close_icon {
+    width: 24px;
 }

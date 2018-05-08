@@ -52,23 +52,25 @@
                 @foreach(var contact in Model.Contacts)
                 {
                     <div id="@contact.Id" class="currentContact">
-                        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
-                        <p>Name: @contact.FirstName</p>
-                        Second name: @contact.LastName
-                        Phone number: @(contact.PhoneNumber ?? "—")
-                        Email: @contact.Email
+                        <button class="close delete_contact" data-dismiss="modal" area-hidden="true">
+                            <img class="close_icon" src="~/images/close.png" />
+                        </button>
+                        <div class="contact_info">
+                            <b>Name:</b> @contact.FirstName<br />
+                            <b>Second name:</b> @contact.LastName<br />
+                            <b>Email:</b> @contact.Email<br />
+                            <b>Phone number:</b> @contact.PhoneNumber
+                        </div>
                     </div>
                 }
             </div>
         </div>
         <div class="col-md-4">
-            <center>
-                <h4>Your chats</h4>
-                <img class="info_img" src="~/images/chat.png" />
-                <hr />
-                @*<button class="modalItem btn">Add chat</button><br />*@
-                <div id="userChats"></div>
-            </center>
+            <h4>Your chats</h4>
+            <img class="info_img" src="~/images/chat.png" />
+            <hr />
+            @*<button class="modalItem btn">Add chat</button><br />*@
+            <div id="userChats"></div>
         </div>
     </div>
 </div>
