@@ -44,7 +44,11 @@ namespace Messenger.DAL.Repository
 
         public void Update(User user)
         {
-            db.Entry(user).State = EntityState.Modified;
+            var tempUser = GetById(user.Id);
+            tempUser.FirstName = user.FirstName;
+            tempUser.LastName = user.LastName;
+            tempUser.PhoneNumber = user.PhoneNumber;
+            //db.Entry(user).State = EntityState.Modified;
         }
 
         public IEnumerable<User> GetWithInclude(params Expression<Func<User, object>>[] includeProperties)

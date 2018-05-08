@@ -109,3 +109,9 @@ textarea {
     height: initial;
     display: inline-block;
 }
+
+.info_img {
+    width: 30px;
+    display: table;
+    margin: 0 auto;
+}

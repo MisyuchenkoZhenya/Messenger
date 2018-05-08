@@ -210,10 +210,14 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="images\chat.png" />
+    <Content Include="images\close.png" />
+    <Content Include="images\contact.png" />
     <Content Include="images\logout.png" />
     <Content Include="images\noImage.png" />
     <Content Include="images\return.png" />
     <Content Include="images\warning.png" />
+    <Content Include="images\wrench.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">

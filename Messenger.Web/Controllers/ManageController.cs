@@ -68,8 +68,10 @@ namespace Messenger.Web.Controllers
         {
             var userId = User.Identity.GetUserId();
             var model = await serviceUOW.UserService.GetFullUser(userId);
+            var contacts = await serviceUOW.UserService.GetContacts(userId);
+            var chats = await serviceUOW.UserService.GetChats(userId);
 
-            return View(model);
+            return View(new ManageIndexViewModel { CurrentUser = model, Contacts = contacts, Chats = chats });
         }
 
         //

@@ -70,16 +70,19 @@ namespace Messenger.BLL.Services
             });
         }
 
-        public IEnumerable<ChatDTO> GetChats(string id)
+        public Task<IEnumerable<ChatDTO>> GetChats(string id)
         {
-            var chatsDTO = new List<ChatDTO>();
-            if (id != null)
+            return Task.Run<IEnumerable<ChatDTO>>(() => 
             {
-                var chats = Database.Users.GetWithInclude(id, u => u.Chats).Chats;
-                chatsDTO = Mapper.Map<IEnumerable<Chat>, List<ChatDTO>>(chats);
-            }
+                var chatsDTO = new List<ChatDTO>();
+                if (id != null)
+                {
+                    var chats = Database.Users.GetWithInclude(id, u => u.Chats).Chats;
+                    chatsDTO = Mapper.Map<IEnumerable<Chat>, List<ChatDTO>>(chats);
+                }
 
-            return chatsDTO;
+                return chatsDTO;
+            });
         }
 
         public Task<UserDTO> GetFullUser(string id)
@@ -145,6 +148,7 @@ namespace Messenger.BLL.Services
                 try
                 {
                     var user = Mapper.Map<UserDTO, User>(userDto);
+                    
                     Database.Users.Update(user);
                     Database.Save();
                 }

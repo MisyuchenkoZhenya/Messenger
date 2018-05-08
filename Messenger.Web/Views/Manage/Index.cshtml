@@ -1,4 +1,4 @@
-﻿@model Messenger.BLL.DTO.UserDTO
+﻿@model Messenger.Web.Models.ManageIndexViewModel
 @{
     ViewBag.Title = "Settings";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -11,17 +11,24 @@
     <div class="row">
         <div class="col-md-4">
             <h4>Here you can change your account settings</h4>
+            <img class="info_img" src="~/images/wrench.png"/>
             <hr />
+            <center>
+                @using (Html.BeginForm("UpdateUser", "Manage", FormMethod.Get))
+                {
+                    <button class="btn" type="submit">Edit</button>
+                }
+            </center>
             <dl class="user_info dl-horizontal">
                 <dt>Name:</dt>
                 <dd>
-                    @($"{Model.FirstName} {Model.LastName}")
+                    @($"{Model.CurrentUser.FirstName} {Model.CurrentUser.LastName}")
                 </dd>
                 <dt>Phone number:</dt>
                 <dd>
-                    @if (Model.PhoneNumber != null)
+                    @if (Model.CurrentUser.PhoneNumber != null)
                     {
-                        @Model.PhoneNumber;
+                        @Model.CurrentUser.PhoneNumber;
                     }
                     else
                     {
@@ -30,24 +37,38 @@
                 </dd>
                 <dt>Email:</dt>
                 <dd>
-                    @Model.Email
+                    @Model.CurrentUser.Email
                 </dd>
             </dl>
-            @using (Html.BeginForm("UpdateUser", "Manage", FormMethod.Get))
-            {
-                <button class="btn" type="submit">Edit</button>
-            }
+        </div>
+        <div class="col-md-4">
+            <h4>Your contacts</h4>
+            <img class="info_img" src="~/images/contact.png" />
+            <hr />
+            <center>
+                <button class="modalItem btn">Add contact</button><br />
+            </center>
+            <div id="userContacts">
+                @foreach(var contact in Model.Contacts)
+                {
+                    <div id="@contact.Id" class="currentContact">
+                        <button class="close" data-dismiss="modal" area-hidden="true">X</button>
+                        <p>Name: @contact.FirstName</p>
+                        Second name: @contact.LastName
+                        Phone number: @(contact.PhoneNumber ?? "—")
+                        Email: @contact.Email
+                    </div>
+                }
+            </div>
         </div>
         <div class="col-md-4">
             <center>
-                <h4>Your contacts</h4>
+                <h4>Your chats</h4>
+                <img class="info_img" src="~/images/chat.png" />
                 <hr />
-                <button class="modalItem btn">Add contact</button><br />
-                <div id="userContacts"></div>
+                @*<button class="modalItem btn">Add chat</button><br />*@
+                <div id="userChats"></div>
             </center>
-        </div>
-        <div class="col-md-4">
-
         </div>
     </div>
 </div>

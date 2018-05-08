@@ -1,17 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Messenger.BLL.DTO;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
 namespace Messenger.Web.Models
 {
-    public class IndexViewModel
+    public class ManageIndexViewModel
     {
-        public bool HasPassword { get; set; }
-        public IList<UserLoginInfo> Logins { get; set; }
-        public string PhoneNumber { get; set; }
-        public bool TwoFactor { get; set; }
-        public bool BrowserRemembered { get; set; }
+        public UserDTO CurrentUser { get; set; }
+        public IEnumerable<UserDTO> Contacts { get; set; }
+        public IEnumerable<ChatDTO> Chats { get; set; }
     }
 
     public class ManageLoginsViewModel

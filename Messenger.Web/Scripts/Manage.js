@@ -1,13 +1,11 @@
 ﻿$(() => {
-    init();    
-})
+    init();
+});
 
 
 function init() {
     $.ajaxSetup({ cache: false });
     $(".modalItem").click(OnModalItemCalled);
-
-    LoadUserContacts();
 }
 
 
@@ -43,6 +41,7 @@ function AddNewContact(e) {
     }
 }
 
+//TODO: delete later
 function LoadUserContacts() {
     $.get("/Manage/GetUserContacts", function (data) {
         let output = "";
@@ -52,7 +51,7 @@ function LoadUserContacts() {
             <div id="${e.Id}">
                 <p>${e.FirstName} ${e.LastName}</p>
                 <h5>${e.Email}</h5>
-            </div>`
+            </div>`;
         });
         $("#userContacts").html(output);
     });
@@ -66,10 +65,10 @@ function UsersFromJson(jsonString) {
         <div id="${e.Id}" class="possibleContact btn">
             <p>${e.FirstName} ${e.LastName}</p>
             <h5>${e.Email}</h5>
-        </div>`
+        </div>`;
     });
 
-    return output.length != 0 ? output : "<p>User is no found</p>";
+    return output.length !== 0 ? output : "<p>User is no found</p>";
 }
 
 function OnPressInputEnter(event) {

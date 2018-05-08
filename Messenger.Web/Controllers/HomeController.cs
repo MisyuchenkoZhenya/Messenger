@@ -23,7 +23,7 @@ namespace Messenger.Web.Controllers
         {
             var userId = User.Identity.GetUserId();
             var contacts = await serviceUOW.UserService.GetContacts(userId);
-            var chats = serviceUOW.UserService.GetChats(userId);
+            var chats = await serviceUOW.UserService.GetChats(userId);
 
             return View(new ChatContactViewModel { chats = chats, users = contacts });
         }
