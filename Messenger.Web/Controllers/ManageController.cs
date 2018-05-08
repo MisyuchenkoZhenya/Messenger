@@ -82,6 +82,55 @@ namespace Messenger.Web.Controllers
             return JsonConvert.SerializeObject(users.Except(contacts), Formatting.Indented);
         }
 
+        //
+        // GET: /Manage/GetUserContacts
+        public async Task<string> GetUserContacts()
+        {
+            var contacts = await serviceUOW.UserService.GetContacts(User.Identity.GetUserId());
+
+            return JsonConvert.SerializeObject(contacts, Formatting.Indented);
+        }
+
+        //
+        // GET: /Manage/GetUserContacts
+        [HttpPost]
+        public async Task<string> AddContact(string contactId)
+        {
+            bool result = await serviceUOW.UserService.AddContact(new UserToUserDTO
+            {
+                FirstUserId = User.Identity.GetUserId(),
+                SecondUserId = contactId
+            });
+
+            return JsonConvert.SerializeObject(result, Formatting.Indented);
+        }
+
+        //
+        // GET: /Manage/GetUserContacts
+        public async Task<ActionResult> UpdateUser()
+        {
+            var user = await serviceUOW.UserService.GetFullUser(User.Identity.GetUserId());            
+
+            return View(user);
+        }
+
+        //
+        // GET: /Manage/GetUserContacts
+        [HttpPost]
+        public async Task<ActionResult> UpdateUser(UserDTO userDTO)
+        {
+            if (ModelState.IsValid)
+            {
+                var isComplete = await serviceUOW.UserService.UpdateUser(userDTO);
+                if (isComplete)
+                {
+                    return RedirectToAction("Index", "Manage");
+                }
+            }            
+
+            return View(userDTO);
+        }
+
         //#region Helpers
         //        // Used for XSRF protection when adding external logins
         //        private const string XsrfKey = "XsrfId";

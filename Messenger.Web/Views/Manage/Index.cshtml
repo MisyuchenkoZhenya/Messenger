@@ -33,11 +33,17 @@
                     @Model.Email
                 </dd>
             </dl>
+            @using (Html.BeginForm("UpdateUser", "Manage", FormMethod.Get))
+            {
+                <button class="btn" type="submit">Edit</button>
+            }
         </div>
         <div class="col-md-4">
             <center>
                 <h4>Your contacts</h4>
-                <button class="modalItem btn">Add contact</button>
+                <hr />
+                <button class="modalItem btn">Add contact</button><br />
+                <div id="userContacts"></div>
             </center>
         </div>
         <div class="col-md-4">
@@ -49,25 +55,4 @@
 @section scripts
 {
     <script src="~/Scripts/manage.js" type="text/javascript"></script>
-
-    <script type="text/javascript">
-        $(() => {
-            $.ajaxSetup({ cache: false });
-            $(".modalItem").click(function (e) {
-                e.preventDefault();
-                $.get("/Manage/Details", function (data) {
-                    $('#dialogContent').html(data);
-                    $('#modDialog').modal('show');
-
-                    $(".findContact").click(function (e) {
-                        $.get("/Manage/GetUsersByEmail", {
-                            email: $("#email_input").val(),
-                        }).done(function (data) {
-                            $(".modal-body").html(UsersFromJson(data));
-                        });
-                    });
-                });
-            });
-        })
-    </script>
 }

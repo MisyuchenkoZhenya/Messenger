@@ -30,6 +30,12 @@
             You are loginned as @User.Identity.GetUserName()
         </button>
 
+        <span>
+            <a href="@Url.Action("Index", "Home")">
+                <img id="return_img" src="~/images/return.png" title="To the main page" />
+            </a>
+        </span>
+
         @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
         {
             @Html.AntiForgeryToken()
@@ -41,9 +47,7 @@
     </div>
     <div class="container body-content">
         @RenderBody()
-        <footer class="modal-footer">
-            <p>&copy; @DateTime.Now.Year - Messenger</p>
-        </footer>
+
     </div>
 
     <div id="modDialog" class="modal fade">

@@ -17,10 +17,10 @@ namespace Messenger.BLL.Interfaces
         Task<IEnumerable<UserDTO>> GetUsers();
         Task<IEnumerable<UserDTO>> GetUsersWithEmail(string email, string currentUserId);
         Task<UserDTO> GetFullUser(string id);
-        void UpdateUser(UserDTO userDto);
+        Task<bool> UpdateUser(UserDTO userDto);
         Task<IEnumerable<UserDTO>> GetContacts(string id);
         IEnumerable<ChatDTO> GetChats(string id);
-        void AddContact(UserToUserDTO userDto);
+        Task<bool> AddContact(UserToUserDTO userDto);
         void DeleteContact(UserToUserDTO userDto);
     }
 }

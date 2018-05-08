@@ -10,10 +10,37 @@ namespace Messenger.BLL.DTO
     public class UserDTO
     {
         public string Id { get; set; }
+
+        [Required]
+        [MaxLength(50)]
         public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(50)]
         public string LastName { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        [RegularExpression(@"((?:\+|00)[17](?: |\-)?|(?:\+|00)[1-9]\d{0,2}(?: |\-)?|(?:\+|00)1\-\d{3}(?: |\-)?)?(0\d|\([0-9]{3}\)|[1-9]{0,3})(?:((?: |\-)[0-9]{2}){4}|((?:[0-9]{2}){4})|((?: |\-)[0-9]{3}(?: |\-)[0-9]{4})|([0-9]{7}))", ErrorMessage = "Not a valid phone number")]
         public string PhoneNumber { get; set; }
+
+        [Required]
+        [Display(Name = "Email")]
+        [EmailAddress]
         public string Email { get; set; }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (!(obj is UserDTO))
+                throw new ArgumentException("obj is not an UserDTO");
+            var user = obj as UserDTO;
+
+            return user == null ? false : Id.Equals(user.Id);
+        }
     }
 
     public class LoginDTO
@@ -30,6 +57,20 @@ namespace Messenger.BLL.DTO
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+    }
+
+    public class UpdateUserDTO
+    {
+        [Required]
+        [MaxLength(50)]
+        public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(50)]
+        public string LastName { get; set; }
+
+        [DataType(DataType.PhoneNumber)]
+        public string PhoneNumber { get; set; }
     }
 
     public class RegisterDTO

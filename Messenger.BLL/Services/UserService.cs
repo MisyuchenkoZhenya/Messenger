@@ -25,14 +25,25 @@ namespace Messenger.BLL.Services
         {
             Database = unitOfWork;
         }
-
-        public void AddContact(UserToUserDTO userDto)
+        
+        public Task<bool> AddContact(UserToUserDTO userDto)
         {
-            User firstUser = Database.Users.GetById(userDto.FirstUserId);
-            User secondUser = Database.Users.GetById(userDto.SecondUserId);
-            firstUser.Contacts.Add(secondUser);
-            secondUser.Contacts.Add(firstUser);
-            Database.Save();
+            return Task.Run(() => {
+                try
+                {
+                    User firstUser = Database.Users.GetById(userDto.FirstUserId);
+                    User secondUser = Database.Users.GetById(userDto.SecondUserId);
+                    firstUser.Contacts.Add(secondUser);
+                    secondUser.Contacts.Add(firstUser);
+                    Database.Save();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+                return true;
+            });
         }
 
         public void DeleteContact(UserToUserDTO userDto)
@@ -100,7 +111,7 @@ namespace Messenger.BLL.Services
                 var usersDTO = Mapper.Map<IEnumerable<User>, IEnumerable<UserDTO>>(users);
                 usersDTO = usersDTO.Where(u => u.Id != currentUserId);
                 if (!string.IsNullOrWhiteSpace(email))
-                    usersDTO = usersDTO.Where(u => Regex.IsMatch(u.Email.ToLower(), email.ToLower()));
+                    usersDTO = usersDTO.Where(u => Regex.IsMatch(u.Email.ToLower(), email.ToLower())).ToList();
 
                 return usersDTO;
             });
@@ -127,11 +138,23 @@ namespace Messenger.BLL.Services
             return result;
         }
 
-        public void UpdateUser(UserDTO userDto)
+        public Task<bool> UpdateUser(UserDTO userDto)
         {
-            var user = Mapper.Map<UserDTO, User>(userDto);
-            Database.Users.Update(user);
-            Database.Save();
+            return Task.Run(() =>
+            {
+                try
+                {
+                    var user = Mapper.Map<UserDTO, User>(userDto);
+                    Database.Users.Update(user);
+                    Database.Save();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+                return true;
+            });
         }
 
         public void Dispose()

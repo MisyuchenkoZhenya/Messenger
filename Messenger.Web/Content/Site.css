@@ -25,6 +25,12 @@ textarea {
     max-width: 280px;
 }
 
+.modal-footer {
+    position: fixed;
+    bottom: 0;
+    width: 80%;
+}
+
 .row {
     position: relative;
     height: inherit;
@@ -42,6 +48,13 @@ textarea {
     position: absolute;
     height: 100%;
     filter: invert(0.9);
+}
+
+#return_img {
+    position: absolute;
+    height: 100%;
+    filter: invert(0.9);
+    right: 28%;
 }
 
 #account_ref {
@@ -73,18 +86,26 @@ textarea {
     font-size: 18px;
 }
 
-.foundUsers_info {
+.possibleContact {
     border: solid 1px #555555;
-    border-radius: 10%;
+    border-radius: 20%;
     box-shadow: 1px 2px 3px #555555;
+    margin: 5px 10px 5px 10px;
 }
 
-.foundUsers_info:hover {
+.possibleContact:hover {
     border: solid 1px #4444bb;
     box-shadow: 1px 2px 3px #7477b6;
     background: #fafaff
 }
 
-.foundUsers_info p {
+.possibleContact p {
     font-size: 18px;
+}
+
+#userContacts {
+    position: relative;
+    width: 100%;
+    height: initial;
+    display: inline-block;
 }
