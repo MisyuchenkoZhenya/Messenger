@@ -46,7 +46,7 @@
             <img class="info_img" src="~/images/contact.png" />
             <hr />
             <center>
-                <button class="modalItem btn">Add contact</button><br />
+                <button id="userModal" class="modalItem btn">Add contact</button><br />
             </center>
             <div id="userContacts">
                 @foreach(var contact in Model.Contacts)
@@ -68,7 +68,9 @@
             <h4>Your chats</h4>
             <img class="info_img" src="~/images/chat.png" />
             <hr />
-            @*<button class="modalItem btn">Add chat</button><br />*@
+            <center>
+                <button id="chatModal" class="modalItem btn">Add chat</button><br />
+            </center>
             <div id="userChats"></div>
         </div>
     </div>

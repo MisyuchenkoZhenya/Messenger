@@ -33,9 +33,15 @@ namespace Messenger.Web.Controllers
         //}
 
         [HttpGet]
-        public ActionResult Details()
+        public ActionResult ContactPartial()
         {
-            return PartialView("DetailsPartial");
+            return PartialView("ContactPartial");
+        }
+
+        [HttpGet]
+        public ActionResult ChatPartial()
+        {
+            return PartialView("ChatPartial");
         }
 
         public ApplicationSignInManager SignInManager

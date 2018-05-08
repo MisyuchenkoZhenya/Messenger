@@ -127,4 +127,7 @@ textarea {
 
 .close_icon {
     width: 24px;
+    position: absolute;
+    right: 0;
+    margin: 5px 5px 0 0;
 }

@@ -5,14 +5,15 @@
 
 function init() {
     $.ajaxSetup({ cache: false });
-    $(".modalItem").click(OnModalItemCalled);
+    $("#userModal").click(OnUserModalCalled);
+    $("#chatModal").click(OnChatModalCalled);
     $(".delete_contact").click(OnDeleteContact);
 }
 
 
-function OnModalItemCalled(e) {
+function OnUserModalCalled(e) {
     e.preventDefault();
-    $.get("/Manage/Details", function (data) {
+    $.get("/Manage/ContactPartial", function (data) {
         $('#dialogContent').html(data);
         $('#modDialog').modal('show');
 
@@ -29,6 +30,28 @@ function OnModalItemCalled(e) {
         $("#email_input").keyup(OnPressInputEnter);
     });
 }
+
+function OnChatModalCalled(e) {
+    e.preventDefault();
+    $.get("/Manage/ChatPartial", function (data) {
+        $('#dialogContent').html(data);
+        $('#modDialog').modal('show');
+
+        $(".findContact").click(function (e) {
+            $.get("/Manage/GetUsersByEmail", { email: $("#email_input").val() })
+                .done((data) => {
+                    $(".modal-body").html(UsersFromJson(data));
+
+                    $(".possibleContact").click(AddNewContact);
+                });
+        });
+
+        $(".findContact").click();
+        $("#email_input").keyup(OnPressInputEnter);
+    });
+}
+
+
 
 function OnDeleteContact(e) {
     if (confirm('Are you sure?')) {

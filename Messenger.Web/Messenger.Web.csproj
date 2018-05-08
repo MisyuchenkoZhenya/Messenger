@@ -257,8 +257,9 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Shared\_Login.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
-    <Content Include="Views\Manage\DetailsPartial.cshtml" />
+    <Content Include="Views\Manage\ContactPartial.cshtml" />
     <Content Include="Views\Manage\UpdateUser.cshtml" />
+    <Content Include="Views\Manage\ChatPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
