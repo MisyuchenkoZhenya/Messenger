@@ -30,12 +30,23 @@ namespace Messenger.BLL.Services
             Database.Save();
         }
 
-        public void CreateChat(ChatDTO chatDto)
+        public Task<bool> CreateChat(ChatDTO chatDto)
         {
-            User admin = Database.Users.GetById(chatDto.AdminId);
-            Chat chat = Mapper.Map<ChatDTO, Chat>(chatDto);
-            chat.Admin = admin;
-            Database.Save();
+            return Task.Run(() => {
+                try
+                {
+                    User admin = Database.Users.GetById(chatDto.AdminId);
+                    Chat chat = Mapper.Map<ChatDTO, Chat>(chatDto);
+                    chat.Admin = admin;
+                    Database.Save();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+                return true;
+            });
         }
 
         public void DeleteChatUser(UserToChatDTO utc)
@@ -64,13 +75,13 @@ namespace Messenger.BLL.Services
             return chatsDto;
         }
 
-        public FullChatDTO GetFullChat(int chatId)
+        public ChatDTO GetFullChat(int chatId)
         {
             Chat chat = Database.Chats.GetWithInclude(chatId, 
                                                       c => c.Admin,
                                                       c => c.Messages,
                                                       c => c.Participants);
-            FullChatDTO chatDTO = Mapper.Map<Chat, FullChatDTO>(chat);
+            ChatDTO chatDTO = Mapper.Map<Chat, ChatDTO>(chat);
 
             return chatDTO;
         }

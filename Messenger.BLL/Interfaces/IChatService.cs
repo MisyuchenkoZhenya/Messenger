@@ -10,10 +10,10 @@ namespace Messenger.BLL.Interfaces
     public interface IChatService : IService
     {
         IEnumerable<ChatDTO> GetChats(string userId);
-        FullChatDTO GetFullChat(int chatId);
+        ChatDTO GetFullChat(int chatId);
         void EditChat(ChatDTO chatDto);
         void AddChatUser(UserToChatDTO utc);
         void DeleteChatUser(UserToChatDTO utc);
-        void CreateChat(ChatDTO chatDto);
+        Task<bool> CreateChat(ChatDTO chatDto);
     }
 }

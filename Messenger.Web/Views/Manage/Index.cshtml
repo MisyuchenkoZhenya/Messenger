@@ -71,7 +71,12 @@
             <center>
                 <button id="chatModal" class="modalItem btn">Add chat</button><br />
             </center>
-            <div id="userChats"></div>
+            <div id="userChats">
+                @foreach(var chat in Model.Chats)
+                {
+                    <p>@chat.Title</p>
+                }
+            </div>
         </div>
     </div>
 </div>

@@ -44,6 +44,35 @@ namespace Messenger.Web.Controllers
             return PartialView("ChatPartial");
         }
 
+
+
+        [HttpPost]
+        public async Task<ActionResult> ChatPartial(ChatDTO chatDTO)//, IEquatable<UserDTO> contacts)
+        {
+            if (ModelState.IsValid)
+            {
+                chatDTO.AdminId = User.Identity.GetUserId();
+                chatDTO.CreatedAt = DateTime.Now;
+                await serviceUOW.ChatService.CreateChat(chatDTO);
+
+                return RedirectToAction("Index", "Manage");
+            }
+            else
+            {
+                return PartialView("ChatPartial", chatDTO);
+            }
+        }
+
+        //[HttpGet]
+        //public ActionResult ChatPartial(int id)
+        //{
+        //    ChatDTO model = serviceUOW.ChatService.GetFullChat(id);  // however you do this in your app
+
+        //    return PartialView("ChatPartial", model);
+        //}
+
+
+
         public ApplicationSignInManager SignInManager
         {
             get

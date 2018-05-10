@@ -37,19 +37,34 @@ function OnChatModalCalled(e) {
         $('#dialogContent').html(data);
         $('#modDialog').modal('show');
 
-        $(".findContact").click(function (e) {
-            $.get("/Manage/GetUsersByEmail", { email: $("#email_input").val() })
-                .done((data) => {
-                    $(".modal-body").html(UsersFromJson(data));
+        //$(".findContact").click(function (e) {
+        //    $.get("/Manage/GetUsersByEmail", { email: $("#email_input").val() })
+        //        .done((data) => {
+        //            $(".modal-body").html(UsersFromJson(data));
 
-                    $(".possibleContact").click(AddNewContact);
-                });
-        });
+        //            $(".possibleContact").click(AddNewContact);
+        //        });
+        //});
 
-        $(".findContact").click();
+        //$(".findContact").click();
         $("#email_input").keyup(OnPressInputEnter);
     });
 }
+
+//$("#form-chat-modal").on("submit", function (e) {
+//    e.preventDefault();  // prevent standard form submission
+
+//    var form = $(this);
+//    $.ajax({
+//        url: form.attr("action"),
+//        method: form.attr("method"),  // post
+//        data: form.serialize(),
+//        success: function (partialResult) {
+//            console.log("OK");
+//            $("#form-container").html(partialResult);
+//        }
+//    });
+//});
 
 
 
