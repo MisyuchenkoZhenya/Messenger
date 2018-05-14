@@ -13,7 +13,6 @@ namespace Messenger.BLL.DTO
 
         public string AdminId { get; set; }
 
-        [Required]
         [DataType(DataType.DateTime)]
         public DateTime CreatedAt { get; set; }
 
@@ -22,21 +21,28 @@ namespace Messenger.BLL.DTO
         public string Title { get; set; }
 
         [DataType(DataType.ImageUrl)]
+        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$", ErrorMessage = "Only Image files allowed.")]
         public string PhotoUrl { get; set; }
 
-        [Required]
         public bool IsPrivate { get; set; }
+
+
+        public static ChatDTO CreateDefault(string admin)
+        {
+            DateTime dateTime = DateTime.Now;
+
+            return new ChatDTO
+            {
+                AdminId = admin,
+                CreatedAt = dateTime,
+                Title = $"Default({dateTime})",
+                IsPrivate = true
+            };
+        }
     }
 
-    public class FullChatDTO
+    public class FullChatDTO : ChatDTO
     {
-        public int Id { get; set; }
-        public int AdminId { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public string Title { get; set; }
-        public string PhotoUrl { get; set; }
-        public bool IsPrivate { get; set; }
-
         public IEnumerable<UserDTO> Participants { get; set; }
         public IEnumerable<MessageDTO> Messages { get; set; }
     }

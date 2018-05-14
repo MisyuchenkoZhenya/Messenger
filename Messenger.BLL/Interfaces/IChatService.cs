@@ -9,7 +9,7 @@ namespace Messenger.BLL.Interfaces
 {
     public interface IChatService : IService
     {
-        IEnumerable<ChatDTO> GetChats(string userId);
+        Task<IEnumerable<ChatDTO>> GetChats(string userId, bool privateOnly = false);
         ChatDTO GetFullChat(int chatId);
         void EditChat(ChatDTO chatDto);
         void AddChatUser(UserToChatDTO utc);

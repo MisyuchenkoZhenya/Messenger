@@ -223,6 +223,7 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\chat.js" />
     <Content Include="Scripts\home.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -259,11 +260,11 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Manage\ContactPartial.cshtml" />
     <Content Include="Views\Manage\UpdateUser.cshtml" />
-    <Content Include="Views\Manage\ChatPartial.cshtml" />
+    <Content Include="Views\Chat\AddChat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Chat\" />
+    <Folder Include="images\chatIcons\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

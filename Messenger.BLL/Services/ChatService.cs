@@ -65,15 +65,34 @@ namespace Messenger.BLL.Services
             Database.Save();
         }
 
-        public IEnumerable<ChatDTO> GetChats(string userId)
+        public Task<IEnumerable<ChatDTO>> GetChats(string userId, bool privateOnly = false)
         {
-            var chats = Database.Users.GetWithInclude(userId, 
-                                                      u => u.Chats,
-                                                      u => u.Chats.Select(c => c.Admin)).Chats;
-            var chatsDto = Mapper.Map<IEnumerable<Chat>, List<ChatDTO>>(chats);
+            return Task.Run<IEnumerable<ChatDTO>>(() =>
+            {
+                var chats = Database.Users.GetWithInclude(userId,
+                                                          u => u.Chats,
+                                                          u => u.Chats.Select(c => c.Admin)).Chats;
+                var chatsDto = Mapper.Map<IEnumerable<Chat>, List<ChatDTO>>(chats);
+                if (privateOnly)
+                    chatsDto = chatsDto.Where(c => c.IsPrivate).ToList();
 
-            return chatsDto;
+                return chatsDto;
+            });            
         }
+
+        //public Task<ChatDTO> GetEmptyChat(string userId)
+        //{
+        //    return Task.Run<ChatDTO>(() =>
+        //    {
+        //        var chats = Database.Users.GetWithInclude(userId,
+        //                                                  u => u.Chats,
+        //                                                  u => u.Chats.Select(c => c.Admin),
+        //                                                  u => u.Chats.Select(c => c.Participants)).Chats;
+        //        var chatsDto = Mapper.Map<IEnumerable<Chat>, List<ChatDTO>>(chats);
+
+        //        return chatDto;
+        //    });
+        //}
 
         public ChatDTO GetFullChat(int chatId)
         {

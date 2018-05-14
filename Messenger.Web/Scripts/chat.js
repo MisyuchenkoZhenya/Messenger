@@ -17,7 +17,7 @@ function OnUserModalCalled(e) {
         $('#modDialog').modal('show');
 
         $(".findContact").click(function (e) {
-            $.get("/Manage/GetUsersByEmail", { email: $("#email_input").val() })
+            $.get("/Chat/GetUsersByEmail", { email: $("#email_input").val(), availableOnly: $("#chat_is_private").is(":checked") })
                 .done((data) => {
                     $(".modal-body").html(UsersFromJson(data));
 
@@ -44,7 +44,7 @@ function OnDeleteContact(e) {
 
 function AddNewContact(e) {
     if (confirm('Are you sure?')) {
-        $.post("/Manage/AddContact", { contactId: $(this).attr("id") })
+        $.post("/Chat/AddContact", { contactId: $(this).attr("id") })
             .done((data) => {
                 if (data === "true")
                     window.location.reload();
@@ -54,7 +54,7 @@ function AddNewContact(e) {
     }
 }
 
-function UsersFromJson(jsonString) {    
+function UsersFromJson(jsonString) {
     let output = "";
     let input = JSON.parse(jsonString);
     input.forEach(e => {

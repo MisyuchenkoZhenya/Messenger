@@ -69,7 +69,7 @@
             <img class="info_img" src="~/images/chat.png" />
             <hr />
             <center>
-                <button id="chatModal" class="modalItem btn">Add chat</button><br />
+                <button onclick="location.href='@Url.Action("AddChat", "Chat")'" class="btn">Add chat</button>
             </center>
             <div id="userChats">
                 @foreach(var chat in Model.Chats)
