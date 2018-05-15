@@ -73,6 +73,7 @@ namespace Messenger.DAL.Repository
         public IQueryable<User> Include(params Expression<Func<User, object>>[] includeProperties)
         {
             IQueryable<User> query = db.Users;
+
             return includeProperties.Aggregate(query, (current, includeProperty) => current.Include(includeProperty));
         }
     }

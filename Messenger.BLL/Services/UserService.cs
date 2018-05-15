@@ -81,21 +81,6 @@ namespace Messenger.BLL.Services
             });
         }
 
-        public Task<IEnumerable<ChatDTO>> GetChats(string id)
-        {
-            return Task.Run<IEnumerable<ChatDTO>>(() => 
-            {
-                var chatsDTO = new List<ChatDTO>();
-                if (id != null)
-                {
-                    var chats = Database.Users.GetWithInclude(id, u => u.Chats).Chats;
-                    chatsDTO = Mapper.Map<IEnumerable<Chat>, List<ChatDTO>>(chats);
-                }
-
-                return chatsDTO;
-            });
-        }
-
         public Task<UserDTO> GetFullUser(string id)
         {
             return Task.Run(() => {

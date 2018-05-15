@@ -82,7 +82,7 @@ function OnPressInputEnter(event) {
 
 function IsExists(value, array) {
     for (let i in array)
-        if (array[i] == value)
+        if (array[i] === value)
             return true;
 
     return false;

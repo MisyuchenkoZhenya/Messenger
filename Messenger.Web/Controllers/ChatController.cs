@@ -3,6 +3,7 @@ using Microsoft.AspNet.Identity;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -35,16 +36,25 @@ namespace Messenger.Web.Controllers
         //
         // POST: /Chat/AddChat
         [HttpPost]
-        public async Task<ActionResult> AddChat(ChatDTO chatDTO, string[] users)
+        public async Task<ActionResult> AddChat(ChatDTO chatDTO, HttpPostedFileBase upload, string[] users)
         {
             if (ModelState.IsValid)
             {
                 chatDTO.AdminId = User.Identity.GetUserId();
                 int chatId = await serviceUOW.ChatService.CreateChat(chatDTO);
-                foreach(var userId in users)
+
+                if (upload.ContentLength > 0)
+                {
+                    string _FileName = Path.GetFileName(upload.FileName);
+                    chatDTO.PhotoUrl = _FileName;
+                    string _path = Path.Combine(Server.MapPath("~/images/chatIcons"), _FileName);
+                    upload.SaveAs(_path);
+                }
+                foreach (var userId in users ?? Array.Empty<string>())
                 {
                     serviceUOW.ChatService.AddChatUser(new UserToChatDTO { ChatId = chatId, UserId = userId });
-                }                
+                }
+                serviceUOW.ChatService.AddChatUser(new UserToChatDTO { ChatId = chatId, UserId = User.Identity.GetUserId() });
 
                 return RedirectToAction("Index", "Manage");
             }
