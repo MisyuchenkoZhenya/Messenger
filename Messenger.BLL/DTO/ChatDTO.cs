@@ -25,20 +25,6 @@ namespace Messenger.BLL.DTO
         public string PhotoUrl { get; set; }
 
         public bool IsPrivate { get; set; }
-
-
-        public static ChatDTO CreateDefault(string admin)
-        {
-            DateTime dateTime = DateTime.Now;
-
-            return new ChatDTO
-            {
-                AdminId = admin,
-                CreatedAt = dateTime,
-                Title = $"Default({dateTime})",
-                IsPrivate = true
-            };
-        }
     }
 
     public class FullChatDTO : ChatDTO

@@ -30,22 +30,25 @@ namespace Messenger.BLL.Services
             Database.Save();
         }
 
-        public Task<bool> CreateChat(ChatDTO chatDto)
+        public Task<int> CreateChat(ChatDTO chatDto)
         {
             return Task.Run(() => {
+                int chatId;
+
                 try
                 {
                     User admin = Database.Users.GetById(chatDto.AdminId);
                     Chat chat = Mapper.Map<ChatDTO, Chat>(chatDto);
                     chat.Admin = admin;
+                    chatId = Database.Chats.Create(chat);
                     Database.Save();
                 }
                 catch (Exception)
                 {
-                    return false;
+                    return -1;
                 }
 
-                return true;
+                return chatId;
             });
         }
 

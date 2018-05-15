@@ -14,6 +14,6 @@ namespace Messenger.BLL.Interfaces
         void EditChat(ChatDTO chatDto);
         void AddChatUser(UserToChatDTO utc);
         void DeleteChatUser(UserToChatDTO utc);
-        Task<bool> CreateChat(ChatDTO chatDto);
+        Task<int> CreateChat(ChatDTO chatDto);
     }
 }

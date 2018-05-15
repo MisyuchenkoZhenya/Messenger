@@ -65,7 +65,7 @@ function UsersFromJson(jsonString) {
         </div>`;
     });
 
-    return output.length !== 0 ? output : "<p>User is no found</p>";
+    return output.length !== 0 ? output : "<p>User is not found</p>";
 }
 
 function OnPressInputEnter(event) {

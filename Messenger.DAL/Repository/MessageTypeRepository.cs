@@ -20,9 +20,11 @@ namespace Messenger.DAL.Repository
             db = context;
         }
 
-        public void Create(MessageType messageType)
+        public int Create(MessageType messageType)
         {
             db.MessageTypes.Add(messageType);
+
+            return messageType.Id;
         }
 
         public void Delete(int id)

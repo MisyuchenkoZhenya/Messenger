@@ -35,11 +35,16 @@ namespace Messenger.Web.Controllers
         //
         // POST: /Chat/AddChat
         [HttpPost]
-        public async Task<ActionResult> AddChat(ChatDTO chatDTO)
+        public async Task<ActionResult> AddChat(ChatDTO chatDTO, string[] users)
         {
             if (ModelState.IsValid)
             {
                 chatDTO.AdminId = User.Identity.GetUserId();
+                int chatId = await serviceUOW.ChatService.CreateChat(chatDTO);
+                foreach(var userId in users)
+                {
+                    serviceUOW.ChatService.AddChatUser(new UserToChatDTO { ChatId = chatId, UserId = userId });
+                }                
 
                 return RedirectToAction("Index", "Manage");
             }
@@ -54,21 +59,6 @@ namespace Messenger.Web.Controllers
             var contacts = await serviceUOW.UserService.GetContacts(User.Identity.GetUserId());
 
             return JsonConvert.SerializeObject(contacts, Formatting.Indented);
-        }
-
-        //
-        // GET: /Chat/AddContact
-        [HttpPost]
-        public async Task<string> AddContact(string contactId)
-        {
-            bool result = true;
-                //await serviceUOW.UserService.AddContact(new UserToUserDTO
-                //{
-                //    FirstUserId = User.Identity.GetUserId(),
-                //    SecondUserId = contactId
-                //});
-
-            return JsonConvert.SerializeObject(result, Formatting.Indented);
         }
     }
 }

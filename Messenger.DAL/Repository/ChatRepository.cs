@@ -20,9 +20,12 @@ namespace Messenger.DAL.Repository
             db = context;
         }
 
-        public void Create(Chat chat)
+        public int Create(Chat chat)
         {
             db.Chats.Add(chat);
+            db.SaveChanges();
+            //TODO: ↑
+            return chat.Id;
         }
 
         public void Delete(int id)

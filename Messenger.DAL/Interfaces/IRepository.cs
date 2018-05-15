@@ -11,7 +11,7 @@ namespace Messenger.DAL.Interfaces
     {
         IEnumerable<TEntity> GetAll();
         TEntity GetById(int id);
-        void Create(TEntity item);
+        int Create(TEntity item);
         void Update(TEntity item);
         void Delete(int id);
         IEnumerable<TEntity> GetWithInclude(params Expression<Func<TEntity, object>>[] includeProperties);

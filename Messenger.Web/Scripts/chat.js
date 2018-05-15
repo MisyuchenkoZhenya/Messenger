@@ -2,6 +2,7 @@
     init();
 });
 
+var existing_users = [];
 
 function init() {
     $.ajaxSetup({ cache: false });
@@ -43,29 +44,34 @@ function OnDeleteContact(e) {
 }
 
 function AddNewContact(e) {
-    if (confirm('Are you sure?')) {
-        $.post("/Chat/AddContact", { contactId: $(this).attr("id") })
-            .done((data) => {
-                if (data === "true")
-                    window.location.reload();
-                else
-                    alert("Something wrong");
-            });
-    }
+    let userId = $(this).attr("id");
+    let userName = $(this).children("p").text();
+
+    existing_users.push(userId);
+    
+    $("#userList").append(`
+        <div id="input_${userId}">
+            <h4>${userName}</h4>
+            <input type="hidden" id="user_${userId}" name="users" value="${userId}"/>
+        </div>
+    `);
+    
 }
 
 function UsersFromJson(jsonString) {
     let output = "";
     let input = JSON.parse(jsonString);
     input.forEach(e => {
-        output += `
-        <div id="${e.Id}" class="possibleContact btn">
-            <p>${e.FirstName} ${e.LastName}</p>
-            <h5>${e.Email}</h5>
-        </div>`;
+        if (!IsExists(e.Id, existing_users)) {
+            output += `
+                <div id="${e.Id}" class="possibleContact btn" data-dismiss="modal">
+                    <p>${e.FirstName} ${e.LastName}</p>
+                    <h5>${e.Email}</h5>
+                </div>`;
+        }
     });
 
-    return output.length !== 0 ? output : "<p>User is no found</p>";
+    return output.length !== 0 ? output : "<p>User is not found</p>";
 }
 
 function OnPressInputEnter(event) {
@@ -74,4 +80,10 @@ function OnPressInputEnter(event) {
     }
 }
 
+function IsExists(value, array) {
+    for (let i in array)
+        if (array[i] == value)
+            return true;
 
+    return false;
+}

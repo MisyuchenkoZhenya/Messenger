@@ -20,9 +20,11 @@ namespace Messenger.DAL.Repository
             db = context;
         }
 
-        public void Create(Message message)
+        public int Create(Message message)
         {
             db.Messages.Add(message);
+
+            return message.Id;
         }
 
         public void Delete(int id)
