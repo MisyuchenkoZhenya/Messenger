@@ -80,22 +80,8 @@ namespace Messenger.BLL.Services
                     chatsDto = chatsDto.Where(c => c.IsPrivate).ToList();
 
                 return chatsDto;
-            });            
+            });
         }
-
-        //public Task<ChatDTO> GetEmptyChat(string userId)
-        //{
-        //    return Task.Run<ChatDTO>(() =>
-        //    {
-        //        var chats = Database.Users.GetWithInclude(userId,
-        //                                                  u => u.Chats,
-        //                                                  u => u.Chats.Select(c => c.Admin),
-        //                                                  u => u.Chats.Select(c => c.Participants)).Chats;
-        //        var chatsDto = Mapper.Map<IEnumerable<Chat>, List<ChatDTO>>(chats);
-
-        //        return chatDto;
-        //    });
-        //}
 
         public ChatDTO GetFullChat(int chatId)
         {

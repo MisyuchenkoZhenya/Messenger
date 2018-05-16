@@ -22,7 +22,6 @@ namespace Messenger.BLL.DTO
         public string Title { get; set; }
 
         [DataType(DataType.ImageUrl)]
-        [RegularExpression(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$", ErrorMessage = "Only Image files allowed.")]
         public string PhotoUrl { get; set; }
 
         public bool IsPrivate { get; set; }

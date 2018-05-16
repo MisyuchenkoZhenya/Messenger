@@ -11,7 +11,7 @@
     <div class="row">
         <div class="col-md-4">
             <h4>Here you can change your account settings</h4>
-            <img class="info_img" src="~/images/wrench.png"/>
+            <img class="info_img" src="~/images/wrench.png" />
             <hr />
             <center>
                 @using (Html.BeginForm("UpdateUser", "Manage", FormMethod.Get))
@@ -19,6 +19,7 @@
                     <button class="btn" type="submit">Edit</button>
                 }
             </center>
+            <hr />
             <dl class="user_info dl-horizontal">
                 <dt>Name:</dt>
                 <dd>
@@ -48,8 +49,9 @@
             <center>
                 <button id="userModal" class="modalItem btn">Add contact</button><br />
             </center>
+            <hr />
             <div id="userContacts">
-                @foreach(var contact in Model.Contacts)
+                @foreach (var contact in Model.Contacts)
                 {
                     <div id="@contact.Id" class="currentContact">
                         <button class="close delete_contact" data-dismiss="modal" area-hidden="true">
@@ -71,16 +73,37 @@
             <center>
                 <button onclick="location.href='@Url.Action("AddChat", "Chat")'" class="btn">Add chat</button>
             </center>
+            <hr />
             <div id="userChats">
-                @foreach(var chat in Model.Chats)
+                @foreach (var chat in Model.Chats)
                 {
-                    <p>@chat.Title</p>
+                    <div id="chat_@chat.Id" class="currentChat">
+                        <button class="close delete_chat" data-dismiss="modal" area-hidden="true">
+                            <img class="close_icon" src="~/images/close.png" />
+                        </button>
+                        <br />
+                        <div class="chat_info">
+                            <span class="chat_info_content">
+                                <b>Title:</b> @chat.Title<br />
+                                <b>Created:</b> @chat.CreatedAt<br />
+                                <b>Private: @(chat.IsPrivate ? '✓' : 'X')</b>
+                            </span>
+                            <span class="chat_info_icon">
+                                <img src="~/images/chatIcons/@(chat.PhotoUrl)" title="chat icon" class="chat_icon" />
+                            </span>
+                        </div>
+                    </div>
+                    <hr />
                 }
             </div>
         </div>
     </div>
 </div>
 
+@section Styles 
+{
+    <link href="@Url.Content("~/Content/Manage.css")" rel="stylesheet" type="text/css" />
+}
 @section scripts
 {
     <script src="~/Scripts/manage.js" type="text/javascript"></script>

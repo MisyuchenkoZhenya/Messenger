@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -35,21 +36,22 @@ namespace Messenger.Web.Controllers
 
         //
         // POST: /Chat/AddChat
+
+
+        //TODO: cut this shit
         [HttpPost]
         public async Task<ActionResult> AddChat(ChatDTO chatDTO, HttpPostedFileBase upload, string[] users)
         {
+            Regex rgx = new Regex(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$");
+            if (!rgx.IsMatch(upload.FileName ?? ""))
+                ModelState.AddModelError("PhotoUrl", "Only Image files allowed.");
+            
             if (ModelState.IsValid)
             {
                 chatDTO.AdminId = User.Identity.GetUserId();
                 int chatId = await serviceUOW.ChatService.CreateChat(chatDTO);
 
-                if (upload.ContentLength > 0)
-                {
-                    string _FileName = Path.GetFileName(upload.FileName);
-                    chatDTO.PhotoUrl = _FileName;
-                    string _path = Path.Combine(Server.MapPath("~/images/chatIcons"), _FileName);
-                    upload.SaveAs(_path);
-                }
+                chatDTO.PhotoUrl = SaveChatIcon(upload);
                 foreach (var userId in users ?? Array.Empty<string>())
                 {
                     serviceUOW.ChatService.AddChatUser(new UserToChatDTO { ChatId = chatId, UserId = userId });
@@ -69,6 +71,20 @@ namespace Messenger.Web.Controllers
             var contacts = await serviceUOW.UserService.GetContacts(User.Identity.GetUserId());
 
             return JsonConvert.SerializeObject(contacts, Formatting.Indented);
+        }
+
+        private string SaveChatIcon(HttpPostedFileBase file)
+        {
+            if (file.ContentLength > 0 && file.FileName != "-noImage-.png")
+            {
+                string _FileName = Path.GetFileName(file.FileName);
+                string _path = Path.Combine(Server.MapPath("~/images/chatIcons"), _FileName);
+                file.SaveAs(_path);
+
+                return file.FileName;
+            }
+
+            return "-noImage-.png";
         }
     }
 }

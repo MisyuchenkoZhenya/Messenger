@@ -205,15 +205,16 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Login.css" />
+    <Content Include="Content\Manage.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="images\chat.png" />
+    <Content Include="images\chatIcons\-noImage-.png" />
     <Content Include="images\close.png" />
     <Content Include="images\contact.png" />
     <Content Include="images\logout.png" />
-    <Content Include="images\noImage.png" />
     <Content Include="images\return.png" />
     <Content Include="images\warning.png" />
     <Content Include="images\wrench.png" />
@@ -264,7 +265,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="images\chatIcons\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
