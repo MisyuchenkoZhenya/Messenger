@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Messenger.Web.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Newtonsoft.Json;
 
 namespace Messenger.Web.Controllers
 {
@@ -19,6 +20,7 @@ namespace Messenger.Web.Controllers
             serviceUOW = new ServiceUOW.ServiceUOW();
         }
 
+        [HttpGet]
         public async Task<ActionResult> Index()
         {
             var userId = User.Identity.GetUserId();
@@ -27,6 +29,13 @@ namespace Messenger.Web.Controllers
             var chats = await serviceUOW.UserService.GetChats(userId);
 
             return View(new ManageIndexViewModel { CurrentUser = model, Contacts = contacts, Chats = chats });
+        }
+
+        public async Task<string> GetChatContent(int chatId)
+        {
+            var messages = await serviceUOW.MessageService.GetMessages(chatId);
+
+            return JsonConvert.SerializeObject(messages, Formatting.Indented);
         }
     }
 }

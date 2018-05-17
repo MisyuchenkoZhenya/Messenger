@@ -99,9 +99,24 @@ textarea {
     margin: 5px 0 12px 0;
     padding: 10px 10px 10px 10px;
     font-size: 16px;
-    border: dashed 1px #aaaaaa;
+    border: dotted 1px #aaaaaa;
+    border-radius: 5px;
     background: transparent;
     color: #dddddd;
+}
+
+.chat_info {
+    margin: 5px 0 12px 0;
+    font-size: 16px;
+    border: groove 2px #eeeeee;
+    border-radius: 3px;
+    background: #444444;
+    color: #dddddd;
+}
+
+.chat_info:hover {
+    background: #505050;
+    box-shadow: 0 0 1px 2px #aaaaaa;
 }
 
 .possibleContact {
@@ -141,25 +156,4 @@ textarea {
     right: 0;
     margin: 5px 5px 0 0;
     filter: invert(1);
-}
-
-#current_chat {
-    position: relative;
-    height: 800px;
-    width: 100%;
-}
-
-.chat_header {
-    position: relative;
-    height: 10%;
-    width: inherit;
-}
-
-.chat_body {
-    position: relative;
-    height: 90%;
-    width: inherit;
-    background: #555555;
-    box-shadow: inset 0 3px 20px 3px #282828;
-    border-radius: 3px;
 }

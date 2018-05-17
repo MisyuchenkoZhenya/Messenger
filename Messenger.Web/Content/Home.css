@@ -1,0 +1,79 @@
+﻿#current_chat {
+    position: relative;
+    height: 800px;
+    width: 100%;
+}
+
+.chat_header {
+    position: relative;
+    height: 10%;
+    width: inherit;
+    margin: 0 0 10px 0;
+    background: #505050;
+    box-shadow: inset 0 0 20px 3px #525252;
+}
+
+.chat_body {
+    position: relative;
+    height: 80%;
+    width: inherit;
+    background: #555555;
+    box-shadow: inset 0 3px 20px 3px #282828;
+    border-radius: 3px;
+    margin: 0 0 5px 0;
+}
+
+.chat_input {
+    position: relative;
+    height: 9%;
+    width: inherit;
+}
+
+#no_chat_info {
+    font-size: 32px;
+    position: relative;
+    text-shadow: 0 1px 20px #bbbbbb;
+    font-weight: bold;
+}
+
+#input_message {
+    position: absolute;
+    word-wrap: break-word;
+    width: 90%;
+    height: 100%;
+    font-size: 15px;
+    padding: 2px 5px 2px 5px;
+    resize: none;
+    background: #666666;
+    color: #dddddd;
+    font-size: 15px;
+    border: solid 1px #aaaaaa;
+    overflow-y: scroll;
+}
+
+#input_btn {
+    background: transparent;
+    position: absolute;
+    width: 20%;
+    height: 100%;
+    right: 0;
+    border: solid 1px initial;
+    padding: 0;
+    color: #eeeeee;
+    pointer-events: none;
+}
+
+#input_message::-webkit-scrollbar-track {
+    border-radius: 1px;
+    background-color: transparent;
+}
+
+#input_message::-webkit-scrollbar {
+    width: 8px;
+    background-color: transparent;
+}
+
+#input_message::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background-color: #dddddd;
+}

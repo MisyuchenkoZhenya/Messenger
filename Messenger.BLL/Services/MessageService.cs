@@ -29,14 +29,17 @@ namespace Messenger.BLL.Services
             Database.Save();
         }
 
-        public IEnumerable<MessageDTO> GetMessages(int chatId)
+        public Task<IEnumerable<MessageDTO>> GetMessages(int chatId)
         {
-            var messages = Database.Chats.GetWithInclude(chatId, c => c.Messages, 
+            return Task.Run<IEnumerable<MessageDTO>>(() =>
+            {
+                var messages = Database.Chats.GetWithInclude(chatId, c => c.Messages,
                                                                  c => c.Messages.Select(m => m.Type),
                                                                  c => c.Messages.Select(m => m.Author)).Messages;
-            var messagesDto = Mapper.Map<IEnumerable<Message>, List<MessageDTO>>(messages);
+                var messagesDto = Mapper.Map<IEnumerable<Message>, List<MessageDTO>>(messages);
 
-            return messagesDto;
+                return messagesDto;
+            });
         }
 
         public void SendMedia(MessageDTO message)

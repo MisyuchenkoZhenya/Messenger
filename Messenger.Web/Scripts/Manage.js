@@ -5,8 +5,8 @@
 
 function init() {
     $.ajaxSetup({ cache: false });
-    $("#userModal").click(OnUserModalCalled);
-    $(".delete_contact").click(OnDeleteContact);
+    $("#userModal").on("click", OnUserModalCalled);
+    $(".delete_contact").on("click", OnDeleteContact);
 }
 
 

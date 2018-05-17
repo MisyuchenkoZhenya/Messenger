@@ -11,7 +11,7 @@ namespace Messenger.BLL.Interfaces
     {
         void SendMessage(MessageDTO message);
         void SendMedia(MessageDTO message);
-        IEnumerable<MessageDTO> GetMessages(int chatId);
+        Task<IEnumerable<MessageDTO>> GetMessages(int chatId);
         void DeleteMessage(int messageId);
     }
 }
