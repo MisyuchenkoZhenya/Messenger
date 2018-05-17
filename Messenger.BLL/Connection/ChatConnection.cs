@@ -11,7 +11,9 @@ namespace Messenger.BLL.Connection
     {
         protected override Task OnConnected(IRequest request, string connectionId)
         {
-            return Connection.Send(connectionId, "Welcome!");
+            var group = request.QueryString.Where(q => q.Key == "group").Select(q => q.Value);
+            
+            return Groups.Add(connectionId, "q");
         }
 
         protected override Task OnReceived(IRequest request, string connectionId, string data)
@@ -23,6 +25,11 @@ namespace Messenger.BLL.Connection
         {
             //Data chatData = new Data() { Name = "Сообщение сервера", Message = "Пользователь " + connectionId + " покинул чат" };
             return Connection.Broadcast("Disconnected");
+        }
+
+        protected override IList<string> OnRejoiningGroups(IRequest request, IList<string> groups, string connectionId)
+        {
+            return groups;
         }
     }
 }
