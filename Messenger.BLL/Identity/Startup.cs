@@ -8,7 +8,6 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Owin;
-using Messenger.BLL.Connection;
 
 [assembly: OwinStartup(typeof(Messenger.BLL.Identity.Startup))]
 namespace Messenger.BLL.Identity
@@ -18,7 +17,7 @@ namespace Messenger.BLL.Identity
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
-            app.MapSignalR<ChatConnection>("/chat");
+            app.MapSignalR();
         }
         
         public void ConfigureAuth(IAppBuilder app)

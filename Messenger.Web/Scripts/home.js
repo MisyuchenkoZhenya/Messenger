@@ -2,112 +2,69 @@
     init();
 });
 
-var commonChatConnection;
-var specificChatConnection;
+var ChatConnection;
 
 function init() {
-    //commonChatConnection = $.connection("/chat");
-
     $(".chat_info").on("click", OnChatSelected);
-    $("#input_message").keyup(PressTextEnter);
+    $("#input_message").keyup(OnPressTextEnter);
     $("#input_btn").on("click", OnChatButtonClick);  
-
-    //ConnectWithWebSocket();
 }
 
 // --events--
 
 function OnChatSelected(e) {
+    ChatConnection = $.connection.chatHub;
+    InitializeChatHandlers(ChatConnection);
+
     $("#input_btn").css("pointer-events", "all");
     let chat_id = $(this).attr("id").split("_")[1];
 
-    $.post("/Home/GetChatContent", {
-        chatId: parseInt(chat_id)
-    })
-    .done(data => {
-        specificChatConnection = $.connection("/chat"); // ???
-        ConnectWithWebSocket();
-
-        $(".chat_body").empty();
-        data = JSON.parse(data);
-
-    });
+    GetChatContent(chat_id);
 }
 
 function OnChatButtonClick(e) {
     let chat_text = $("#input_message").val();
     if (chat_text.search(/.+/) >= 0) {
-
+        ChatConnection.server.Send(chat_text);
     }
 
     $("#input_message").val('');
 }
 
-// --helpers--
-
-function ConnectWithWebSocket() {
-    specificChatConnection.start()
-        .done((data) => {
-            alert(data);
-        });
-}
-
-function AppendMessage(message) {
-
-}
-
-function FillChat(content) {
-
-}
-
-function PressTextEnter(event) {
+function OnPressTextEnter(event) {
     if (event.keyCode === 13) {
         $("#input_btn").click();
     }
 }
 
+function InitializeChatHandlers(chat) {
+    chat.client.AppendMessage = (message) => {
+        alert(message);
+    }
+}
 
+// --helpers--
 
+function GetChatContent(chat_id) {
+    $.post("/Home/GetChatContent", {
+        chatId: parseInt(chat_id)
+    })
+    .done(data => {
+        ConnectWithWebSocket();
 
-//$(function () {
+        $(".chat_body").empty();
+        data = JSON.parse(data);
+    });
+}
 
-//    $('#chatBody').hide();
+function ConnectWithWebSocket() {
+    $.connection.hub.start()
+        .done(() => {
+            ChatConnection.server.send("Hi");
+            alert("Connected");
+    });
+}
 
-//    var myConnection = $.connection("/chat");
+function FillChat(content) {
 
-//    myConnection.received((data) => {
-//        $("#chatroom ul").append("<li><strong>" + htmlEncode(data.Name) +
-//            '</strong>: ' + htmlEncode(data.Message) + "</li>");
-//    });
-
-//    // обработка логина
-//    $("#btnLogin").click(function () {
-
-//        var userName = $("#txtUserName").val().replace(/\s/g, '');
-//        if (userName.length > 0) {
-//            $('#username').val(userName);
-            
-//            $('#btnLogin').attr('disabled', 'disabled');
-//            $('#txtUserName').attr('disabled', 'disabled');
-
-//            $('#chatBody').show();
-
-//            myConnection.start().done(function () {
-
-//                $('#sendmessage').click(function () {
-
-//                    myConnection.send(JSON.stringify({ name: $('#username').val(), message: $('#message').val() }));
-//                    $('#message').val('');
-//                });
-//            });
-//        }
-//        else {
-//            alert("Введите имя");
-//        }
-//    });
-//});
-//// Кодирование тегов
-//function htmlEncode(value) {
-//    var encodedValue = $('<div />').text(value).html();
-//    return encodedValue;
-//}
+}
