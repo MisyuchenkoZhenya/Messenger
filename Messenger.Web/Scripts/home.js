@@ -38,8 +38,8 @@ function OnChatButtonClick(e) {
     let chat_text = $("#input_message").val();
     if (chat_text.search(/.+/) >= 0) {
         ChatConnection.server.send({
-            message: chat_text,
-            message_type: "Text",
+            Content: chat_text,
+            Type: "Text",
             authorId: CurrentUserId
         }, ChatId);
     }
@@ -54,8 +54,8 @@ function OnPressTextEnter(event) {
 }
 
 function InitializeChatHandlers(chat) {
-    chat.client.addChatMessage = function (content) {
-        Print(content);
+    chat.client.addChatMessage = function (message) {
+        Print(message);
     }
 }
 
@@ -65,35 +65,36 @@ function GetChatContent(chat_id) {
     $.post("/Home/GetChatContent", {
         chatId: parseInt(chat_id)
     })
-    .done(data => {
-        ConnectWithWebSocket();
-
+        .done(data => {
         $(".chat_body").empty();
-        data = JSON.parse(data);
+        ConnectWithWebSocket(JSON.parse(data));
     });
 }
 
-function ConnectWithWebSocket() {
+function ConnectWithWebSocket(data) {
     $.connection.hub.start()
     .done(() => {
         ChatConnection.server.connect(ChatId);
+        data.forEach((elem) => {
+            Print(elem);
+        });
     });
 }
 
-function Print(content) {
-    if (content.message_type === "Text") {
-        PrintText(content.message);
-    } else if (content.message_type === "Image") {
-        PrintImage(content.message);
-    } else if (content.message_type === "Info") {
-        PrintInfo(content.message);
+function Print(message) {
+    if (message.Type === "Text") {
+        PrintText(message);
+    } else if (message.Type === "Image") {
+        PrintImage(message);
+    } else if (message.Type === "Info") {
+        PrintInfo(message);
     }
 }
 
 function PrintText(message) {
     $(".chat_body").append(`
         <div class="chat_message">
-            <p>${message}</p>
+            <p>${message.Content}</p>
         </div>
     `);
 }
@@ -105,7 +106,7 @@ function PrintImage(message) {
 function PrintInfo(message) {
     $(".chat_body").append(`
         <div class="chat_message">
-            <p>${message}</p>
+            <p>${message.Content}</p>
         </div>
     `);
 }

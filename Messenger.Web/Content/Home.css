@@ -32,9 +32,11 @@
 
 #no_chat_info {
     font-size: 32px;
-    position: relative;
+    position: absolute;
     text-shadow: 0 1px 20px #bbbbbb;
     font-weight: bold;
+    top: 40%;
+    margin: 0 30%;
 }
 
 #input_message {

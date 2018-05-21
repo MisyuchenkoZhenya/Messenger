@@ -20,33 +20,33 @@ namespace Messenger.BLL.Hubs
             messageService = new MessageService(new UnitOfWork());
         }
         
-        public async Task Send(dynamic content, string roomName)
+        public async Task Send(dynamic message, string roomName)
         {
             MessageDTO messageDTO = new MessageDTO
             {
-                Author = content.authorId,
-                Content = content.message,
+                Author = message.authorId,
+                Content = message.Content,
                 CreatedAt = DateTime.Now,
-                Type = content.message_type,
+                Type = message.Type,
                 ChatId = int.Parse(roomName)
             };
             messageService.SendMessage(messageDTO);
-            content.createdAt = messageDTO.CreatedAt;
-            content.author = Context.User.Identity.Name;
+            message.createdAt = messageDTO.CreatedAt;
+            message.author = Context.User.Identity.Name;
 
-            Clients.Group(roomName).addChatMessage(content);
+            Clients.Group(roomName).addChatMessage(message);
         }
         
         public async Task Connect(string roomName)
         {
             await Groups.Add(Context.ConnectionId, roomName);
-            Clients.Group(roomName).addChatMessage(new { message = Context.User.Identity.Name + " joined.", message_type = "Info" });
+            Clients.Group(roomName).addChatMessage(new { Content = Context.User.Identity.Name + " joined.", Type = "Info" });
         }
 
         public async Task Disconnect(string roomName)
         {
             await Groups.Remove(Context.ConnectionId, roomName);
-            Clients.Group(roomName).addChatMessage(new { message = Context.User.Identity.Name + " disconnected.", message_type = "Info" });
+            Clients.Group(roomName).addChatMessage(new { Content = Context.User.Identity.Name + " disconnected.", Type = "Info" });
         }
     }
 }
