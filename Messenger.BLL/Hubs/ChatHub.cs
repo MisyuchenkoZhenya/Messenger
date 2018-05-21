@@ -31,27 +31,22 @@ namespace Messenger.BLL.Hubs
                 ChatId = int.Parse(roomName)
             };
             messageService.SendMessage(messageDTO);
+            content.createdAt = messageDTO.CreatedAt;
+            content.author = Context.User.Identity.Name;
 
-            Clients.Group(roomName).addChatMessage(content.message);
+            Clients.Group(roomName).addChatMessage(content);
         }
         
         public async Task Connect(string roomName)
         {
             await Groups.Add(Context.ConnectionId, roomName);
-            Clients.Group(roomName).addChatMessage(Context.User.Identity.Name + " joined.");
+            Clients.Group(roomName).addChatMessage(new { message = Context.User.Identity.Name + " joined.", message_type = "Info" });
         }
 
         public async Task Disconnect(string roomName)
         {
             await Groups.Remove(Context.ConnectionId, roomName);
-            Clients.Group(roomName).addChatMessage(Context.User.Identity.Name + " disconnected.");
+            Clients.Group(roomName).addChatMessage(new { message = Context.User.Identity.Name + " disconnected.", message_type = "Info" });
         }
-
-        //// Отключение пользователя
-        //public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)
-        //{
-
-        //    return base.OnDisconnected(stopCalled);
-        //}
     }
 }

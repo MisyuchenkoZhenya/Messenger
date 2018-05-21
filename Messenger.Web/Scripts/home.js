@@ -54,8 +54,8 @@ function OnPressTextEnter(event) {
 }
 
 function InitializeChatHandlers(chat) {
-    chat.client.addChatMessage = function (message, ChatId) {
-        PrintText(message);
+    chat.client.addChatMessage = function (content) {
+        Print(content);
     }
 }
 
@@ -80,6 +80,16 @@ function ConnectWithWebSocket() {
     });
 }
 
+function Print(content) {
+    if (content.message_type === "Text") {
+        PrintText(content.message);
+    } else if (content.message_type === "Image") {
+        PrintImage(content.message);
+    } else if (content.message_type === "Info") {
+        PrintInfo(content.message);
+    }
+}
+
 function PrintText(message) {
     $(".chat_body").append(`
         <div class="chat_message">
@@ -88,6 +98,14 @@ function PrintText(message) {
     `);
 }
 
-function PrintImage() {
+function PrintImage(message) {
 
+}
+
+function PrintInfo(message) {
+    $(".chat_body").append(`
+        <div class="chat_message">
+            <p>${message}</p>
+        </div>
+    `);
 }
