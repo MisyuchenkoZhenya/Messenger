@@ -15,7 +15,7 @@ namespace Messenger.DAL.Interfaces
         void Update(TEntity item);
         void Delete(int id);
         IEnumerable<TEntity> GetWithInclude(params Expression<Func<TEntity, object>>[] includeProperties);
-        IEnumerable<TEntity> GetWithInclude(Func<TEntity, bool> predicate, params Expression<Func<TEntity, object>>[] includeProperties);
+        List<TEntity> GetWithInclude(Func<TEntity, bool> predicate, params Expression<Func<TEntity, object>>[] includeProperties);
         TEntity GetWithInclude(int id, params Expression<Func<TEntity, object>>[] includeProperties);
         IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includeProperties);
     }

@@ -42,14 +42,15 @@ namespace Messenger.BLL.Services
             });
         }
 
-        public void SendMedia(MessageDTO message)
+        public void SendMessage(MessageDTO messageDto)
         {
-            throw new NotImplementedException();
-        }
+            var message = Mapper.Map<MessageDTO, Message>(messageDto);
+            message.Author = Database.Users.GetById(messageDto.Author);
+            message.Chat = Database.Chats.GetById(messageDto.ChatId);
+            message.Type = Database.MessageTypes.GetWithInclude(mt => mt.Type == messageDto.Type)[0];
 
-        public void SendMessage(MessageDTO message)
-        {
-            throw new NotImplementedException();
+            Database.Messages.Create(message);
+            Database.Save();
         }
 
         public void Dispose()

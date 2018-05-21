@@ -18,7 +18,7 @@ namespace Messenger.Web.Controllers
 
         public ChatController()
         {
-            serviceUOW = new ServiceUOW.ServiceUOW();
+            serviceUOW = ServiceUOW.ServiceUOW.GetInstance();
         }
 
         // GET: Chat
@@ -36,22 +36,22 @@ namespace Messenger.Web.Controllers
 
         //
         // POST: /Chat/AddChat
-
-
-        //TODO: cut this shit
         [HttpPost]
         public async Task<ActionResult> AddChat(ChatDTO chatDTO, HttpPostedFileBase upload, string[] users)
         {
+            //TODO: correct upload
+
             Regex rgx = new Regex(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$");
-            if (!rgx.IsMatch(upload.FileName ?? ""))
+            if (!rgx.IsMatch(upload.FileName))
                 ModelState.AddModelError("PhotoUrl", "Only Image files allowed.");
             
             if (ModelState.IsValid)
             {
                 chatDTO.AdminId = User.Identity.GetUserId();
-                int chatId = await serviceUOW.ChatService.CreateChat(chatDTO);
-
                 chatDTO.PhotoUrl = SaveChatIcon(upload);
+                chatDTO.CreatedAt = DateTime.Now;
+                int chatId = await serviceUOW.ChatService.CreateChat(chatDTO);
+                
                 foreach (var userId in users ?? Array.Empty<string>())
                 {
                     serviceUOW.ChatService.AddChatUser(new UserToChatDTO { ChatId = chatId, UserId = userId });

@@ -16,8 +16,7 @@ namespace Messenger.BLL.DTO
 
         [DataType(DataType.DateTime)]
         public DateTime CreatedAt { get; set; }
-
-        [Required]
+        
         [MaxLength(16)]
         public string Title { get; set; }
 

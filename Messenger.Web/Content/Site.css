@@ -105,20 +105,6 @@ textarea {
     color: #dddddd;
 }
 
-.chat_info {
-    margin: 5px 0 12px 0;
-    font-size: 16px;
-    border: groove 2px #eeeeee;
-    border-radius: 3px;
-    background: #444444;
-    color: #dddddd;
-}
-
-.chat_info:hover {
-    background: #505050;
-    box-shadow: 0 0 1px 2px #aaaaaa;
-}
-
 .possibleContact {
     border: solid 1px #555555;
     border-radius: 20%;

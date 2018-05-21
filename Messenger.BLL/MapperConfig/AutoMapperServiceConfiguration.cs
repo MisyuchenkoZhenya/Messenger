@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Messenger.BLL.DTO;
+using Messenger.BLL.Services;
 using Messenger.DAL.Models;
+using Messenger.DAL.Repository;
 using System.Web;
 
 namespace Messenger.BLL.MapperConfig
@@ -30,7 +32,13 @@ namespace Messenger.BLL.MapperConfig
         {
             cfg.CreateMap<Message, MessageDTO>()
                     .ForMember("Author", opt => opt.MapFrom(m => m.Author.GetFullName()))
-                    .ForMember("Type", opt => opt.MapFrom(m => m.Type.Type));
+                    .ForMember("Type", opt => opt.MapFrom(m => m.Type.Type))
+                    .ForMember("ChatId", opt => opt.MapFrom(m => m.Chat.Id));
+
+            cfg.CreateMap<MessageDTO, Message>()//TODO: fix it later
+                    .ForMember("Author", opt => opt.MapFrom(m => new User()))
+                    .ForMember("Type", opt => opt.MapFrom(m => new MessageType()))
+                    .ForMember("Chat", opt => opt.MapFrom(m => new Chat()));
         }
 
         private static void ConfigureUserMapping(IMapperConfigurationExpression cfg)

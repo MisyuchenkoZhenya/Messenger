@@ -23,7 +23,7 @@ namespace Messenger.Web.Controllers
 
         public ManageController()
         {
-            serviceUOW = new ServiceUOW.ServiceUOW();
+            serviceUOW = ServiceUOW.ServiceUOW.GetInstance();
         }
 
         [HttpGet]

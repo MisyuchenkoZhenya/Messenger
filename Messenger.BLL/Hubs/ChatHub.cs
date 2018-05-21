@@ -5,22 +5,47 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Messenger.BLL.Services;
+using Messenger.DAL.Repository;
+using Messenger.BLL.DTO;
 
 namespace Messenger.BLL.Hubs
 {
     public class ChatHub : Hub
     {
-        // Отправка сообщений
-        public void Send(string message)
+        private MessageService messageService;
+
+        public ChatHub()
         {
-            Clients.All.AppendMessage(message);
+            messageService = new MessageService(new UnitOfWork());
+        }
+        
+        public async Task Send(dynamic content, string roomName)
+        {
+            MessageDTO messageDTO = new MessageDTO
+            {
+                Author = content.authorId,
+                Content = content.message,
+                CreatedAt = DateTime.Now,
+                Type = content.message_type,
+                ChatId = int.Parse(roomName)
+            };
+            messageService.SendMessage(messageDTO);
+
+            Clients.Group(roomName).addChatMessage(content.message);
+        }
+        
+        public async Task Connect(string roomName)
+        {
+            await Groups.Add(Context.ConnectionId, roomName);
+            Clients.Group(roomName).addChatMessage(Context.User.Identity.Name + " joined.");
         }
 
-        //// Подключение нового пользователя
-        //public void Connect(string userName)
-        //{
-
-        //}
+        public async Task Disconnect(string roomName)
+        {
+            await Groups.Remove(Context.ConnectionId, roomName);
+            Clients.Group(roomName).addChatMessage(Context.User.Identity.Name + " disconnected.");
+        }
 
         //// Отключение пользователя
         //public override System.Threading.Tasks.Task OnDisconnected(bool stopCalled)

@@ -17,7 +17,7 @@ namespace Messenger.Web.Controllers
 
         public HomeController()
         {
-            serviceUOW = new ServiceUOW.ServiceUOW();
+            serviceUOW = ServiceUOW.ServiceUOW.GetInstance();
         }
 
         [HttpGet]

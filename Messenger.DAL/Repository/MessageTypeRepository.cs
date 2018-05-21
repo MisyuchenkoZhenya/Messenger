@@ -54,7 +54,7 @@ namespace Messenger.DAL.Repository
             return Include(includeProperties).ToList();
         }
 
-        public IEnumerable<MessageType> GetWithInclude(Func<MessageType, bool> predicate, params Expression<Func<MessageType, object>>[] includeProperties)
+        public List<MessageType> GetWithInclude(Func<MessageType, bool> predicate, params Expression<Func<MessageType, object>>[] includeProperties)
         {
             var query = Include(includeProperties);
             return query.Where(predicate).ToList();

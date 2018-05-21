@@ -12,5 +12,6 @@ namespace Messenger.BLL.DTO
         public string Content { get; set; }
         public string Type { get; set; }
         public DateTime CreatedAt { get; set; }
+        public int ChatId { get; set; }
     }
 }

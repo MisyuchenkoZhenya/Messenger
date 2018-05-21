@@ -25,7 +25,7 @@ namespace Messenger.Web.Controllers
 
         public AccountController()
         {
-            serviceUOW = new ServiceUOW.ServiceUOW();
+            serviceUOW = ServiceUOW.ServiceUOW.GetInstance();
         }
 
         //public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)

@@ -15,10 +15,19 @@ namespace ServiceUOW
         private IMessageService messageService;
         private IUserService userService;
 
+        private static ServiceUOW Instance { get; set; }
 
-        public ServiceUOW()
+        private ServiceUOW()
         {
             unitOfWork = new UnitOfWork();
+        }
+
+        public static ServiceUOW GetInstance()
+        {
+            if (Instance == null)
+                Instance = new ServiceUOW();
+
+            return Instance;
         }
 
         public IChatService ChatService {

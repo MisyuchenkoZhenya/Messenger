@@ -27,6 +27,7 @@
     position: relative;
     height: 9%;
     width: inherit;
+    pointer-events: none;
 }
 
 #no_chat_info {
@@ -60,7 +61,6 @@
     border: solid 1px initial;
     padding: 0;
     color: #eeeeee;
-    pointer-events: none;
 }
 
 #input_message::-webkit-scrollbar-track {
@@ -76,4 +76,27 @@
 #input_message::-webkit-scrollbar-thumb {
     border-radius: 2px;
     background-color: #dddddd;
+}
+
+.chat_info {
+    margin: 5px 0 12px 0;
+    font-size: 16px;
+    border: groove 2px #eeeeee;
+    border-radius: 3px;
+    background: #444444;
+    color: #dddddd;
+}
+
+.chat_info:hover {
+    background: #606060;
+    box-shadow: 0 0 1px 2px #cccccc;
+}
+
+.active {
+    background: #606060;
+    box-shadow: 0 0 2px 3px #cccccc;
+}
+
+.chat_message {
+
 }
