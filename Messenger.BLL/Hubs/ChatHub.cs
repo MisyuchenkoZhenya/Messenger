@@ -37,7 +37,7 @@ namespace Messenger.BLL.Hubs
 
             Clients.Group(roomName).addChatMessage(message);
         }
-        
+
         public async Task Connect(string roomName)
         {
             await Groups.Add(Context.ConnectionId, roomName);

@@ -34,7 +34,7 @@ namespace Messenger.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<JsonResult> UploadFile(string id)
+        public async Task<JsonResult> UploadFile()
         {
             string fileName = string.Empty;
             foreach (string file in Request.Files)
@@ -45,7 +45,7 @@ namespace Messenger.Web.Controllers
                     var stream = fileContent.InputStream;
                     string extension = fileContent.ContentType.Split('/')[1];
                     fileName = $"{Guid.NewGuid().ToString()}.{extension}";
-                    var path = Path.Combine(Server.MapPath("~/App_Data/Images"), fileName);
+                    var path = Path.Combine(Server.MapPath("~/data/images"), fileName);
                     using (var fileStream = System.IO.File.Create(path))
                     {
                         stream.CopyTo(fileStream);
