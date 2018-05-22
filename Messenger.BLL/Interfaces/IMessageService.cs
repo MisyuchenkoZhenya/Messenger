@@ -9,7 +9,7 @@ namespace Messenger.BLL.Interfaces
 {
     public interface IMessageService : IService
     {
-        void SendMessage(MessageDTO message);
+        Task<MessageDTO> SendMessage(MessageDTO message);
         Task<IEnumerable<MessageDTO>> GetMessages(int chatId);
         void DeleteMessage(int messageId);
     }

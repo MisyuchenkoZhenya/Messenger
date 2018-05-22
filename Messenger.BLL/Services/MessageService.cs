@@ -42,15 +42,21 @@ namespace Messenger.BLL.Services
             });
         }
 
-        public void SendMessage(MessageDTO messageDto)
+        public Task<MessageDTO> SendMessage(MessageDTO messageDto)
         {
-            var message = Mapper.Map<MessageDTO, Message>(messageDto);
-            message.Author = Database.Users.GetById(messageDto.Author);
-            message.Chat = Database.Chats.GetById(messageDto.ChatId);
-            message.Type = Database.MessageTypes.GetWithInclude(mt => mt.Type == messageDto.Type)[0];
+            return Task.Run(() => {
+                var message = Mapper.Map<MessageDTO, Message>(messageDto);
+                message.Author = Database.Users.GetById(messageDto.Author);
+                message.Chat = Database.Chats.GetById(messageDto.ChatId);
+                message.Type = Database.MessageTypes.GetWithInclude(mt => mt.Type == messageDto.Type)[0];
 
-            Database.Messages.Create(message);
-            Database.Save();
+                Database.Messages.Create(message);
+                Database.Save();
+
+                messageDto.AuthorName = message.Author.GetFullName();
+
+                return messageDto;
+            });            
         }
 
         public void Dispose()

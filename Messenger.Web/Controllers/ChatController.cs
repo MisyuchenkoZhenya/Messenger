@@ -73,6 +73,7 @@ namespace Messenger.Web.Controllers
             return JsonConvert.SerializeObject(contacts, Formatting.Indented);
         }
 
+
         private string SaveChatIcon(HttpPostedFileBase file)
         {
             if (file.ContentLength > 0 && file.FileName != "-noImage-.png")

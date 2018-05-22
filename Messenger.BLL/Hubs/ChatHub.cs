@@ -30,9 +30,10 @@ namespace Messenger.BLL.Hubs
                 Type = message.Type,
                 ChatId = int.Parse(roomName)
             };
-            messageService.SendMessage(messageDTO);
-            message.createdAt = messageDTO.CreatedAt;
-            message.author = Context.User.Identity.Name;
+            messageDTO = await messageService.SendMessage(messageDTO);
+            message.CreatedAt = messageDTO.CreatedAt;
+            message.Author = messageDTO.AuthorName;
+            message.AuthorId = messageDTO.Author;
 
             Clients.Group(roomName).addChatMessage(message);
         }
@@ -40,13 +41,13 @@ namespace Messenger.BLL.Hubs
         public async Task Connect(string roomName)
         {
             await Groups.Add(Context.ConnectionId, roomName);
-            Clients.Group(roomName).addChatMessage(new { Content = Context.User.Identity.Name + " joined.", Type = "Info" });
+            Clients.Group(roomName, Context.ConnectionId).addChatMessage(new { Content = Context.User.Identity.Name + " joined.", Type = "Info" });
         }
 
         public async Task Disconnect(string roomName)
         {
             await Groups.Remove(Context.ConnectionId, roomName);
-            Clients.Group(roomName).addChatMessage(new { Content = Context.User.Identity.Name + " disconnected.", Type = "Info" });
+            Clients.Group(roomName, Context.ConnectionId).addChatMessage(new { Content = Context.User.Identity.Name + " disconnected.", Type = "Info" });
         }
     }
 }

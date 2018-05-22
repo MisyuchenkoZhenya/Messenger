@@ -32,6 +32,7 @@ namespace Messenger.BLL.MapperConfig
         {
             cfg.CreateMap<Message, MessageDTO>()
                     .ForMember("Author", opt => opt.MapFrom(m => m.Author.GetFullName()))
+                    .ForMember("AuthorId", opt => opt.MapFrom(m => m.Author.Id))
                     .ForMember("Type", opt => opt.MapFrom(m => m.Type.Type))
                     .ForMember("ChatId", opt => opt.MapFrom(m => m.Chat.Id));
 

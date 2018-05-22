@@ -11,7 +11,9 @@ function init() {
 
     $(".chat_info").on("click", OnChatSelected);
     $("#input_message").keyup(OnPressTextEnter);
-    $("#input_btn").on("click", OnChatButtonClick);
+    $("#input_btn_send").on("click", OnChatButtonClick);
+    $("#input_btn_img").on("click", OnImageButtonClick);
+    $("#upload_file").on("change", OnFileUpload);
 }
 
 // --events--
@@ -47,9 +49,44 @@ function OnChatButtonClick(e) {
     $("#input_message").val('');
 }
 
+function OnImageButtonClick(e) {
+    $("#upload_file").click();
+}
+
+function OnFileUpload(e) {
+    var files = e.target.files;
+    if (files.length > 0) {
+        if (window.FormData !== undefined) {
+            var data = new FormData();
+            for (var x = 0; x < files.length; x++) {
+                data.append("file" + x, files[x]);
+            }
+
+            $.ajax({
+                type: "POST",
+                url: '/Home/UploadFile',
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (result) {
+                    console.log(result);
+                },
+                error: function (xhr, status, p3, p4) {
+                    var err = "Error " + " " + status + " " + p3 + " " + p4;
+                    if (xhr.responseText && xhr.responseText[0] == "{")
+                        err = JSON.parse(xhr.responseText).Message;
+                    console.log(err);
+                }
+            });
+        } else {
+            alert("This browser doesn't support HTML5 file uploads!");
+        }
+    }
+}
+
 function OnPressTextEnter(event) {
     if (event.keyCode === 13) {
-        $("#input_btn").click();
+        $("#input_btn_send").click();
     }
 }
 
@@ -89,18 +126,39 @@ function Print(message) {
     } else if (message.Type === "Info") {
         PrintInfo(message);
     }
+    $(".chat_body").scrollTop($(".chat_body").get(0).scrollHeight);
 }
 
 function PrintText(message) {
     $(".chat_body").append(`
-        <div class="chat_message">
-            <p>${message.Content}</p>
+        <div class="speech-bubble${message.AuthorId === CurrentUserId ? "-my" : ""}">
+            <div class="message_sender">
+                ${message.Author}
+            </div>
+            <div class="message_content">
+                ${message.Content}
+            </div>
+            <div class="message_date">
+                ${message.CreatedAt}
+            </div>
         </div>
     `);
 }
 
 function PrintImage(message) {
-
+    $(".chat_body").append(`
+        <div class="speech-bubble${message.AuthorId === CurrentUserId ? "-my" : ""}">
+            <div class="message_sender">
+                ${message.Author}
+            </div>
+            <div class="message_content">
+                <img src="/data/images/${message.Content}">                
+            </div>
+            <div class="message_date">
+                ${message.CreatedAt}
+            </div>
+        </div>
+    `);
 }
 
 function PrintInfo(message) {

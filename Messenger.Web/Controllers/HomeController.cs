@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -29,6 +31,29 @@ namespace Messenger.Web.Controllers
             var chats = await serviceUOW.UserService.GetChats(userId);
 
             return View(new ManageIndexViewModel { CurrentUser = model, Contacts = contacts, Chats = chats });
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> UploadFile(string id)
+        {
+            string fileName = string.Empty;
+            foreach (string file in Request.Files)
+            {
+                var fileContent = Request.Files[file];
+                if (fileContent != null && fileContent.ContentLength > 0)
+                {
+                    var stream = fileContent.InputStream;
+                    string extension = fileContent.ContentType.Split('/')[1];
+                    fileName = $"{Guid.NewGuid().ToString()}.{extension}";
+                    var path = Path.Combine(Server.MapPath("~/App_Data/Images"), fileName);
+                    using (var fileStream = System.IO.File.Create(path))
+                    {
+                        stream.CopyTo(fileStream);
+                    }
+                }
+            }
+
+            return Json(fileName);
         }
 
         public async Task<string> GetChatContent(int chatId)

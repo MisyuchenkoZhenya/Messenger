@@ -50,9 +50,15 @@
                 </div>
                 <div class="chat_input">
                     <textarea id="input_message" class="form-control"></textarea>
-                    <button id="input_btn" class="btn btn-default">
-                        SEND                        
-                    </button>
+                    <div id="input_btn" class="btn-group-vertical">
+                        <button id="input_btn_send" class="btn btn-default">
+                            SEND
+                        </button>
+                        <button id="input_btn_img" class="btn btn-default">
+                            Image
+                        </button>
+                    </div>
+                    <input id="upload_file" name="UploadFile" type="file" accept="image/*" hidden />
                 </div>
             </div>
         </div>
