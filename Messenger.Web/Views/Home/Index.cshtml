@@ -6,36 +6,46 @@
 <div>
     <div class="row">
         <div class="col-md-4">
-            <h4>List of contacts</h4>
-            @foreach (var contact in Model.Contacts)
-            {
-                <div id="@contact.Id" class="currentContact">
-                    <div class="contact_info">
-                        <b>Name:</b> @contact.FirstName<br />
-                        <b>Second name:</b> @contact.LastName<br />
-                        <b>Email:</b> @contact.Email<br />
-                        <b>Phone number:</b> @contact.PhoneNumber
+            <div class="col_title">
+                <h4>List of contacts</h4>
+            </div>
+            <div class="col_body">
+                @foreach (var contact in Model.Contacts)
+                {
+                    <div id="@contact.Id" class="currentContact">
+                        <div class="contact_info">
+                            <b>Name:</b> @contact.FirstName<br />
+                            <b>Second name:</b> @contact.LastName<br />
+                            <b>Email:</b> @contact.Email<br />
+                            <b>Phone number:</b> @contact.PhoneNumber
+                        </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
         <div class="col-md-4">
-            <h4>Chats</h4>
-            @foreach (var chat in Model.Chats)
-            {
-                <div id="chat_@chat.Id" class="chat_info">
-                    <span class="chat_info_content">
-                        <center><b>@chat.Title</b></center><br />
+            <div class="col_title">
+                <h4>Chats</h4>
+            </div>
+            <div class="col_body">
+                @foreach (var chat in Model.Chats)
+                {
+                    <div id="chat_@chat.Id" class="chat_info">
+                        <span class="chat_info_content">
+                            <center><b>@chat.Title</b></center><br />
 
-                    </span>
-                    <span class="chat_info_icon">
-                        <img src="~/images/chatIcons/@(chat.PhotoUrl)" title="chat icon" class="chat_icon" />
-                    </span>
-                </div>
-            }
+                        </span>
+                        <span class="chat_info_icon">
+                            <img src="~/images/chatIcons/@(chat.PhotoUrl)" title="chat icon" class="chat_icon" />
+                        </span>
+                    </div>
+                }
+            </div>
         </div>
         <div class="col-md-4">
-            <h4>Current chat</h4>
+            <div class="col_title">
+                <h4>Current chat</h4>
+            </div>
             <div id="current_chat">
                 <div class="chat_header">
 

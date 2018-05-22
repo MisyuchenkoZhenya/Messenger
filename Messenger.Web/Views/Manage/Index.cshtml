@@ -78,15 +78,13 @@
                 @foreach (var chat in Model.Chats)
                 {
                     <div id="chat_@chat.Id" class="currentChat">
-                        <button class="close delete_chat" data-dismiss="modal" area-hidden="true">
-                            <img class="close_icon" src="~/images/close.png" />
-                        </button>
                         <br />
                         <div class="chat_info">
                             <span class="chat_info_content">
                                 <b>Title:</b> @chat.Title<br />
                                 <b>Created:</b> @chat.CreatedAt<br />
-                                <b>Private: @(chat.IsPrivate ? '✓' : 'X')</b>
+                                <b>Private: @(chat.IsPrivate ? '✓' : 'X')</b><br />
+                                <button onclick="location.href='@Url.Action("UpdateChat", "Chat", new { chatId = chat.Id })'" class="btn">update</button>
                             </span>
                             <span class="chat_info_icon">
                                 <img src="~/images/chatIcons/@(chat.PhotoUrl)" title="chat icon" class="chat_icon" />

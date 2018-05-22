@@ -105,12 +105,27 @@
     box-shadow: 0 0 2px 3px #cccccc;
 }
 
+.col-md-4 {
+    height: 850px;
+}
 
+.col_body {
+    height: inherit;
+    overflow-y: auto;
+}
 
-
-.chat_body::-webkit-scrollbar-track {
+.col_body::-webkit-scrollbar {
+    width: 4px;
     background-color: transparent;
 }
+
+.col_body::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #dddddd;
+}
+
+
+
 
 .chat_body::-webkit-scrollbar {
     width: 6px;

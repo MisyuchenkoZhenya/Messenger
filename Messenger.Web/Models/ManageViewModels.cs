@@ -19,6 +19,12 @@ namespace Messenger.Web.Models
         public IList<AuthenticationDescription> OtherLogins { get; set; }
     }
 
+    public class ChatToUpdateViewModel
+    {
+        public ChatDTO Chat { get; set; }
+        public IList<UserDTO> Participants { get; set; }
+    }
+
     public class FactorViewModel
     {
         public string Purpose { get; set; }

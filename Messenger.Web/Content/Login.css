@@ -1,9 +1,10 @@
 ﻿body {
-    background: linear-gradient(166deg, #e4e9cd, #ccd7ee, #c8eecf, #d5c8f5);
+    background: linear-gradient(166deg, #54594d, #4c576e, #486e6f, #554865);
     background-size: 600% 600%;
     -webkit-animation: Gradient 40s ease infinite;
     -moz-animation: Gradient 40s ease infinite;
     animation: Gradient 40s ease infinite;
+    color: #111111;
 }
 
 @-webkit-keyframes Gradient {

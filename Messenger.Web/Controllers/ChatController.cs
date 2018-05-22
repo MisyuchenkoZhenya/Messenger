@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using Messenger.Web.Models;
 
 namespace Messenger.Web.Controllers
 {
@@ -57,6 +58,37 @@ namespace Messenger.Web.Controllers
                     serviceUOW.ChatService.AddChatUser(new UserToChatDTO { ChatId = chatId, UserId = userId });
                 }
                 serviceUOW.ChatService.AddChatUser(new UserToChatDTO { ChatId = chatId, UserId = User.Identity.GetUserId() });
+
+                return RedirectToAction("Index", "Manage");
+            }
+
+            return View(chatDTO);
+        }
+
+        //
+        // GET: /Chat/UpdateChat
+        public ActionResult UpdateChat(int chatId)
+        {
+            var chat = serviceUOW.ChatService.GetFullChat(chatId);
+            var participants = serviceUOW.ChatService.GetChatParticipants(chatId);
+
+            ChatToUpdateViewModel vm = new ChatToUpdateViewModel
+            {
+                Chat = chat,
+                Participants = participants.ToList()
+            };
+
+            return View(vm);
+        }
+
+        //
+        // POST: /Chat/UpdateChat
+        [HttpPost]
+        public async Task<ActionResult> UpdateChat(ChatDTO chatDTO, HttpPostedFileBase upload, string[] users)
+        {
+            if (ModelState.IsValid)
+            {
+
 
                 return RedirectToAction("Index", "Manage");
             }
