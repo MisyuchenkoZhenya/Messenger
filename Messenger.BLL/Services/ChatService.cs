@@ -61,11 +61,23 @@ namespace Messenger.BLL.Services
             Database.Save();
         }
 
-        public void EditChat(ChatDTO chatDto)
+        public Task<bool> EditChat(ChatDTO chatDto)
         {
-            Chat chat = Database.Chats.GetById(chatDto.Id);
-            chat = Mapper.Map<ChatDTO, Chat>(chatDto);
-            Database.Save();
+            return Task.Run(() => {                
+                try
+                {
+                    var chat = Mapper.Map<ChatDTO, Chat>(chatDto);
+
+                    Database.Chats.Update(chat);
+                    Database.Save();
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
+
+                return true;
+            });
         }
 
         public Task<IEnumerable<ChatDTO>> GetChats(string userId, bool privateOnly = false)

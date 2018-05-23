@@ -12,7 +12,7 @@ namespace Messenger.BLL.Interfaces
         Task<IEnumerable<ChatDTO>> GetChats(string userId, bool privateOnly = false);
         ChatDTO GetFullChat(int chatId);
         IEnumerable<UserDTO> GetChatParticipants(int chatId);
-        void EditChat(ChatDTO chatDto);
+        Task<bool> EditChat(ChatDTO chatDto);
         void AddChatUser(UserToChatDTO utc);
         void DeleteChatUser(UserToChatDTO utc);
         Task<int> CreateChat(ChatDTO chatDto);

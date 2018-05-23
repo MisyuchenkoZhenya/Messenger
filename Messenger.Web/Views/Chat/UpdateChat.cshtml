@@ -7,58 +7,45 @@
 
 <h2>UpdateChat</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("UpdateChat", "Chat", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
     <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Chat.Id)
-
         <div class="form-group">
-            @Html.LabelFor(model => model.Chat.AdminId, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Chat.AdminId, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Chat.AdminId, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Chat.CreatedAt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Chat.CreatedAt, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Chat.CreatedAt, "", new { @class = "text-danger" })
-            </div>
+            @Html.HiddenFor(model => model.Chat.Id, new { @Name = "chatDTO.Id" })
+            @Html.HiddenFor(model => model.Chat.AdminId, new { @Name = "chatDTO.AdminId" })
+            @Html.HiddenFor(model => model.Chat.CreatedAt, new { @Name = "chatDTO.CreatedAt" })
+            @Html.HiddenFor(model => model.Chat.IsPrivate, new { @Name = "chatDTO.IsPrivate" })
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Chat.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Chat.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.Chat.Title, new { htmlAttributes = new { @class = "form-control", @Name = "chatDTO.Title" } })
                 @Html.ValidationMessageFor(model => model.Chat.Title, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Chat.PhotoUrl, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Chat icon", new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Chat.PhotoUrl, new { htmlAttributes = new { @class = "form-control" } })
+                <input type="file" name="upload" value="@Model.Chat.PhotoUrl" />
                 @Html.ValidationMessageFor(model => model.Chat.PhotoUrl, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Chat.IsPrivate, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.Label("Contact: ", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                <div class="checkbox">
-                    @Html.EditorFor(model => model.Chat.IsPrivate)
-                    @Html.ValidationMessageFor(model => model.Chat.IsPrivate, "", new { @class = "text-danger" })
-                </div>
+                <button id="userModal" class="modalItem btn">Add contact</button><br />
+                <div id="userList"></div>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Update" class="btn btn-default" />
             </div>
         </div>
     </div>
@@ -71,4 +58,12 @@
 @section scripts
 {
     <script src="~/Scripts/chat.js" type="text/javascript"></script>
+    @*<script type="text/javascript">
+        window.onload = () => {
+            @foreach (var user in Model.Participants)
+            {
+                @: eval("AddNewContact(@user.Id, @($"{user.FirstName} {user.LastName}"))");
+            }
+        }
+    </script>*@
 }

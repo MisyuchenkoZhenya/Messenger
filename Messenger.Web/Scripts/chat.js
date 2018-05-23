@@ -22,7 +22,7 @@ function OnUserModalCalled(e) {
                 .done((data) => {
                     $(".modal-body").html(UsersFromJson(data));
 
-                    $(".possibleContact").click(AddNewContact);
+                    $(".possibleContact").click(OnAppendContact);
                 });
         });
 
@@ -43,19 +43,22 @@ function OnDeleteContact(e) {
     }
 }
 
-function AddNewContact(e) {
+function OnAppendContact(e) {
     let userId = $(this).attr("id");
     let userName = $(this).children("p").text();
 
+    AddNewContact(userId, userName);
+}
+
+function AddNewContact(userId, userName) {
     existing_users.push(userId);
-    
+
     $("#userList").append(`
         <div id="input_${userId}">
             <h4>${userName}</h4>
             <input type="hidden" id="user_${userId}" name="users" value="${userId}"/>
         </div>
     `);
-    
 }
 
 function UsersFromJson(jsonString) {

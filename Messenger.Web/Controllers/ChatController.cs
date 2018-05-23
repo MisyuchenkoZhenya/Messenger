@@ -40,29 +40,37 @@ namespace Messenger.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> AddChat(ChatDTO chatDTO, HttpPostedFileBase upload, string[] users)
         {
-            //TODO: correct upload
-
-            Regex rgx = new Regex(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$");
-            if (!rgx.IsMatch(upload.FileName))
-                ModelState.AddModelError("PhotoUrl", "Only Image files allowed.");
+            IsFilenameValide(upload);
             
             if (ModelState.IsValid)
             {
                 chatDTO.AdminId = User.Identity.GetUserId();
                 chatDTO.PhotoUrl = SaveChatIcon(upload);
                 chatDTO.CreatedAt = DateTime.Now;
+
                 int chatId = await serviceUOW.ChatService.CreateChat(chatDTO);
-                
-                foreach (var userId in users ?? Array.Empty<string>())
-                {
-                    serviceUOW.ChatService.AddChatUser(new UserToChatDTO { ChatId = chatId, UserId = userId });
-                }
-                serviceUOW.ChatService.AddChatUser(new UserToChatDTO { ChatId = chatId, UserId = User.Identity.GetUserId() });
+                AddUsersToChat(chatId, users);
 
                 return RedirectToAction("Index", "Manage");
             }
 
             return View(chatDTO);
+        }
+
+        private void IsFilenameValide(HttpPostedFileBase file) //TODO: fix this shit
+        {
+            Regex rgx = new Regex(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$");
+            if (!rgx.IsMatch(file.FileName))
+                ModelState.AddModelError("PhotoUrl", "Only Image files allowed.");
+        }
+
+       private void AddUsersToChat(int chatId, string[] users)
+        {
+            foreach (var userId in users ?? Array.Empty<string>())
+            {
+                serviceUOW.ChatService.AddChatUser(new UserToChatDTO { ChatId = chatId, UserId = userId });
+            }
+            serviceUOW.ChatService.AddChatUser(new UserToChatDTO { ChatId = chatId, UserId = User.Identity.GetUserId() });
         }
 
         //
@@ -86,9 +94,16 @@ namespace Messenger.Web.Controllers
         [HttpPost]
         public async Task<ActionResult> UpdateChat(ChatDTO chatDTO, HttpPostedFileBase upload, string[] users)
         {
+            IsFilenameValide(upload);
+
             if (ModelState.IsValid)
             {
+                chatDTO.PhotoUrl = SaveChatIcon(upload);
+                await serviceUOW.ChatService.EditChat(chatDTO);
 
+                //TODO: chat users add/remove
+
+                AddUsersToChat(chatDTO.Id, users);
 
                 return RedirectToAction("Index", "Manage");
             }

@@ -47,7 +47,10 @@ namespace Messenger.DAL.Repository
 
         public void Update(Chat chat)
         {
-            db.Entry(chat).State = EntityState.Modified;
+            var tempChat = GetById(chat.Id);
+            tempChat.PhotoUrl = chat.PhotoUrl;
+            tempChat.Title = chat.Title;
+
         }
 
         public IEnumerable<Chat> GetWithInclude(params Expression<Func<Chat, object>>[] includeProperties)
