@@ -6,6 +6,12 @@ var ChatConnection;
 var ChatId;
 var CurrentUserId;
 
+const message_types = {
+    "Text": (m) => PrintText(m),
+    "Image": (m) => PrintImage(m),
+    "File": (m) => PrintFile(m),
+}
+
 function init() {
     CurrentUserId = window.userId;
 
@@ -66,8 +72,8 @@ function OnFileUpload(e) {
         data: data,
         success: (result) => {
             ChatConnection.server.send({
-                Content: result,
-                Type: "Image",
+                Content: result.file_name,
+                Type: result.file_type,
                 authorId: CurrentUserId
             }, ChatId);
         }
@@ -83,6 +89,10 @@ function OnPressTextEnter(event) {
 function InitializeChatHandlers(chat) {
     chat.client.addChatMessage = function (message) {
         Print(message);
+    }
+
+    chat.client.addInfoMessage = function (message) {
+        PrintInfo(message);
     }
 }
 
@@ -109,54 +119,47 @@ function ConnectWithWebSocket(data) {
 }
 
 function Print(message) {
-    if (message.Type === "Text") {
-        PrintText(message);
-    } else if (message.Type === "Image") {
-        PrintImage(message);
-    } else if (message.Type === "Info") {
-        PrintInfo(message);
-    }
+    $(".chat_body").append(`
+        <div class="speech-bubble${message.AuthorId === CurrentUserId ? "-my" : ""}">
+            <div class="message_sender">
+                ${message.Author}
+            </div>
+            <div class="message_content">
+                ${message_types[message.Type](message.Content)}
+            </div>
+            <div class="message_date">
+                ${message.CreatedAt}
+            </div>
+        </div>
+    `);
     $(".chat_body").scrollTop($(".chat_body").get(0).scrollHeight);
 }
 
 function PrintText(message) {
-    $(".chat_body").append(`
-        <div class="speech-bubble${message.AuthorId === CurrentUserId ? "-my" : ""}">
-            <div class="message_sender">
-                ${message.Author}
-            </div>
-            <div class="message_content">
-                ${message.Content}
-            </div>
-            <div class="message_date">
-                ${message.CreatedAt}
-            </div>
-        </div>
-    `);
+    return message;
 }
 
 function PrintImage(message) {
-    $(".chat_body").append(`
-        <div class="speech-bubble${message.AuthorId === CurrentUserId ? "-my" : ""}">
-            <div class="message_sender">
-                ${message.Author}
-            </div>
-            <div class="message_content">
-                <a href="/data/images/${message.Content}" target="_blank">
-                    <img class="message_img" src="/data/images/${message.Content}">
-                </a>
-            </div>
-            <div class="message_date">
-                ${message.CreatedAt}
-            </div>
-        </div>
-    `);
+    return `
+        <a href="/data/images/${message}" target="_blank">
+            <img class="message_img" src="/data/images/${message}">
+        </a>
+    `;
+}
+
+function PrintFile(message) {
+    return `
+        <a href="/data/files/${message}" target="_blank">
+            <b>${message}</b>
+        </a>
+    `;
 }
 
 function PrintInfo(message) {
     $(".chat_body").append(`
-        <div class="chat_message">
-            <p>${message.Content}</p>
-        </div>
+        <center>
+            <p>${message}</p>
+        </center>
     `);
+    $(".chat_body").scrollTop($(".chat_body").get(0).scrollHeight);
 }

@@ -275,6 +275,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="data\files\" />
     <Folder Include="data\images\" />
   </ItemGroup>
   <ItemGroup>

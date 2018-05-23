@@ -37,15 +37,17 @@ namespace Messenger.Web.Controllers
         public async Task<JsonResult> UploadFile()
         {
             string fileName = string.Empty;
+            string type = string.Empty;
             foreach (string file in Request.Files)
             {
                 var fileContent = Request.Files[file];
                 if (fileContent != null && fileContent.ContentLength > 0)
                 {
                     var stream = fileContent.InputStream;
-                    string extension = fileContent.ContentType.Split('/')[1];
+                    string extension = fileContent.FileName.Split('.').Last();
                     fileName = $"{Guid.NewGuid().ToString()}.{extension}";
-                    var path = Path.Combine(Server.MapPath("~/data/images"), fileName);
+                    type = fileContent.ContentType.Split('/')[0].Equals("image") ? "Image" : "File";
+                    var path = Path.Combine(Server.MapPath(type.Equals("Image") ? "~/data/images" : "~/data/files"), fileName);
                     using (var fileStream = System.IO.File.Create(path))
                     {
                         stream.CopyTo(fileStream);
@@ -53,7 +55,7 @@ namespace Messenger.Web.Controllers
                 }
             }
 
-            return Json(fileName);
+            return Json(new { file_name = fileName, file_type = type });
         }
 
         public async Task<string> GetChatContent(int chatId)

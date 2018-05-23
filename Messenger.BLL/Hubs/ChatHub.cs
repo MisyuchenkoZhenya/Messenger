@@ -41,13 +41,13 @@ namespace Messenger.BLL.Hubs
         public async Task Connect(string roomName)
         {
             await Groups.Add(Context.ConnectionId, roomName);
-            Clients.Group(roomName, Context.ConnectionId).addChatMessage(new { Content = Context.User.Identity.Name + " joined.", Type = "Info" });
+            Clients.Group(roomName, Context.ConnectionId).addInfoMessage(Context.User.Identity.Name + " joined.");
         }
 
         public async Task Disconnect(string roomName)
         {
             await Groups.Remove(Context.ConnectionId, roomName);
-            Clients.Group(roomName, Context.ConnectionId).addChatMessage(new { Content = Context.User.Identity.Name + " disconnected.", Type = "Info" });
+            Clients.Group(roomName, Context.ConnectionId).addInfoMessage(Context.User.Identity.Name + " disconnected.");
         }
     }
 }
