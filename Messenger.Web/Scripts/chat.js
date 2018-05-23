@@ -6,8 +6,8 @@ var existing_users = [];
 
 function init() {
     $.ajaxSetup({ cache: false });
-    $("#userModal").click(OnUserModalCalled);
-    $(".delete_contact").click(OnDeleteContact);
+    $("#userModal").on('click', OnUserModalCalled);
+    $(".delete_contact").on('click', OnDeleteContact);
 }
 
 
@@ -50,15 +50,28 @@ function OnAppendContact(e) {
     AddNewContact(userId, userName);
 }
 
+function OnRemoveChatUser(e) {
+    let userId = $(this).parent().attr("id").split('_')[1];
+    existing_users.splice(existing_users.indexOf(userId), 1);
+    $(`#input_${userId}`).remove();
+    //TODO: removing all users when trying to remove first FIX!!!
+    console.log(existing_users);
+}
+
 function AddNewContact(userId, userName) {
     existing_users.push(userId);
 
     $("#userList").append(`
         <div id="input_${userId}">
+            <span class="remove_user"></span>
             <h4>${userName}</h4>
             <input type="hidden" id="user_${userId}" name="users" value="${userId}"/>
         </div>
     `);
+
+    $(".remove_user").on('click', OnRemoveChatUser);
+
+    console.log(existing_users);
 }
 
 function UsersFromJson(jsonString) {

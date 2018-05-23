@@ -149,7 +149,7 @@
 }
 
 .message_img {
-    width: 99%;
+    max-width: 99%;
 }
 
 .message_date {

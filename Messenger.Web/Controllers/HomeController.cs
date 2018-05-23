@@ -36,6 +36,7 @@ namespace Messenger.Web.Controllers
         [HttpPost]
         public async Task<JsonResult> UploadFile()
         {
+            //TODO: clear this later
             string fileName = string.Empty;
             string type = string.Empty;
             foreach (string file in Request.Files)
