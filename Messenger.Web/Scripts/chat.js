@@ -54,24 +54,24 @@ function OnRemoveChatUser(e) {
     let userId = $(this).parent().attr("id").split('_')[1];
     existing_users.splice(existing_users.indexOf(userId), 1);
     $(`#input_${userId}`).remove();
-    //TODO: removing all users when trying to remove first FIX!!!
-    console.log(existing_users);
+
+    RewriteRemoveButtonEvent();
 }
 
 function AddNewContact(userId, userName) {
     existing_users.push(userId);
 
+    let viewUserInfo = userName.length === 0 ? "" : `<span class="remove_user"></span>
+                                                <h4>${userName}</h4>`;
+    
     $("#userList").append(`
         <div id="input_${userId}">
-            <span class="remove_user"></span>
-            <h4>${userName}</h4>
+            ${viewUserInfo}
             <input type="hidden" id="user_${userId}" name="users" value="${userId}"/>
         </div>
     `);
-
-    $(".remove_user").on('click', OnRemoveChatUser);
-
-    console.log(existing_users);
+    
+    RewriteRemoveButtonEvent();
 }
 
 function UsersFromJson(jsonString) {
@@ -102,4 +102,9 @@ function IsExists(value, array) {
             return true;
 
     return false;
+}
+
+function RewriteRemoveButtonEvent() {
+    $(".remove_user").off('click', OnRemoveChatUser);
+    $(".remove_user").on('click', OnRemoveChatUser);
 }

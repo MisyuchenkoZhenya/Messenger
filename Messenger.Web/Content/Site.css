@@ -156,3 +156,9 @@ textarea {
     margin: 5px;
     cursor: pointer;
 }
+
+.hidden_elem {
+    display: none;
+}
+
+

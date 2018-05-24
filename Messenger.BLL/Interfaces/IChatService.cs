@@ -14,7 +14,8 @@ namespace Messenger.BLL.Interfaces
         IEnumerable<UserDTO> GetChatParticipants(int chatId);
         Task<bool> EditChat(ChatDTO chatDto);
         void AddChatUser(UserToChatDTO utc);
-        void DeleteChatUser(UserToChatDTO utc);
+        void RemoveChatUser(UserToChatDTO utc);
         Task<int> CreateChat(ChatDTO chatDto);
+        Task ChangeChatUsersList(int chatId, string[] users);
     }
 }

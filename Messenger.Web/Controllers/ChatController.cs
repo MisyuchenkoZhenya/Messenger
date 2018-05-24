@@ -60,7 +60,7 @@ namespace Messenger.Web.Controllers
         private void IsFilenameValide(HttpPostedFileBase file) //TODO: fix this shit
         {
             Regex rgx = new Regex(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$");
-            if (!rgx.IsMatch(file.FileName))
+            if (!rgx.IsMatch(file?.FileName ?? ""))
                 ModelState.AddModelError("PhotoUrl", "Only Image files allowed.");
         }
 
@@ -100,16 +100,36 @@ namespace Messenger.Web.Controllers
             {
                 chatDTO.PhotoUrl = SaveChatIcon(upload);
                 await serviceUOW.ChatService.EditChat(chatDTO);
-
-                //TODO: chat users add/remove
-
-                AddUsersToChat(chatDTO.Id, users);
-
+                await serviceUOW.ChatService.ChangeChatUsersList(chatDTO.Id, users);
+                
                 return RedirectToAction("Index", "Manage");
             }
+            
+            ChatToUpdateViewModel vm = new ChatToUpdateViewModel
+            {
+                Chat = chatDTO,
+                Participants = await LoadUsersToList(users ?? new string[0])
+            };
 
-            return View(chatDTO);
+            return View(vm);
         }
+
+        public async Task<List<UserDTO>> LoadUsersToList(string[] users)
+        {
+            var participants = new List<UserDTO>();
+            foreach (var index in users)
+                participants.Add(await serviceUOW.UserService.GetFullUser(index));
+
+            return participants;
+        }
+
+        //public void ChangeChatUsersList(int chatId, string[] users)
+        //{
+        //    //var currentChatUsers = serviceUOW.ChatService.GetChatParticipants(chatId).ToList();
+            
+
+        //    //serviceUOW.ChatService.RemoveChatUser(new UserToChatDTO { ChatId = chatId, UserId =  });
+        //}
 
         //
         // GET: /Chat/GetUsersByEmail

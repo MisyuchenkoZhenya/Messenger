@@ -30,6 +30,15 @@ namespace Messenger.BLL.Services
             Database.Save();
         }
 
+        public void RemoveChatUser(UserToChatDTO utc)
+        {
+            User user = Database.Users.GetById(utc.UserId);
+            Chat chat = Database.Chats.GetWithInclude(utc.ChatId,
+                                                      c => c.Participants);
+            chat.Participants.Remove(user);
+            Database.Save();
+        }
+
         public Task<int> CreateChat(ChatDTO chatDto)
         {
             return Task.Run(() => {
@@ -52,15 +61,6 @@ namespace Messenger.BLL.Services
             });
         }
 
-        public void DeleteChatUser(UserToChatDTO utc)
-        {
-            User user = Database.Users.GetById(utc.UserId);
-            Chat chat = Database.Chats.GetWithInclude(utc.ChatId, 
-                                                      c => c.Participants);
-            chat.Participants.Remove(user);
-            Database.Save();
-        }
-
         public Task<bool> EditChat(ChatDTO chatDto)
         {
             return Task.Run(() => {                
@@ -77,6 +77,22 @@ namespace Messenger.BLL.Services
                 }
 
                 return true;
+            });
+        }
+
+        public Task ChangeChatUsersList(int chatId, string[] users)
+        {
+            return Task.Run(() =>
+            {
+                var chat = Database.Chats.GetById(chatId);
+                List<User> participants = new List<User>();
+                foreach(var index in users)
+                    participants.Add(Database.Users.GetById(index));
+
+                chat.Participants = participants;
+
+                Database.Chats.Update(chat);
+                Database.Save();
             });
         }
 
