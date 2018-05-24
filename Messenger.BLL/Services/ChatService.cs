@@ -122,13 +122,15 @@ namespace Messenger.BLL.Services
             return chatDTO;
         }
 
-        public IEnumerable<UserDTO> GetChatParticipants(int chatId)
+        public Task<IEnumerable<UserDTO>> GetChatParticipants(int chatId)
         {
-            var users = Database.Chats.GetWithInclude(chatId,
-                                                             c => c.Participants).Participants;
-            var usersDTO = Mapper.Map<ICollection<User>, List<UserDTO>>(users);
+            return Task.Run<IEnumerable<UserDTO>>(() =>
+            {
+                var users = Database.Chats.GetWithInclude(chatId, c => c.Participants).Participants;
+                var usersDTO = Mapper.Map<ICollection<User>, List<UserDTO>>(users);
 
-            return usersDTO;
+                return usersDTO;
+            });            
         }
 
         public void Dispose()

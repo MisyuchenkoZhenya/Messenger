@@ -36,7 +36,7 @@ namespace Messenger.BLL.MapperConfig
                     .ForMember("Type", opt => opt.MapFrom(m => m.Type.Type))
                     .ForMember("ChatId", opt => opt.MapFrom(m => m.Chat.Id));
 
-            cfg.CreateMap<MessageDTO, Message>()//TODO: fix it later
+            cfg.CreateMap<MessageDTO, Message>()
                     .ForMember("Author", opt => opt.MapFrom(m => new User()))
                     .ForMember("Type", opt => opt.MapFrom(m => new MessageType()))
                     .ForMember("Chat", opt => opt.MapFrom(m => new Chat()));

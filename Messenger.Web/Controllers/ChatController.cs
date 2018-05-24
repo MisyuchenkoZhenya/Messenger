@@ -57,13 +57,6 @@ namespace Messenger.Web.Controllers
             return View(chatDTO);
         }
 
-        private void IsFilenameValide(HttpPostedFileBase file) //TODO: fix this shit
-        {
-            Regex rgx = new Regex(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$");
-            if (!rgx.IsMatch(file?.FileName ?? ""))
-                ModelState.AddModelError("PhotoUrl", "Only Image files allowed.");
-        }
-
        private void AddUsersToChat(int chatId, string[] users)
         {
             foreach (var userId in users ?? Array.Empty<string>())
@@ -75,10 +68,10 @@ namespace Messenger.Web.Controllers
 
         //
         // GET: /Chat/UpdateChat
-        public ActionResult UpdateChat(int chatId)
+        public async Task<ActionResult> UpdateChat(int chatId)
         {
             var chat = serviceUOW.ChatService.GetFullChat(chatId);
-            var participants = serviceUOW.ChatService.GetChatParticipants(chatId);
+            var participants = await serviceUOW.ChatService.GetChatParticipants(chatId);
 
             ChatToUpdateViewModel vm = new ChatToUpdateViewModel
             {
@@ -123,14 +116,6 @@ namespace Messenger.Web.Controllers
             return participants;
         }
 
-        //public void ChangeChatUsersList(int chatId, string[] users)
-        //{
-        //    //var currentChatUsers = serviceUOW.ChatService.GetChatParticipants(chatId).ToList();
-            
-
-        //    //serviceUOW.ChatService.RemoveChatUser(new UserToChatDTO { ChatId = chatId, UserId =  });
-        //}
-
         //
         // GET: /Chat/GetUsersByEmail
         public async Task<string> GetUsersByEmail(string email)
@@ -153,6 +138,13 @@ namespace Messenger.Web.Controllers
             }
 
             return "-noImage-.png";
+        }
+
+        private void IsFilenameValide(HttpPostedFileBase file)
+        {
+            Regex rgx = new Regex(@"([a-zA-Z0-9\s_\\.\-:])+(.png|.jpg|.gif)$");
+            if (!rgx.IsMatch(file?.FileName ?? ""))
+                ModelState.AddModelError("PhotoUrl", "Only Image files allowed.");
         }
     }
 }

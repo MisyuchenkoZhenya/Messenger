@@ -73,5 +73,3 @@ function OnPressInputEnter(event) {
         $(".findContact").click();
     }
 }
-
-

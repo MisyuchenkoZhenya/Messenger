@@ -36,34 +36,39 @@ namespace Messenger.Web.Controllers
         [HttpPost]
         public async Task<JsonResult> UploadFile()
         {
-            //TODO: clear this later
-            string fileName = string.Empty;
-            string type = string.Empty;
-            foreach (string file in Request.Files)
-            {
-                var fileContent = Request.Files[file];
-                if (fileContent != null && fileContent.ContentLength > 0)
-                {
-                    var stream = fileContent.InputStream;
-                    string extension = fileContent.FileName.Split('.').Last();
-                    fileName = $"{Guid.NewGuid().ToString()}.{extension}";
-                    type = fileContent.ContentType.Split('/')[0].Equals("image") ? "Image" : "File";
-                    var path = Path.Combine(Server.MapPath(type.Equals("Image") ? "~/data/images" : "~/data/files"), fileName);
-                    using (var fileStream = System.IO.File.Create(path))
-                    {
-                        stream.CopyTo(fileStream);
-                    }
-                }
-            }
+            var data = SaveFile(Request.Files[0]);
 
-            return Json(new { file_name = fileName, file_type = type });
+            return Json(data);
         }
 
         public async Task<string> GetChatContent(int chatId)
         {
             var messages = await serviceUOW.MessageService.GetMessages(chatId);
+            var chat_users = await serviceUOW.ChatService.GetChatParticipants(chatId);
+            var combine = new { messages, chat_users };
 
-            return JsonConvert.SerializeObject(messages, Formatting.Indented);
+            return JsonConvert.SerializeObject(combine, Formatting.Indented);
+        }
+
+        private dynamic SaveFile(HttpPostedFileBase fileContent)
+        {
+            string fileName = string.Empty;
+            string type = string.Empty;
+
+            if (fileContent != null && fileContent.ContentLength > 0)
+            {
+                var stream = fileContent.InputStream;
+                string extension = fileContent.FileName.Split('.').Last();
+                fileName = $"{Guid.NewGuid().ToString()}.{extension}";
+                type = fileContent.ContentType.Split('/')[0].Equals("image") ? "Image" : "File";
+                var path = Path.Combine(Server.MapPath(type.Equals("Image") ? "~/data/images" : "~/data/files"), fileName);
+                using (var fileStream = System.IO.File.Create(path))
+                {
+                    stream.CopyTo(fileStream);
+                }
+            }
+
+            return new { file_name = fileName, file_type = type };
         }
     }
 }

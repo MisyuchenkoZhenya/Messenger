@@ -24,13 +24,12 @@ function init() {
 
 // --events--
 
-function OnChatSelected(e) {//TODO: clear this shit
+function OnChatSelected(e) {
     ChatConnection = $.connection.chatHub;
     InitializeChatHandlers(ChatConnection);
 
-    $(".chat_input").css("pointer-events", "all");    
-
     $(this).addClass("active");
+    $(".chat_input").css("pointer-events", "all");
     $(`#chat_${ChatId}`).removeClass("active");
 
     if (ChatId)
@@ -102,7 +101,7 @@ function GetChatContent(chat_id) {
     $.post("/Home/GetChatContent", {
         chatId: parseInt(chat_id)
     })
-        .done(data => {
+    .done(data => {
         $(".chat_body").empty();
         ConnectWithWebSocket(JSON.parse(data));
     });
@@ -112,9 +111,19 @@ function ConnectWithWebSocket(data) {
     $.connection.hub.start()
     .done(() => {
         ChatConnection.server.connect(ChatId);
-        data.forEach((elem) => {
+        ShowChatUsers(data['chat_users']);
+        data['messages'].forEach((elem) => {
             Print(elem);
         });
+    });
+}
+
+function ShowChatUsers(users) {
+    $(".chat_header").empty();
+    users.forEach((elem) => {
+        $(".chat_header").append(`
+            <div><h4>${elem.FirstName} ${elem.LastName}(${elem.Email})</h4></div>
+        `);
     });
 }
 
