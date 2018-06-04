@@ -129,7 +129,7 @@ function ShowChatUsers(users) {
 
 function Print(message) {
     $(".chat_body").append(`
-        <div class="speech-bubble${message.AuthorId === CurrentUserId ? "-my" : ""}">
+        <div class="speech bubble${message.AuthorId === CurrentUserId ? "-my" : ""}">
             <div class="message_sender">
                 ${message.Author}
             </div>

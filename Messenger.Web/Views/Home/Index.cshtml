@@ -7,7 +7,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="col_title">
-                <h4>List of contacts</h4>
+                <h3>List of contacts</h3>
             </div>
             <div class="col_body">
                 @foreach (var contact in Model.Contacts)
@@ -25,15 +25,14 @@
         </div>
         <div class="col-md-4">
             <div class="col_title">
-                <h4>Chats</h4>
+                <h3>Chats</h3>
             </div>
             <div class="col_body">
                 @foreach (var chat in Model.Chats)
                 {
                     <div id="chat_@chat.Id" class="chat_info">
                         <span class="chat_info_content">
-                            <center><b>@chat.Title</b></center><br />
-
+                            <b>@chat.Title</b><br />
                         </span>
                         <span class="chat_info_icon">
                             <img src="~/images/chatIcons/@(chat.PhotoUrl)" title="chat icon" class="chat_icon" />
@@ -44,7 +43,7 @@
         </div>
         <div class="col-md-4">
             <div class="col_title">
-                <h4>Current chat</h4>
+                <h3>Current chat</h3>
             </div>
             <div id="current_chat">
                 <div class="chat_header">

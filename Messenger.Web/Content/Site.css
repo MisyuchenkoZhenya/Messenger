@@ -100,8 +100,6 @@ textarea {
     font-size: 16px;
     border: dotted 1px #aaaaaa;
     border-radius: 5px;
-    background: transparent;
-    color: #dddddd;
 }
 
 .possibleContact {
@@ -160,5 +158,3 @@ textarea {
 .hidden_elem {
     display: none;
 }
-
-

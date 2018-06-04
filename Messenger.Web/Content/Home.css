@@ -100,11 +100,10 @@
 
 .chat_info {
     margin: 5px 5px 12px 0;
-    font-size: 16px;
     border: groove 2px #eeeeee;
     border-radius: 3px;
-    background: #444444;
-    color: #dddddd;
+    position: relative;
+    height: 100px;
 }
 
 .chat_info:hover {
@@ -171,54 +170,46 @@
     background: #555555;
 }
 
-.speech-bubble-my {
+.speech {
     position: relative;
     background: #555555;
     border-radius: .4em;
+    padding: 5px 5px 5px 5px;
+    word-wrap: break-word;
+    height: auto;
+}
+
+.speech.bubble-my {
     border: solid 2px #440000;
     margin: 10px 5px 10px 30px;
-    padding: 5px 5px 5px 5px;
-    word-wrap: break-word;
-    height: auto;
 }
 
-.speech-bubble {
-    position: relative;
-    background: #555555;
-    border-radius: .4em;
+.speech.bubble {
     border: solid 2px #111111;
     margin: 10px 30px 10px 5px;
-    padding: 5px 5px 5px 5px;
-    word-wrap: break-word;
-    height: auto;
 }
 
-.speech-bubble-my:after {
+.speech:after {
     content: '';
     position: absolute;
-    left: 0;
     top: 50%;
     width: 0;
     height: 0;
     border: 20px solid transparent;
-    border-right-color: #440000;
-    border-left: 0;
     border-top: 0;
     margin-top: -10px;
+}
+
+.speech.bubble-my:after {
+    left: 0;
+    border-right-color: #440000;
+    border-left: 0;
     margin-left: -20px;
 }
 
-.speech-bubble:after {
-    content: '';
-    position: absolute;
+.speech.bubble:after {
     right: 0;
-    top: 50%;
-    width: 0;
-    height: 0;
-    border: 20px solid transparent;
     border-left-color: #111111;
     border-right: 0;
-    border-top: 0;
-    margin-top: -10px;
     margin-right: -20px;
 }

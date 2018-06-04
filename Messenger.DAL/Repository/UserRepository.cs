@@ -48,7 +48,6 @@ namespace Messenger.DAL.Repository
             tempUser.FirstName = user.FirstName;
             tempUser.LastName = user.LastName;
             tempUser.PhoneNumber = user.PhoneNumber;
-            //db.Entry(user).State = EntityState.Modified;
         }
 
         public IEnumerable<User> GetWithInclude(params Expression<Func<User, object>>[] includeProperties)

@@ -18,12 +18,14 @@ function OnUserModalCalled(e) {
         $('#modDialog').modal('show');
 
         $(".findContact").click(function (e) {
-            $.get("/Chat/GetUsersByEmail", { email: $("#email_input").val(), availableOnly: $("#chat_is_private").is(":checked") })
-                .done((data) => {
-                    $(".modal-body").html(UsersFromJson(data));
-
-                    $(".possibleContact").click(OnAppendContact);
-                });
+            $.get("/Chat/GetUsersByEmail", {
+                email: $("#email_input").val(),
+                availableOnly: $("#chat_is_private").is(":checked")
+            })
+            .done((data) => {
+                $(".modal-body").html(UsersFromJson(data));
+                $(".possibleContact").click(OnAppendContact);
+            });
         });
 
         $(".findContact").click();
@@ -33,13 +35,15 @@ function OnUserModalCalled(e) {
 
 function OnDeleteContact(e) {
     if (confirm('Are you sure?')) {
-        $.post("/Manage/DeleteContact", { contactId: $(this).parent().attr("id") })
-            .done((data) => {
-                if (data === "true")
-                    window.location.reload();
-                else
-                    alert("Something wrong");
-            });
+        $.post("/Manage/DeleteContact", {
+            contactId: $(this).parent().attr("id")
+        })
+        .done((data) => {
+            if (data === "true")
+                window.location.reload();
+            else
+                alert("Something wrong");
+        });
     }
 }
 

@@ -1,6 +1,5 @@
 ﻿.chat_info {
     position: relative;
-    /*background: #808080;*/
     height: 100px;
 }
 
@@ -9,6 +8,8 @@
     width: 70%;
     height: 100%;
     font-size: 16px;
+    cursor: pointer;
+    text-align: center;
 }
 
 .chat_info_icon {

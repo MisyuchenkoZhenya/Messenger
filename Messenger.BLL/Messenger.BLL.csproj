@@ -95,7 +95,6 @@
     <Compile Include="DTO\ChatDTO.cs" />
     <Compile Include="DTO\MessageDTO.cs" />
     <Compile Include="DTO\UserDTO.cs" />
-    <Compile Include="Identity\IdentityServices.cs" />
     <Compile Include="Identity\Managers\ApplicationSignInManager.cs" />
     <Compile Include="Identity\Managers\ApplicationUserManager.cs" />
     <Compile Include="DatabaseInitializer\DatabaseInitializer.cs" />
