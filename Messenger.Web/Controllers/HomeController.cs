@@ -31,7 +31,7 @@ namespace Messenger.Web.Controllers
         }
 
         [HttpPost]
-        public Task<JsonResult> UploadFile()
+        public JsonResult UploadFile()
         {
             var data = SaveFile(Request.Files[0]);
 
